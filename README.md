@@ -37,19 +37,19 @@ Para instalar y ejecutar el proyecto en tu entorno local, sigue estos pasos:
 
 ### Organización de Archivos
 
-**Assets** Aloja todos los recursos estáticos del proyecto, como imágenes e íconos.
+**Assets:** Aloja todos los recursos estáticos del proyecto, como imágenes e íconos.
 
-**Components** Agrupa los componentes reutilizables del proyecto, así como aquellos que conforman las páginas principales de la aplicación.
+**Components:** Agrupa los componentes reutilizables del proyecto, así como aquellos que conforman las páginas principales de la aplicación.
 
-**Data** Almacena datos estáticos o archivos JSON utilizados como fuente de datos en el proyecto o informacion relevante que esta almacenada para uso.
+**Data:** Almacena datos estáticos o archivos JSON utilizados como fuente de datos en el proyecto o informacion relevante que esta almacenada para uso.
 
-**Pages** Incluye las vistas principales proyecto.
+**Pages:** Incluye las vistas principales proyecto.
 
-**Router** Configura la navegación de la aplicación. Contiene las rutas, los componentes asociados a cada ruta y la lógica relacionada con la navegación.
+**Router:** Configura la navegación de la aplicación. Contiene las rutas, los componentes asociados a cada ruta y la lógica relacionada con la navegación.
 
-**Services** Agrupa las funciones y configuraciones relacionadas con las llamadas a APIs u otros servicios externos que utiliza la aplicación.
+**Services:** Agrupa las funciones y configuraciones relacionadas con las llamadas a APIs u otros servicios externos que utiliza la aplicación.
 
-**Stores** Gestiona el estado global de la aplicación utilizando Zustand. Aquí se centraliza y organiza la lógica necesaria para compartir datos y estados entre diferentes partes del proyecto.
+**Stores:** Gestiona el estado global de la aplicación utilizando Zustand. Aquí se centraliza y organiza la lógica necesaria para compartir datos y estados entre diferentes partes del proyecto.
 
 ### Gestión de Proyecto
 

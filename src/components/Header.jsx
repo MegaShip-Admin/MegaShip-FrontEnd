@@ -16,7 +16,7 @@ import SettingB from '../assets/OpcionesBlanco.svg';
 const StyledHeader = styled.header`
   background-color: #724D93;
   height: 100vh;
-  width: ${(props) => (props.collapsed ? '6vw' : '17vw')};
+  width: ${(props) => (props.$collapsed ? '6vw' : '17vw')};
   display: flex;
   flex-direction: column;
   border-radius: 0 20px 20px 0;
@@ -54,7 +54,7 @@ const LogoText = styled.div`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  display: ${(props) => (props.collapsed ? 'none' : 'block')};
+  display: ${(props) => (props.$collapsed ? 'none' : 'block')};
 `;
 
 const StyledNav = styled.nav`
@@ -90,33 +90,34 @@ const StyledLink = styled(Link)`
   }
 `;
 
-export default function Header({ collapsed, onClick }) {
+export default function Header() {
+  const { headerCollapsed, expandHeader } = useStore();
   const location = useLocation();
 
   return (
-    <StyledHeader collapsed={collapsed} onClick={onClick}>
+    <StyledHeader $collapsed={headerCollapsed} onClick={expandHeader}>
       <LogoLink to="/login">
         <LogoCircle>MB</LogoCircle>
-        <LogoText collapsed={collapsed}>MegaBoss</LogoText>
+        <LogoText $collapsed={headerCollapsed}>MegaBoss</LogoText>
       </LogoLink>
       <StyledNav>
-        <StyledLink to="/" $isActive={location.pathname === '/'} collapsed={collapsed}>
+        <StyledLink to="/" $isActive={location.pathname === '/'} collapsed={headerCollapsed}>
           <img src={location.pathname === '/' ? Inicio : InicioB} alt="Inicio" />
           <span>Inicio</span>
         </StyledLink>
-        <StyledLink to="/nueva_cotizacion" $isActive={location.pathname === '/nueva_cotizacion'} collapsed={collapsed}>
+        <StyledLink to="/nueva_cotizacion" $isActive={location.pathname === '/nueva_cotizacion'} collapsed={headerCollapsed}>
           <img src={location.pathname === '/nueva_cotizacion' ? Nuevo : NuevoB} alt="Nueva Cotización" />
           <span >Nueva Cotización</span>
         </StyledLink>
-        <StyledLink to="/lista_cotizaciones" $isActive={location.pathname === '/lista_cotizaciones'} collapsed={collapsed}>
+        <StyledLink to="/lista_cotizaciones" $isActive={location.pathname === '/lista_cotizaciones'} collapsed={headerCollapsed}>
           <img src={location.pathname === '/lista_cotizaciones' ? Lista : ListaB} alt="Lista de Cotizaciones" />
           <span >Lista de Cotizaciones</span>
         </StyledLink>
-        <StyledLink to="/gestion_usuarios" $isActive={location.pathname === '/gestion_usuarios'} collapsed={collapsed}>
+        <StyledLink to="/gestion_usuarios" $isActive={location.pathname === '/gestion_usuarios'} collapsed={headerCollapsed}>
           <img src={location.pathname === '/gestion_usuarios' ? Users : UsersB} alt="Gestión de Usuarios" />
           <span>Gestión de Usuarios</span>
         </StyledLink>
-        <StyledLink to="/configuraciones" $isActive={location.pathname === '/configuraciones'} collapsed={collapsed} $bottom>
+        <StyledLink to="/configuraciones" $isActive={location.pathname === '/configuraciones'} collapsed={headerCollapsed} $bottom>
           <img src={location.pathname === '/configuraciones' ? Setting : SettingB} alt="Opciones" />
           <span>Opciones</span>
         </StyledLink>

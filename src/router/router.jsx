@@ -22,18 +22,13 @@ const MainContent = styled.main`
 `;
 
 export default function AppRouter() {
-  const { headerCollapsed, expandHeader, collapseHeader } = useStore();
-  const handleMainContentClick = () => {
-    if (!headerCollapsed) {
-      collapseHeader();
-    }
-  };
+  const { headerCollapsed, collapseHeader } = useStore();
 
   return (
     <BrowserRouter>
       <Layout>
-        <Header collapsed={headerCollapsed} onClick={expandHeader} />
-        <MainContent headerCollapsed={headerCollapsed} onClick={handleMainContentClick}>
+        <Header />
+        <MainContent $headerCollapsed={headerCollapsed} onClick={collapseHeader}>
           <Routes>
             <Route path="/" element={<IndexPage />} />
             <Route path="/nueva_cotizacion" element={<NewQuote />} />
