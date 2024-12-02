@@ -6,4 +6,5 @@ const useStore = create((set) => ({
   collapseHeader: () => set({ headerCollapsed: true }), // A method to collapse the header
 }));
 
+
 export default useStore;
