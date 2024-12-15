@@ -1,91 +1,85 @@
 import styled from "styled-components";
 import Progress from "../components/ProgressBar";
-import useStore from '../stores/store';
-import { Active } from '../stores/store';
-import { ActiveBoxs } from "../stores/store";
-import { IntActiveBoxs } from "../stores/store";
-import { UseProgress } from "../stores/store";
+import { useProgressStore } from "../stores/store";
 import Aereo from '../assets/Aereo.svg';
 import Maritimo from '../assets/Maritimo.svg';
 import Terrestre from '../assets/Terrestre.svg';
-import { useState } from "react";
+import useStore from "../stores/store";
 
 const StyledNewQuote = styled.div`
-height: 100vh;
-width: ${(props) => (props.$collapsed ? '94vw' : '83vw')};
-display: flex;
-align-items: center;
-flex-direction: column;
-justify-content: space-evenly;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
 `
 const IMPEXP = styled.div`
-height: 15vh;
-width: 30vw;
-display: flex;
-justify-content: center;
-align-items: flex-end;
+  height: 15vh;
+  width: 30vw;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
 `
 const ButtonGroup = styled.div`
-display: flex;
-height: 40%;
-border-radius: 16px;
-position: relative;
-width: 100%;
-overflow: hidden;
+  display: flex;
+  height: 40%;
+  border-radius: 16px;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
 `
 const Button = styled.button`
-flex: 1;
-padding: 12px 24px;
-font-size: 30px;
-color: #fff;
-font-family: "Inter", sans-serif;
-background-color: ${({ isActive }) => (isActive ? "#724D93" : "#BEBDBF")};
-border: none;
-cursor: pointer;
-position: relative;
-margin-left: -5%;
-z-index: ${({ isActive }) => (isActive ? 2 : 1)};
-transition: all 0.3s ease;
-border-radius: ${({ isActive }) => (isActive ? "16px" : "0px")};
-width: ${({ isActive }) => (isActive ? "60%" : "40%")};
-
+  flex: 1;
+  padding: 12px 24px;
+  font-size: 30px;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  background-color: ${({ isActive }) => (isActive ? "#724D93" : "#BEBDBF")};
+  border: none;
+  cursor: pointer;
+  position: relative;
+  margin-left: -5%;
+  z-index: ${({ isActive }) => (isActive ? 2 : 1)};
+  transition: all 0.3s ease;
+  border-radius: ${({ isActive }) => (isActive ? "16px" : "0px")};
+  width: ${({ isActive }) => (isActive ? "60%" : "40%")};
 &:first-child {
-border-top-left-radius: 16px;
-border-bottom-left-radius: 16px;
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
 }
 &:last-child {
-border-top-right-radius: 16px;
-border-bottom-right-radius: 16px;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
 }
 `
 const BoxContainer = styled.div`
-height: 55vh;
-width: 65vw;
-display: flex;
-align-items: flex-end;
-justify-content: space-around;
-flex-direction: row;
+  height: 55vh;
+  width: 65vw;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  flex-direction: row;
 `
 const BOXS = styled.button`
-width: 20vw;
-height: 35vh;
-border: 5px solid #724D93;
-border-radius: 25px;
-cursor: pointer;
-position: relative;
-background: #FBFAFA;
+  width: 20vw;
+  height: 35vh;
+  border: 5px solid #724D93;
+  border-radius: 25px;
+  cursor: pointer;
+  position: relative;
+  background: #FBFAFA;
 `
 const Icons = styled.img`
-width: 15vw;
+  width: 15vw;
 `
 const ContainerBOX2 = styled.div`
-width: 20vw;
-height: 35vh;
-position: relative;
-display: flex;
-flex-direction: column;
-align-content: space-around;
-justify-content: space-between;
+  width: 20vw;
+  height: 35vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-content: space-around;
+  justify-content: space-between;
 `
 const IntBox = styled.button`
   width: 20vw;
@@ -99,15 +93,16 @@ const IntBox = styled.button`
   font-family: "Inter", sans-serif;
 `
 export default function NewQuote() {
-  const { headerCollapsed } = useStore(); // Determina si el header está colapsado
-  const { ActiveTab, setActiveTab } = Active(); // Estado y acción para la pestaña activa
-  const { BoxActive, setBoxActive } = ActiveBoxs(); // Estado y acción para el tipo de transporte activo
-  const { IntBoxActive, setIntBoxActive } = IntActiveBoxs(); // Estado y acción para el tipo de caja interno
-  const { setCurrentStep } = UseProgress(); // Acción para establecer el paso actual en el progreso
+  const {
+    ActiveTab,
+    setActiveTab,
+    selectedType,
+    setSelectedType,
+    selectedTransport,
+    setSelectedTransport,
+  } = useStore();
 
-  const [selectedOption, setselectedOption] = useState(''); // Opción seleccionada (Importación/Exportación)
-  const [selectedType, setselectedType] = useState(''); // Tipo seleccionado (Consolidado/Exclusivo/Courier/Común)
-  const [selectedTransport, setselectedTransport] = useState(''); // Transporte seleccionado (Marítimo/Aéreo/Terrestre)
+  const { BoxActive, setBoxActive, IntBoxActive, setIntBoxActive, setCurrentStep } = useProgressStore(); // Estado y acción para el tipo de transporte activo
 
   // Maneja el clic en un tipo de transporte y reinicia el progreso
   const handleBoxclick = (boxType) => {
@@ -117,24 +112,22 @@ export default function NewQuote() {
 
   return (
     <>
-      <StyledNewQuote $collapsed={headerCollapsed}>
+      <StyledNewQuote>
         {/* Sección de Importación/Exportación */}
         <IMPEXP>
           <ButtonGroup>
             <Button
-              isActive={ActiveTab === "Exportación"}
+              isActive={ActiveTab === 'Exportación'}
               onClick={() => {
-                setActiveTab("Exportación"); // Cambia la pestaña activa
-                setselectedOption('Exportación'); // Actualiza la opción seleccionada
+                setActiveTab('Exportación'); // Cambia la pestaña activa
               }}
             >
               Exportación
             </Button>
             <Button
-              isActive={ActiveTab === "Importación"}
+              isActive={ActiveTab === 'Importación'}
               onClick={() => {
-                setActiveTab("Importación");
-                setselectedOption('Importación');
+                setActiveTab('Importación'); // Cambia la pestaña activa
               }}
             >
               Importación
@@ -148,7 +141,7 @@ export default function NewQuote() {
                 isActive={IntBoxActive === 'Consolidado'}
                 onClick={() => {
                   setIntBoxActive('Consolidado');
-                  setselectedType('Consolidado');
+                  setSelectedType('Consolidado');
                 }}
               >
                 Consolidado
@@ -157,7 +150,7 @@ export default function NewQuote() {
                 isActive={IntBoxActive === 'Exclusivo'}
                 onClick={() => {
                   setIntBoxActive('Exclusivo');
-                  setselectedType('Exclusivo');
+                  setSelectedType('Exclusivo');
                 }}
               >
                 Exclusivo
@@ -168,7 +161,7 @@ export default function NewQuote() {
               isActive={BoxActive === "Maritimo"}
               onClick={() => {
                 handleBoxclick("Maritimo");
-                setselectedTransport('Maritimo');
+                setSelectedTransport('Maritimo');
               }}
             >
               <Icons src={Maritimo} alt="Maritimo" />
@@ -180,16 +173,16 @@ export default function NewQuote() {
                 isActive={IntBoxActive === 'Común'}
                 onClick={() => {
                   setIntBoxActive('Común');
-                  setselectedType('Común');
+                  setSelectedType('Común');
                 }}
               >
                 Común
               </IntBox>
               <IntBox
-                isActive={IntBoxActive === 'Courier'} 
+                isActive={IntBoxActive === 'Courier'}
                 onClick={() => {
                   setIntBoxActive('Courier');
-                  setselectedType('Courier');
+                  setSelectedType('Courier');
                 }}
               >
                 Courier
@@ -199,8 +192,8 @@ export default function NewQuote() {
             <BOXS
               isActive={BoxActive === "Aereo"}
               onClick={() => {
-                handleBoxclick("Aereo"); 
-                setselectedTransport('Aereo');
+                handleBoxclick("Aereo");
+                setSelectedTransport('Aereo');
               }}
             >
               <Icons src={Aereo} alt="Aereo" />
@@ -209,10 +202,10 @@ export default function NewQuote() {
           {BoxActive === 'Terrestre' ? (
             <ContainerBOX2>
               <IntBox
-                isActive={IntBoxActive === 'Consolidado'}do
+                isActive={IntBoxActive === 'Consolidado'} do
                 onClick={() => {
                   setIntBoxActive('Consolidado');
-                  setselectedType('Consolidado');
+                  setSelectedType('Consolidado');
                 }}
               >
                 Consolidado
@@ -221,7 +214,7 @@ export default function NewQuote() {
                 isActive={IntBoxActive === 'Exclusivo'}
                 onClick={() => {
                   setIntBoxActive('Exclusivo');
-                  setselectedType('Exclusivo');
+                  setSelectedType('Exclusivo');
                 }}
               >
                 Exclusivo
@@ -232,7 +225,7 @@ export default function NewQuote() {
               isActive={BoxActive === "Terrestre"}
               onClick={() => {
                 handleBoxclick("Terrestre");
-                setselectedTransport('Terrestre');
+                setSelectedTransport('Terrestre');
               }}
             >
               <Icons src={Terrestre} alt="Terrestre" />
@@ -240,7 +233,7 @@ export default function NewQuote() {
           )}
         </BoxContainer>
         <Progress
-          selectedOption={selectedOption}
+          selectedOption={ActiveTab}
           selectedTransport={selectedTransport}
           selectedType={selectedType}
         />
