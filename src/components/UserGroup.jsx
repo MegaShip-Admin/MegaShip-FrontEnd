@@ -8,8 +8,8 @@ const UsersGroup = styled.div`
   grid-template-columns: 1fr 1fr;
   align-items: start;
   gap: 2px;
-  grid-row-gap: 5px; 
-  height: 80vh;
+  grid-row-gap: 2px; 
+  height: 70vh;
   width: ${(props) => (props.$collapsed ? '94vw' : '83vw')};
   background-color: #ffffff;
   color: #724D93;
@@ -33,19 +33,6 @@ const PagesSlider = styled.div`
   background-color: #6f6f6f;
 `;
 
-const PageActualNumber = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  background-color: #724D93;
-  height: 10px;
-  width: 10px;
-  color: #ffff;
-  font-size: smaller;
-  padding: 6px;
-`;
-
 const PageNumber = styled.div`
   display: flex;
   justify-content: center;
@@ -65,18 +52,35 @@ function getPages(newArray) {
   return numPages;
 }
 
-export default function UserGroup() {
-  const [usersData, setUsersData] = useState([]);
+export default function UserGroup({ searching }) {
+  const [usersData, setUsersData] = useState(Users); // Initial data from Users.json
+  const [filteredData, setFilteredData] = useState([]);
   const [pages, setPages] = useState(0);
   const [actualPage, setActualPage] = useState(1);
 
   useEffect(() => {
-    setUsersData(Users);
-    setPages(getPages(Users));
-  }, []);
+    const filteredUsers = usersData.filter((u) =>
+      u.name.toLowerCase().includes(searching.toLowerCase())
+    );
+    setFilteredData(filteredUsers);
+    setPages(getPages(filteredUsers));
+  }, [searching, usersData]);
+
+  useEffect(() => {
+    setActualPage(1); // Reset page to 1 when the search changes
+  }, [searching]);
+
+  const displayedUsers = filteredData.slice((actualPage - 1) * 4, actualPage * 4);
 
   return (
     <>
+      <UsersGroup>
+        {displayedUsers && displayedUsers.length > 0 ? (
+          displayedUsers.map((u) => <User key={u.phone} {...u} />)
+        ) : (
+          'No hay usuarios'
+        )}
+      </UsersGroup>
       <SliderContainer>
         <PagesSlider>
           {[...Array(pages)].map((_, i) => (
@@ -91,15 +95,6 @@ export default function UserGroup() {
           ))}
         </PagesSlider>
       </SliderContainer>
-      <UsersGroup>
-        {usersData && usersData.length > 0 ? (
-          usersData
-            .slice((actualPage - 1) * 4, actualPage * 4)
-            .map((u) => <User key={u.phone} {...u} />)
-        ) : (
-          'No hay usuarios'
-        )}
-      </UsersGroup>
     </>
   );
 }

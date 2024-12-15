@@ -20,18 +20,38 @@
     "phone": "5555-2211"
   },
   {
-    "name": "Silvia Perez",
-    "email": "silvia@gmail.com",
-    "phone": "5555-2211"
+    "name": "Pablo Perez",
+    "email": "pablo@gmail.com",
+    "phone": "5555-3211"
   },
   {
-    "name": "Silvia Perez",
-    "email": "silvia@gmail.com",
-    "phone": "5555-2211"
+    "name": "Julio Iglesias",
+    "email": "julio@gmail.com",
+    "phone": "5555-4211"
   },
   {
-    "name": "Silvia Perez",
-    "email": "silvia@gmail.com",
-    "phone": "5555-2211"
+    "name": "Diego Maradona",
+    "email": "eldiego@gmail.com",
+    "phone": "5555-9211"
+  },
+  {
+    "name": "Dionisio Alvarez",
+    "email": "eldios@gmail.com",
+    "phone": "5555-1111"
+  },
+  {
+    "name": "Fernando DelaVega",
+    "email": "elzorro@gmail.com",
+    "phone": "5555-zzzz"
+  },
+  {
+    "name": "Anacleto Lopez",
+    "email": "anal@gmail.com",
+    "phone": "5555-7777"
+  },
+  {
+    "name": "Martin Pescador",
+    "email": "martin@gmail.com",
+    "phone": "5555-9441"
   }
 ]

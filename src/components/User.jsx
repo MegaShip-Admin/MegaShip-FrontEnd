@@ -9,12 +9,12 @@ const UserBox = styled.div`
   margin: 20px;
   background-color: #FBFAFA;
   border-radius: 30px;
-  height: 25vh;
+  height: 14vh;
   width: 30vw;
-  min-height: 200px;
-  max-height: 300px;
+  min-height: 170px;
+  max-height: 180px;
   border: solid 2px #724D93;
-  padding: 10px 40px;
+  padding: 10px 30px;
 `;
 
 const UserInfo = styled.div`
@@ -32,7 +32,7 @@ const TextField = styled.div`
   align-items: center;
   border-radius: 30px;
   height: fit-content;
-  width: 80%;
+  width: 70%;
   border: solid 2px #724D93;
   padding: 5px 30px;
   color: #787878;
@@ -65,9 +65,10 @@ const UserPic = styled.div`
   border-radius: 50%;
   margin-left: 18%;
   background-color: #724D93;
-  height: 170px;
-  width: 170px;
+  height: 150px;
+  width: 150px;
   color: #ffff;
+  margin-top: 1.5vh;
   font-size: xx-large;
   font-weight: 700;
 

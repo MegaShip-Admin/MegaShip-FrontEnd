@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import useStore from '../stores/store';
-import UserGroup from '../components/UserGroup'
+import UserGroup from '../components/UserGroup';
 
 const Page = styled.div`
   display: flex;
@@ -17,17 +17,16 @@ const Container = styled.div`
   align-items: center;
   height: 75vh;
   width: ${(props) => (props.$collapsed ? '94vw' : '83vw')};
-
 `;
-
 
 const Controls = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 10%;
+  height: 5%;
   width: 80%;
-  margin-bottom: 2vh;
+  margin-top: 6vh;
+  margin-bottom: 1.1vh;
 `;
 
 const FunctionButtons = styled.div`
@@ -66,14 +65,15 @@ const Finder = styled.div`
   justify-content: space-between;
   align-items: center;
   border-radius: 30px;
-  min-width: 340px;
+  min-width: 300px;
   width: fit-content;
   border: solid 2px #724D93;
   padding: 5px;
-  spam {
-    margin-left: 20px;
-
-  }
+ .inputText {
+  margin-left: 5px;
+  border: none;
+  outline: none;
+ }
 `;
 
 const Magnifier = styled.div`
@@ -85,14 +85,17 @@ const Magnifier = styled.div`
   width: 30px;
   border: solid 2px #724D93;
   background-color: #724D93;
-
 `;
 
 
 
 export default function UserManagement() {
   const { headerCollapsed, expandHeader } = useStore();
+  const [searching, setSearching] = useState('');
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
 
   return (
     <>
@@ -101,8 +104,18 @@ export default function UserManagement() {
           <Controls>
             <div>
               <Finder>
-                <spam>Buscador</spam>
-                <Magnifier />
+                <form onSubmit={handleSubmit}>
+                  <input
+                    className='inputText'
+                    type='text'
+                    placeholder='Buscador'
+                    value={searching}
+                    onChange={(e) => setSearching(e.target.value)}
+                  />
+                
+
+                </form>
+                  <Magnifier/>
               </Finder>
             </div>
             <FunctionButtons>
@@ -114,7 +127,7 @@ export default function UserManagement() {
               </SuspendEmployee>
             </FunctionButtons>
           </Controls>
-          <UserGroup />
+          <UserGroup searching={searching} />
         </Container>
       </Page>
     </>
