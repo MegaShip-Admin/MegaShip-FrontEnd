@@ -1,0 +1,47 @@
+/* Contenedor de la tabla */
+.rdt_Table {
+  /* border: 2px solid #724D93;
+  border-radius: 20px;
+  overflow: hidden; */
+
+  min-width: 75vw; /* Tamaño mínimo */
+  width: calc(100% + 5px);
+}
+
+/* Filas de la tabla (hover) */
+.rdt_TableRow:hover {
+  background-color: #BEBDBF !important; /* Fondo gris claro al hacer hover (#f1f1f1 o #BEBDBF) */
+}
+
+.rdt_TableRow {
+  margin: 0; /* Elimina cualquier margen externo */
+  background-color: #FBFAFA !important;
+}
+
+/* Celdas de la tabla */
+.rdt_TableCell { 
+  text-align: center; /* Centrado del texto (puede no ser necesario) */
+  font-size: 17px; /* Tamaño de la fuente */
+  padding: 18px; /* Espaciado interno de las celdas */
+  color: #646464;
+  font-weight: 400;
+  
+  
+}
+
+/* Encabezado de la tabla */
+.rdt_TableHeadRow {
+  background-color: #724D93 !important; /* Fondo morado del encabezado */
+  color: rgb(255, 255, 255); /* Texto blanco en el encabezado */
+  font-size: 17px; /* Tamaño de la fuente */  
+  padding: 3px;
+  font-weight: 600;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+
+.rdt_TableCell img {
+  width: 40px;
+  height: auto;
+}
