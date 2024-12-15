@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import useStore from '../stores/store';
 import UserGroup from '../components/UserGroup';
+import NewUser from '../components/NewUser';
 
 const Page = styled.div`
   display: flex;
@@ -96,9 +97,11 @@ export default function UserManagement() {
   const handleSubmit = (event) => {
     event.preventDefault();
   };
-
+  const [showModal, setShowModal] = useState(false);  // show newUser Modal
+  const toggleModal = () => { setShowModal(!showModal); };
   return (
     <>
+      <NewUser showModal={showModal} toggleModal={toggleModal} />
       <Page $collapsed={headerCollapsed}>
         <Container $collapsed={headerCollapsed}>
           <Controls>
@@ -119,7 +122,7 @@ export default function UserManagement() {
               </Finder>
             </div>
             <FunctionButtons>
-              <AddUserBoton>
+              <AddUserBoton onClick={toggleModal}>
                 <span>Agregar Usuario +</span>
               </AddUserBoton>
               <SuspendEmployee>
