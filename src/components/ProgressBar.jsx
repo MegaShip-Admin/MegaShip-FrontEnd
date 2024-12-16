@@ -23,6 +23,7 @@ const BarProgress = styled.div`
 display: flex;
 justify-content: center;
 align-items: center;
+position: relative;
 width: 100%;
 gap: 4px;
 `
@@ -90,6 +91,11 @@ align-items: center;
 flex-direction: column;
 position: relative;
 width: 100px;
+
+&:last-child { // para el ultimo paso
+align-items: flex-start;
+margin-left: 10px;
+}
 `
 const StepText = styled.p`
 margin-top: 8px;
@@ -136,7 +142,7 @@ const useProgressStore = create((set) => ({
   })),
   // va al paso anterior
   prevStep: () => set((state) => ({
-    currentStep: Math.max(state.currentStep - 1, 1),
+    currentStep: state.currentStep === 4 ? 1 : Math.max(state.currentStep - 1, 1),
   })),
 }));
 
@@ -148,7 +154,6 @@ Progress.propTypes = {
 }
 export default function Progress({ selectedOption, selectedTransport, selectedType }) {
   const { steps, currentStep, nextStep, prevStep, setStepValue } = useProgressStore();
-
   // Actualiza los valores de los pasos
   useEffect(() => {
     setStepValue(1, selectedOption); // Paso 1
@@ -156,6 +161,7 @@ export default function Progress({ selectedOption, selectedTransport, selectedTy
     setStepValue(3, selectedType); // Paso 3
   }, [selectedOption, selectedTransport, selectedType, setStepValue]);
 
+  
   return(
     <StyledProgress>
       <DivProgress>
