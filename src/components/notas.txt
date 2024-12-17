@@ -1,0 +1,19 @@
+hacer q los pasos reinicie si voy atras
+hacer q la barra marque paso a paso 
+asegurarse q cuando tenes marcado el paso el index sea correcto asiq si hay 3 pasos vaya al 4 y no del 0 al 1
+
+
+
+import { ActiveBoxs } from "../stores/store";
+import { IntActiveBoxs } from "../stores/store";
+import { UseProgress } from "../stores/store";
+
+const { BoxActive, setBoxActive } = ActiveBoxs(); // Estado y acción para el tipo de transporte activo
+const { IntBoxActive, setIntBoxActive } = IntActiveBoxs(); // Estado y acción para el tipo de caja interno
+const { setCurrentStep } = UseProgress(); // Acción para establecer el paso actual en el progreso
+
+// Maneja el clic en un tipo de transporte y reinicia el progreso
+const handleBoxclick = (boxType) => {
+  setBoxActive(boxType); // Establece el transporte activo
+  setCurrentStep(0); // Reinicia el progreso al paso inicial
+};
