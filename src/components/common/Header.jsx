@@ -1,16 +1,16 @@
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import useStore from '../stores/store';
-import Inicio from '../assets/BotonInicioVioleta.svg';
-import Nuevo from '../assets/BotonCotizacionVioleta.svg';
-import Lista from '../assets/BotonListaVioleta.svg';
-import Users from '../assets/BotonGestionVioleta.svg';
-import Setting from '../assets/Opciones.svg';
-import InicioB from '../assets/BotonInicioBlanco.svg';
-import NuevoB from '../assets/BotonCotizacionBlanco.svg';
-import ListaB from '../assets/BotonListaBlanco.svg';
-import UsersB from '../assets/BotonGestionBlanco.svg';
-import SettingB from '../assets/OpcionesBlanco.svg';
+import useHeaderStore from '../../stores/headerStore';
+import Inicio from '../../assets/BotonInicioVioleta.svg';
+import Nuevo from '../../assets/BotonCotizacionVioleta.svg';
+import Lista from '../../assets/BotonListaVioleta.svg';
+import Users from '../../assets/BotonGestionVioleta.svg';
+import Setting from '../../assets/Opciones.svg';
+import InicioB from '../../assets/BotonInicioBlanco.svg';
+import NuevoB from '../../assets/BotonCotizacionBlanco.svg';
+import ListaB from '../../assets/BotonListaBlanco.svg';
+import UsersB from '../../assets/BotonGestionBlanco.svg';
+import SettingB from '../../assets/OpcionesBlanco.svg';
 
 
 const StyledHeader = styled.header`
@@ -91,7 +91,7 @@ const StyledLink = styled(Link)`
 `;
 
 export default function Header() {
-  const { headerCollapsed, expandHeader } = useStore();
+  const { headerCollapsed, expandHeader } = useHeaderStore();
   const location = useLocation();
 
   return (
