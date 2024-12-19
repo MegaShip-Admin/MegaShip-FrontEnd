@@ -1,35 +1,49 @@
 import { create } from 'zustand';
 
 const useProgressStore = create((set) => ({
+
   ActiveTab: 'Importación', // Initial state for ActiveTab
   setActiveTab: (tab) => set({ ActiveTab: tab }), // Method to update ActiveTab
-
-  selectedType: '', // Add selectedType initial state
-  setSelectedType: (option) => set({ selectedType: option }), // Add setter for selectedOption
 
   selectedTransport: '', // Add selectedTransport initial state
   setSelectedTransport: (option) => set({ selectedTransport: option }), // Add setter for selectedOption
 
-  BoxActive: null, // Active transport type
-  setBoxActive: (box) => set({ BoxActive: box }),
+  selectedType: '', // Add selectedType initial state
+  setSelectedType: (option) => set({ selectedType: option }), // Add setter for selectedOption
 
-  IntBoxActive: null, // Active internal box type
-  setIntBoxActive: (box) => set({ IntBoxActive: box }),
 
-  // Current step and steps configuration
-  currentStep: 1,
+  currentStep: 1, // Current step
   steps: [
-    { id: 1, label: " ", value: null },
-    { id: 2, label: " ", value: null },
-    { id: 3, label: " ", value: null },
-    { id: 4, label: " ", value: null },
-    { id: 5, label: " ", value: null },
-    { id: 6, label: " ", value: null },
-    { id: 7, label: " ", value: null },
-    { id: 8, label: " ", value: null },
-    { id: 9, label: " ", value: null },
-    { id: 10, label: " ", value: null },
+    { id: 1, value: null },
+    { id: 2, value: null },
+    { id: 3, value: null },
+    { id: 4, value: null },
+    { id: 5, value: null },
+    { id: 6, value: null },
+    { id: 7, value: null },
+    { id: 8, value: null },
+    { id: 9, value: null },
+    { id: 10, value: null },
   ],
+  // Update the steps array based on the state values
+  updateSteps: () => {
+    set((state) => {
+      const updatedSteps = [
+        { id: 1, value: state.ActiveTab },
+        { id: 2, value: state.selectedTransport },
+        { id: 3, value: state.selectedType },
+        { id: 4, value: null },
+        { id: 5, value: null },
+        { id: 6, value: null },
+        { id: 7, value: null },
+        { id: 8, value: null },
+        { id: 9, value: null },
+        { id: 10, value: null },
+      ];
+      return { steps: updatedSteps };
+    });
+  },
+
   // Methods for steps
   setStepValue: (stepId, value) => {
     set((state) => {
@@ -57,19 +71,8 @@ const useProgressStore = create((set) => ({
     });
   },
   setCurrentStep: (step) => {
-    console.log('Setting currentStep:', step);
     set({ currentStep: step });
   },
-  // Selections for steps
-  Selection: {
-    selectedOption: null, // Step 1 selection
-    selectedTransport: null, // Step 2 selection
-    selectedType: null, // Step 3 selection
-  },
-  setSelection: (newSelections) =>
-    set((state) => ({
-      Selection: { ...state.Selection, ...newSelections },
-    })),
 }));
 
 export default useProgressStore;

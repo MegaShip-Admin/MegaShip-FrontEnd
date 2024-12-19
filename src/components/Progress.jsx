@@ -1,11 +1,10 @@
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useProgressStore from "../stores/progressStore";
 import { useEffect } from "react";
 import styled from "styled-components";
 import Flecha from '../assets/Flecha.svg'
 import FlechaAtras from '../assets/FlechaAtras.svg'
 import Check from '../assets/Check.svg'
-import PropTypes from "prop-types";
 
 const StyledProgress = styled.div`
   display: flex;
@@ -109,15 +108,9 @@ const Div = styled.div`
   height: 40px;
 `
 
-// definicion de los tipos de props que acepta el componente progress
-Progress.propTypes = {
-  ActiveTab: PropTypes.string,
-  selectedTransport: PropTypes.string,
-  selectedType: PropTypes.string,
-}
-
 export default function Progress() {
-  const { ActiveTab, selectedTransport, selectedType, steps, currentStep, nextStep, prevStep, setStepValue
+  const { ActiveTab, selectedTransport, selectedType, setStepValue,
+    steps, currentStep, nextStep, prevStep,
   } = useProgressStore();
   const navigate = useNavigate();
 
@@ -125,7 +118,14 @@ export default function Progress() {
     setStepValue(1, ActiveTab); // Update step 1
     setStepValue(2, selectedTransport); // Update step 2
     setStepValue(3, selectedType); // Update step 3
-  }, [ActiveTab, selectedTransport, selectedType, setStepValue]);
+  }, [ActiveTab, selectedTransport, selectedType]);
+
+  useEffect(() => {
+    console.log("Steps:", steps);
+    steps.forEach(step => {
+      console.log(`Step ID: ${step.id}, Label: ${step.label}`);
+    });
+  }, [steps]);
 
   return (
     <StyledProgress>
@@ -160,7 +160,6 @@ export default function Progress() {
                     </LineContainer>
                   )}
                 </Div>
-                <span>{step.label}</span>
                 {step.id < currentStep && step.value && (
                   <StepText>{step.value}</StepText>
                 )}

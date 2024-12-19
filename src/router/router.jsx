@@ -24,6 +24,7 @@ import Deposit from '../components/new_qoute/Deposit';
 import Clarifications from '../components/new_qoute/Clarifications';
 import ExportationData from '../components/new_qoute/ExportationData';
 
+
 const Layout = styled.div`
   display: flex;
   height: 100vh;
@@ -37,6 +38,7 @@ const MainContent = styled.main`
 
 export default function AppRouter() {
   const { headerCollapsed, collapseHeader } = useHeaderStore();
+
 
   return (
     <BrowserRouter>

@@ -95,7 +95,7 @@ export default function FirstSteps() {
     setActiveTab,
     setSelectedType,
     setSelectedTransport,
-    BoxActive, setBoxActive, IntBoxActive, setIntBoxActive, setCurrentStep
+    BoxActive, setBoxActive, IntBoxActive, selectedTransport, setCurrentStep, selectedType
   } = useProgressStore();
 
   // Maneja el clic en un tipo de transporte y reinicia el progreso
@@ -128,21 +128,19 @@ export default function FirstSteps() {
           </ButtonGroup>
         </IMPEXP>
         <BoxContainer>
-          {BoxActive === 'Maritimo' ? (
+          {selectedTransport === 'Maritimo' ? (
             <ContainerBOX2>
               <IntBox
-                $isActive={IntBoxActive === 'Consolidado'}
+                $isActive={selectedType === 'Consolidado'}
                 onClick={() => {
-                  setIntBoxActive('Consolidado');
                   setSelectedType('Consolidado');
                 }}
               >
                 Consolidado
               </IntBox>
               <IntBox
-                $isActive={IntBoxActive === 'Exclusivo'}
+                $isActive={selectedType === 'Exclusivo'}
                 onClick={() => {
-                  setIntBoxActive('Exclusivo');
                   setSelectedType('Exclusivo');
                 }}
               >
@@ -151,30 +149,27 @@ export default function FirstSteps() {
             </ContainerBOX2>
           ) : (
             <BOXS
-              $isActive={BoxActive === "Maritimo"}
+              $isActive={selectedTransport === "Maritimo"}
               onClick={() => {
-                handleBoxclick("Maritimo");
                 setSelectedTransport('Maritimo');
               }}
             >
               <Icons src={Maritimo} alt="Maritimo" />
             </BOXS>
           )}
-          {BoxActive === 'Aereo' ? (
+          {selectedTransport === 'Aereo' ? (
             <ContainerBOX2>
               <IntBox
-                $isActive={IntBoxActive === 'Común'}
+                $isActive={selectedType === 'Común'}
                 onClick={() => {
-                  setIntBoxActive('Común');
                   setSelectedType('Común');
                 }}
               >
                 Común
               </IntBox>
               <IntBox
-                $isActive={IntBoxActive === 'Courier'}
+                $isActive={selectedType === 'Courier'}
                 onClick={() => {
-                  setIntBoxActive('Courier');
                   setSelectedType('Courier');
                 }}
               >
@@ -183,30 +178,27 @@ export default function FirstSteps() {
             </ContainerBOX2>
           ) : (
             <BOXS
-              $isActive={BoxActive === "Aereo"}
+              $isActive={selectedTransport === "Aereo"}
               onClick={() => {
-                handleBoxclick("Aereo");
                 setSelectedTransport('Aereo');
               }}
             >
               <Icons src={Aereo} alt="Aereo" />
             </BOXS>
           )}
-          {BoxActive === 'Terrestre' ? (
+          {selectedTransport === 'Terrestre' ? (
             <ContainerBOX2>
               <IntBox
-                $isActive={IntBoxActive === 'Consolidado'} do
+                $isActive={selectedType === 'Consolidado'} do
                 onClick={() => {
-                  setIntBoxActive('Consolidado');
                   setSelectedType('Consolidado');
                 }}
               >
                 Consolidado
               </IntBox>
               <IntBox
-                $isActive={IntBoxActive === 'Exclusivo'}
+                $isActive={selectedType === 'Exclusivo'}
                 onClick={() => {
-                  setIntBoxActive('Exclusivo');
                   setSelectedType('Exclusivo');
                 }}
               >
@@ -215,9 +207,8 @@ export default function FirstSteps() {
             </ContainerBOX2>
           ) : (
             <BOXS
-              $isActive={BoxActive === "Terrestre"}
+              $isActive={selectedTransport === "Terrestre"}
               onClick={() => {
-                handleBoxclick("Terrestre");
                 setSelectedTransport('Terrestre');
               }}
             >

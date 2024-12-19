@@ -14,7 +14,6 @@ import Deposit from '../components/new_qoute/Deposit';
 import Clarifications from '../components/new_qoute/Clarifications';
 import ExportationData from '../components/new_qoute/ExportationData';
 import FirstSteps from '../components/FirstSteps';
-import Try from '../components/Try';
 
 
 const Wrapper = styled.div`
