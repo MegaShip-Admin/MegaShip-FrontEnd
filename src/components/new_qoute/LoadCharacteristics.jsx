@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 
 const Column = styled.div`
   display: flex;
@@ -12,7 +13,7 @@ const Card = styled.div`
   min-width: 500px; 
   max-width: 500px;
   padding: 25px 45px 45px 45px;
-  border: 1.5px solid #724D93; 
+  border: 1.8px solid #724D93; 
   border-radius: 20px;
   background-color: #fbfafa; 
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 5px;
@@ -52,6 +53,7 @@ const Label = styled.label`
   font-weight: bold;
   padding: 0 5px;
   z-index:3;
+  ${({ disabled }) => disabled && `color: #646464;`}
 `;
 
 const Input = styled.input`
@@ -59,12 +61,13 @@ const Input = styled.input`
   max-width: 355px;
   padding: 11px 0 11px 18px;
   margin-top: 20px;
-  border: 1.5px solid #724D93;
+  border: 1.8px solid #724D93;
   border-radius: 20px;
   font-size: 16px;
   color: #646464;
   background-color: #fbfafa;
   outline: none;
+  ${({ disabled }) => disabled && `border: 1.8px solid #646464; cursor: not-allowed;`}
 `;
 
 const Container = styled.div`
@@ -93,7 +96,7 @@ const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   margin-top: 38px;
   border-radius: 50%;
   appearance: none;
-  border: 1.5px solid #BEBDBF;
+  border: 1.8px solid #BEBDBF;
   background-color: #fbfafa;
   cursor: pointer;
   &:checked {
@@ -103,7 +106,13 @@ const Checkbox = styled.input.attrs({ type: 'checkbox' })`
 
 export default function LoadCharacteristics() {
 
-  //put states so if the checkbox isnt marked then you cannot access the input
+
+  const [isChecked, setIsChecked] = useState(false);
+
+
+  const handleCheckboxChange = (e) => {
+    setIsChecked(e.target.checked);
+  };
 
   return (
     <Column>
@@ -111,12 +120,17 @@ export default function LoadCharacteristics() {
         <Title> Características de la carga</Title>
         <Container>
           <CheckboxWrapper>
-            <Checkbox />
+            <Checkbox
+              checked={isChecked}
+              onChange={handleCheckboxChange}
+            />
             <CheckboxLabel> Peligroso</CheckboxLabel>
           </CheckboxWrapper>
           <InputLabelWrapper>
-            <Label>UN</Label>
-            <Input placeholder="1000" />
+            <Label disabled={!isChecked}>UN</Label>
+            <Input
+              placeholder="1000"
+              disabled={!isChecked} />
           </InputLabelWrapper>
         </Container>
       </Card>

@@ -12,6 +12,8 @@ El frontend de CarToFix utiliza las siguientes tecnologías modernas para ofrece
 - **Styled Components**: Librería para aplicar estilos en componentes de React utilizando JavaScript.
 - **React Router**: Herramienta para gestionar la navegación entre páginas en aplicaciones web de una sola página.
 - **Zustand**: Biblioteca ligera para manejar el estado global en aplicaciones de React.
+- **React select**: Librería para crear menús desplegables personalizables y funcionales en aplicaciones de React.
+- **React datatable**: Herramienta para mostrar y gestionar tablas de datos dinámicas e interactivas en aplicaciones de React.
 
 ## Instalación
 

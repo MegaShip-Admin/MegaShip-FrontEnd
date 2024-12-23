@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import useProgressStore from "../stores/progressStore";
-import Aereo from '../assets/Aereo.svg';
-import Maritimo from '../assets/Maritimo.svg';
-import Terrestre from '../assets/Terrestre.svg';
+import useProgressStore from "../../stores/progressStore";
+import Aereo from '../../assets/Aereo.svg';
+import Maritimo from '../../assets/Maritimo.svg';
+import Terrestre from '../../assets/Terrestre.svg';
 
 const StyledNewQuote = styled.div`
   display: flex;
@@ -95,14 +95,8 @@ export default function FirstSteps() {
     setActiveTab,
     setSelectedType,
     setSelectedTransport,
-    BoxActive, setBoxActive, IntBoxActive, selectedTransport, setCurrentStep, selectedType
+    selectedTransport, selectedType
   } = useProgressStore();
-
-  // Maneja el clic en un tipo de transporte y reinicia el progreso
-  const handleBoxclick = (boxType) => {
-    setBoxActive(boxType); // Establece el transporte activo
-    setCurrentStep(0); // Reinicia el progreso al paso inicial
-  };
 
   return (
     <>

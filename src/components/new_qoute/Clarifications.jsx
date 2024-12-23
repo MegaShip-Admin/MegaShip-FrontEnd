@@ -11,9 +11,9 @@ const Card = styled.div`
   flex-direction: column;
   min-width: 500px; 
   max-width: 500px;
-  max-height: 496px;
+  min-height: 496px;
   padding: 45px 20px 15px 45px;
-  border: 1.5px solid #724D93; 
+  border: 1.8px solid #724D93; 
   border-radius: 20px;
   gap: 5px;
   background-color: #fbfafa; 
@@ -55,7 +55,9 @@ const Title = styled.label`
 const BotonContainer = styled.div`
   display:flex;
   justify-content: right;
-  margin-right: 20px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
 `;
 
 const Boton = styled.button`
@@ -65,7 +67,7 @@ const Boton = styled.button`
   gap: 5px;
   width: 160px;
   padding: 3px 0;
-  border: 1.5px solid #724D93;
+  border: 1.8px solid #724D93;
   border-radius: 20px;
   font-size: 16px;
   font-weight: 700;
@@ -78,7 +80,7 @@ const Paragraph = styled.p`
   font-size: 16px;
   color: #646464;
   margin: 0;
-  text-align: center;
+  text-align: left;
   word-wrap: break-word;
   white-space: normal;
 `;

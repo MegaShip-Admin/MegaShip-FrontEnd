@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Select from 'react-select';
+import CreatableSelect from 'react-select/creatable';
 
 const Column = styled.div`
   display: flex;
@@ -46,7 +46,7 @@ const Label = styled.label`
   z-index: 3;
 `;
 
-const StyledReactSelect = styled(Select).attrs({
+const StyledReactSelect = styled(CreatableSelect).attrs({
   classNamePrefix: 'custom-select',
 })`
   font-size: 16px;

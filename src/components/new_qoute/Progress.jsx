@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
-import useProgressStore from "../stores/progressStore";
+import useProgressStore from "../../stores/progressStore";
 import { useEffect } from "react";
 import styled from "styled-components";
-import Flecha from '../assets/Flecha.svg'
-import FlechaAtras from '../assets/FlechaAtras.svg'
-import Check from '../assets/Check.svg'
+import Flecha from '../../assets/Flecha.svg'
+import FlechaAtras from '../../assets/FlechaAtras.svg'
+import Check from '../../assets/Check.svg'
 
 const StyledProgress = styled.div`
   display: flex;
@@ -111,6 +111,7 @@ const Div = styled.div`
 export default function Progress() {
   const { ActiveTab, selectedTransport, selectedType, setStepValue,
     steps, currentStep, nextStep, prevStep,
+    updateSteps
   } = useProgressStore();
   const navigate = useNavigate();
 
@@ -118,14 +119,8 @@ export default function Progress() {
     setStepValue(1, ActiveTab); // Update step 1
     setStepValue(2, selectedTransport); // Update step 2
     setStepValue(3, selectedType); // Update step 3
+    updateSteps();
   }, [ActiveTab, selectedTransport, selectedType]);
-
-  useEffect(() => {
-    console.log("Steps:", steps);
-    steps.forEach(step => {
-      console.log(`Step ID: ${step.id}, Label: ${step.label}`);
-    });
-  }, [steps]);
 
   return (
     <StyledProgress>
@@ -133,7 +128,7 @@ export default function Progress() {
         <BarProgress>
           <ContainerButton>
             {currentStep >= 4 && (
-              <Button onClick={prevStep}>
+              <Button onClick={() => prevStep(navigate)}>
                 <Arrow src={FlechaAtras} />
                 Atras
               </Button>
@@ -167,8 +162,8 @@ export default function Progress() {
             ))}
           </LineContainer>
           <ContainerButton>
-            <Button onClick={nextStep}>
-              {currentStep < steps.length ? 'Siguiente' : 'finalizado'}
+            <Button onClick={() => nextStep(navigate)}>
+              {currentStep < steps.length ? 'Siguiente' : 'Finalizado'}
               <Arrow src={Flecha} />
             </Button>
           </ContainerButton>

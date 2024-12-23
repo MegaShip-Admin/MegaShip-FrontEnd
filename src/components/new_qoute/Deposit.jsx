@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Select from 'react-select';
+import CreatableSelect from 'react-select/creatable';
 
 const Column = styled.div`
   display: flex;
@@ -13,7 +13,7 @@ const Card = styled.div`
   min-width: 500px; 
   max-width: 500px;
   padding: 25px 45px 45px 45px;
-  border: 1.5px solid #724D93; 
+  border: 1.8px solid #724D93; 
   border-radius: 20px;
   gap: 5px;
   background-color: #fbfafa; 
@@ -51,7 +51,7 @@ const Label = styled.label`
 const Input = styled.input`
   width: 480px;
   padding: 11px 0 11px 18px;
-  border: 1.5px solid #724D93;
+  border: 1.8px solid #724D93;
   border-radius: 20px;
   font-size: 16px;
   color: #646464;
@@ -59,12 +59,12 @@ const Input = styled.input`
   outline: none;
 `;
 
-const StyledReactSelect = styled(Select).attrs({
+const StyledReactSelect = styled(CreatableSelect).attrs({
   classNamePrefix: 'custom-select',
 })`
   font-size: 16px;
   .custom-select__control {
-    border: 1.5px solid #724D93;
+    border: 1.8px solid #724D93;
     padding: 2px;
     border-radius: 20px;
     box-shadow: none;
@@ -131,7 +131,7 @@ export default function Deposit() {
           placeholder="Selecciona el Tipo de Contenedor"
         />
         <Label>Salida DEPO</Label>
-        <Input placeholder="placeholder" />
+        <Input placeholder="Ej. 1000" />
       </Card>
     </Column>
   )

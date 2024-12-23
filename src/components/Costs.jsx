@@ -1,10 +1,9 @@
 import styled from "styled-components";
-import { Outlet } from "react-router-dom";
 
-import Progress from '../components/new_qoute/Progress';
+import ExtraServices from "./new_qoute/ExtraServices";
+import Cost from "./new_qoute/Cost";
 
 const Wrapper = styled.div`
-  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,28 +11,30 @@ const Wrapper = styled.div`
 `;
 
 const ContentMain = styled.div`
-  margin-top: 3.5%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-grow: 1;
 `;
 
-const ProgressBarWrapper = styled.div`
-  height: 10%;
-  width: 100%;
-  margin-bottom: 3.5%;
+const Columns = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 70px;
+  padding: 0 35px;
 `;
 
-export default function NewquoteMain() {
+export default function Costs() {
   return (
     <Wrapper>
       <ContentMain>
-        <Outlet />
+        <Columns>
+          <Cost />
+        </Columns>
+        <Columns>
+          <ExtraServices />
+        </Columns>
       </ContentMain>
-      <ProgressBarWrapper>
-        <Progress />
-      </ProgressBarWrapper>
     </Wrapper>
   )
 }

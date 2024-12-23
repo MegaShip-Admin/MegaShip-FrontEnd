@@ -12,7 +12,7 @@ const Card = styled.div`
   min-width: 500px; 
   max-width: 500px;
   padding: 25px 45px 45px 45px;
-  border: 1.5px solid #724D93; 
+  border: 1.8px solid #724D93; 
   border-radius: 20px;
   gap: 5px;
   background-color: #fbfafa; 
@@ -52,7 +52,7 @@ const Label = styled.label`
 const Input = styled.input`
   width: 480px;
   padding: 11px 0 11px 18px;
-  border: 1.5px solid #724D93;
+  border: 1.8px solid #724D93;
   border-radius: 20px;
   font-size: 16px;
   color: #646464;
@@ -66,11 +66,11 @@ export default function ExtraServices() {
       <Card>
         <Title>Servicios Extra</Title>
         <Label>Unif. Factura</Label>
-        <Input placeholder="placeholder" />
+        <Input placeholder="USD" />
         <Label>TLX</Label>
-        <Input placeholder="placeholder" />
+        <Input placeholder="USD" />
         <Label>Seguro</Label>
-        <Input placeholder="placeholder" />
+        <Input placeholder="USD" />
       </Card>
     </Column>
   )

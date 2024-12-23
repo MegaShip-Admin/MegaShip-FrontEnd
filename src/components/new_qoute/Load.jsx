@@ -1,5 +1,7 @@
 import styled from 'styled-components';
-import Select from 'react-select';
+import CreatableSelect from 'react-select/creatable';
+
+import useProgressStore from '../../stores/progressStore';
 
 const Column = styled.div`
   display: flex;
@@ -13,7 +15,7 @@ const Card = styled.div`
   min-width: 500px; 
   max-width: 500px;
   padding: 25px 45px 45px 45px;
-  border: 1.5px solid #724D93; 
+  border: 1.8px solid #724D93; 
   border-radius: 20px;
   gap: 5px;
   background-color: #fbfafa; 
@@ -51,7 +53,7 @@ const Label = styled.label`
 const Input = styled.input`
   width: 480px;
   padding: 11px 0 11px 18px;
-  border: 1.5px solid #724D93;
+  border: 1.8px solid #724D93;
   border-radius: 20px;
   font-size: 16px;
   color: #646464;
@@ -59,12 +61,12 @@ const Input = styled.input`
   outline: none;
 `;
 
-const StyledReactSelect = styled(Select).attrs({
+const StyledReactSelect = styled(CreatableSelect).attrs({
   classNamePrefix: 'custom-select',
 })`
   font-size: 16px;
   .custom-select__control {
-    border: 1.5px solid #724D93;
+    border: 1.8px solid #724D93;
     padding: 2px;
     border-radius: 20px;
     box-shadow: none;
@@ -121,7 +123,7 @@ const Boton = styled.button`
   gap: 5px;
   width: 160px;
   padding: 3px 0;
-  border: 1.5px solid #724D93;
+  border: 1.8px solid #724D93;
   border-radius: 20px;
   font-size: 16px;
   font-weight: 700;
@@ -154,6 +156,9 @@ const BotonContainer = styled.div`
 
 export default function Load() {
   // tamaño del contenedor, cambiar a input? o ver como poder escribir y guardar info en select
+
+  const { selectedType } = useProgressStore();
+
   return (
     <Column>
       <Card>
@@ -170,9 +175,13 @@ export default function Load() {
         />
         <Label>Cantidad de contenedores</Label>
         <Input placeholder="Ej: 1, 2" />
-        <BotonContainer>
-          <Boton> Añadir <Span>+</Span></Boton>
-        </BotonContainer>
+        {
+          selectedType && selectedType === 'Exclusivo' ? (
+            <BotonContainer>
+              <Boton> Añadir <Span>+</Span></Boton>
+            </BotonContainer>
+          ) : null
+        }
       </Card>
     </Column>
   )

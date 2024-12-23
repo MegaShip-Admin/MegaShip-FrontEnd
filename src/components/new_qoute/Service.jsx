@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Select from 'react-select';
+import CreatableSelect from 'react-select/creatable';
 
 const Column = styled.div`
   display: flex;
@@ -13,7 +13,7 @@ const Card = styled.div`
   min-width: 500px; 
   max-width: 500px;
   padding: 25px 45px 45px 45px;
-  border: 1.5px solid #724D93; 
+  border: 1.8px solid #724D93; 
   border-radius: 20px;
   gap: 5px;
   background-color: #fbfafa; 
@@ -51,7 +51,7 @@ const Label = styled.label`
 const Input = styled.input`
   width: 480px;
   padding: 11px 0 11px 18px;
-  border: 1.5px solid #724D93;
+  border: 1.8px solid #724D93;
   border-radius: 20px;
   font-size: 16px;
   color: #646464;
@@ -59,12 +59,12 @@ const Input = styled.input`
   outline: none;
 `;
 
-const StyledReactSelect = styled(Select).attrs({
+const StyledReactSelect = styled(CreatableSelect).attrs({
   classNamePrefix: 'custom-select',
 })`
   font-size: 16px;
   .custom-select__control {
-    border: 1.5px solid #724D93;
+    border: 1.8px solid #724D93;
     padding: 2px;
     border-radius: 20px;
     box-shadow: none;
@@ -115,21 +115,22 @@ const StyledReactSelect = styled(Select).attrs({
 `;
 
 const opcionesServicio = [
-  { value: 'dry', label: 'Dry' },
-  { value: 'highcube', label: 'High Cube' },
-  { value: 'reefer', label: 'Reefer' },
+  { value: 'directo', label: 'Directo' },
+  { value: 'viashangai', label: 'Via Shangai' },
 ];
 
 const DateInput = styled.input`
   width: 196px;
   padding: 11px 19px;
-  border: 1.5px solid #724D93;
+  border: 1.8px solid #724D93;
   border-radius: 20px;
   font-size: 16px;
+  font-family: "Inter", sans-serif; 
+  text-transform: uppercase;
   color: #646464;
   background-color: #fbfafa;
   outline: none;
-  text-align: left; 
+  text-align: left;
 `;
 
 const DateInputContainer = styled.div`
@@ -138,7 +139,7 @@ const DateInputContainer = styled.div`
 `;
 
 export default function Service() {
-  // get a better date alternative
+
   return (
     <Column>
       <Card>
@@ -149,7 +150,7 @@ export default function Service() {
           placeholder="Selecciona el Tipo de Contenedor"
         />
         <Label>Tiempo de viaje</Label>
-        <Input placeholder="placeholder" />
+        <Input placeholder="Dias estimados de viaje" />
         <Label>Validez</Label>
         <DateInputContainer>
           <DateInput type="date" />

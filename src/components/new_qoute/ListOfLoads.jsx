@@ -13,7 +13,7 @@ const Card = styled.div`
   max-width: 500px;
   max-height: 510px;
   padding: 45px 20px 15px 45px;
-  border: 1.5px solid #724D93; 
+  border: 1.8px solid #724D93; 
   border-radius: 20px;
   background-color: #fbfafa; 
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 5px;
@@ -94,7 +94,7 @@ const Boton = styled.button`
   gap: 5px;
   width: 160px;
   padding: 3px 0;
-  border: 1.5px solid #724D93;
+  border: 1.8px solid #724D93;
   border-radius: 20px;
   font-size: 16px;
   font-weight: 700;
