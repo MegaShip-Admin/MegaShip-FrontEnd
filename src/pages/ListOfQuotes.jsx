@@ -48,47 +48,47 @@ const ListOfQuotes = () => {
 
   return (
     <Container>
-      <div>
-      <InputFiler
-          type="text" 
-          placeholder={`Buscar por ${filterColumn}...`} 
-          onChange={handleChange} 
-        />
-        
-        {/* Selector de columna */}
-        <FiletSelect onChange={(e) => setFilterColumn(e.target.value)}>
-          <option value="transporte">Transporte</option>
-          <option value="flujo">Flujo</option>
-          <option value="empresa">Empresa</option>
-          <option value="cliente">Clientre</option>
-          <option value="origen">Origen</option>
-          <option value="destino">Destino</option>
-          <option value="costo">Costo</option>
-          <option value="fecha">Fecha</option>
-          <option value="empleado">Empleado</option>
-          <option value="estado">Estado</option>
-        </FiletSelect>
+      <InternalContainer>
+        <FilterContainer>
+          <InputFiler
+              type="text" 
+              placeholder={`Buscar por ${filterColumn}...`} 
+              onChange={handleChange} 
+            />
+            
+            {/* Selector de columna */}
+            <FiletSelect onChange={(e) => setFilterColumn(e.target.value)}>
+              <option value="transporte">Transporte</option>
+              <option value="flujo">Flujo</option>
+              <option value="empresa">Empresa</option>
+              <option value="cliente">Clientre</option>
+              <option value="origen">Origen</option>
+              <option value="destino">Destino</option>
+              <option value="costo">Costo</option>
+              <option value="fecha">Fecha</option>
+              <option value="empleado">Empleado</option>
+              <option value="estado">Estado</option>
+            </FiletSelect>
 
-        
+        </FilterContainer>
 
-      </div>
-
-      <ListContainer>
-        <StyledDataTable
-          columns={columns}
-          data={records}
-          selectableRows
-          fixedHeader
-          fixedHeaderScrollHeight="500px"
-          onSelectedRowsChange={(data) => console.log(data)}
-        />
-      </ListContainer>
-      <ButtonContainer>
-        <BotonDuplicar onClick={() => console.log("Botón 'Duplicar' clickeado")}> Duplicar</BotonDuplicar>
-        <BotonEditar>Editar</BotonEditar>
-      </ButtonContainer>
+        <ListContainer>
+          <StyledDataTable
+            columns={columns}
+            data={records}
+            selectableRows
+            fixedHeader
+            fixedHeaderScrollHeight="500px"
+            onSelectedRowsChange={(data) => console.log(data)}
+          />
+        </ListContainer>
+        <ButtonContainer>
+          <BotonDuplicar onClick={() => console.log("Botón 'Duplicar' clickeado")}> Duplicar</BotonDuplicar>
+          <BotonEditar onClick={() => console.log("Botón 'Editar' clickeado")}>Editar</BotonEditar>
+        </ButtonContainer>
+      </InternalContainer>
     </Container>
-  );
+  ); 
 };
 
 export default ListOfQuotes;
@@ -100,8 +100,19 @@ const Container = styled.div`
   align-items: center;
   height: 100vh;
   gap: 20px;
-  /* border: 3px solid red; */
+  border: 3px solid red;
 `;
+
+const InternalContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end; /* Mueve los elementos a la derecha */
+  height: 80vh;
+  gap: 20px;
+  /* border: 2px solid blue; */
+`;
+
 
 const ListContainer = styled.div`
   display: flex;
@@ -109,25 +120,16 @@ const ListContainer = styled.div`
   align-items: center;
   border: 2px solid #724d93;
   border-radius: 20px;
+  /* overflow-y: auto */
 `;
 
 
-//Selector de filtor
-const FiletSelect = styled.select`
-  width: 225px;
-  height: 45px;
-  font-size: 16px;
-  padding-left: 20px;
-  border: 2px solid #724d93;
-  color: #646464;
-  border-radius: 30px;
-  margin: 10px;
-  
-  
-  &:focus {
-    border-color: #724d93;
-    outline: none;
-  }
+//Contenedor de Barra de Busqueda y Filtro
+const FilterContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Menor espacio entre los botones */
+  margin-top: 20px;
 `
 
 // Barra de busqueda
@@ -139,14 +141,21 @@ const InputFiler = styled.input`
   border: 2px solid #724d93;
   color: #646464;
   border-radius: 30px;
-  margin: 5px;
-  margin-left: 1000px;
 
   &:focus {
     border-color: #724d93;
     outline: none;
   }
 `
+
+//Selector de filtor
+const FiletSelect = styled(InputFiler).attrs({ as: 'select' })`
+  width: 225px;
+  height: 46px;
+  cursor: pointer;
+`
+
+//Botones
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -159,8 +168,10 @@ const BotonDuplicar = styled.button`
   height: 34px; /* Mitad de la altura de FiletSelect */
   font-size: 14px; /* Ajusta el tamaño de fuente proporcionalmente */
   border: 2px solid #724d93;
+  background-color: #ffffff;
   color: #724d93;
   border-radius: 30px;
+  cursor: pointer;
   margin: 0px; /* Mismo margen */
 
   &:focus {
@@ -169,7 +180,7 @@ const BotonDuplicar = styled.button`
   }
 
   &:hover {
-    background-color: #f3f3f3; /* Un efecto hover */
+    background-color: #c71313; /* Un efecto hover */
   }
 `;
 
