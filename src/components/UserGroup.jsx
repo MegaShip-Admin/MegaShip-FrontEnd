@@ -17,34 +17,37 @@ const UsersGroup = styled.div`
 
 const SliderContainer = styled.div`
   display: flex;
-  align-self: center;
-  justify-content: center;
-  align-items: center;
-  height: 10%;
-  width: 100%;
+  flex-direction: row;
+  justify-content: space-around;
+  height: 100%;
+  width: 50vw;
 `;
 
 const PagesSlider = styled.div`
   display: flex;
-  justify-content: space-around;
+  margin-top: 2vh;;
+  justify-content: space-between;
   align-items: center;
-  height: 1%;
-  width: 30%;
+  height: 1px;
+  width: 50%;
   background-color: #6f6f6f;
 `;
 
 const PageNumber = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  color: #724D93;
+  width: 40px;
+  height: 40px;
+  background: white;
   border-radius: 50%;
-  border: solid 1px #724D93;
-  height: 10px;
-  width: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
   background-color: ${(props) => (props.$actualPage === props.$i ? '#724D93' : '#e6ddee')};
   color: ${(props) => (props.$actualPage === props.$i ? '#e6ddee' : '#724D93')};
-  font-size: smaller;
-  padding: 6px;
+  position: static;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+ 
 `;
 
 function getPages(newArray) {

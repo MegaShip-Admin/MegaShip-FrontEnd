@@ -7,13 +7,14 @@ const UserBox = styled.div`
   display: flex;
   justify-content: center;
   margin: 20px;
-  background-color: #FBFAFA;
+  background-color: #fbfafa; 
   border-radius: 30px;
   height: 14vh;
   width: 30vw;
   min-height: 170px;
   max-height: 180px;
-  border: solid 2px #724D93;
+  border: 1.8px solid #724D93; 
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 5px;
   padding: 10px 30px;
 `;
 
@@ -33,7 +34,7 @@ const TextField = styled.div`
   border-radius: 30px;
   height: fit-content;
   width: 70%;
-  border: solid 2px #724D93;
+  border: solid 1.8px #724D93;
   padding: 5px 30px;
   color: #787878;
 `;

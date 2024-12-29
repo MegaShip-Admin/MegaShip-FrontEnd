@@ -42,7 +42,7 @@ const AddUserBoton = styled.div`
   align-items: center;
   background-color: #ffffff;
   border-radius: 30px;
-  border: solid 2px #724D93;
+  border: solid 1.8px #724D93;
   padding: 10px 30px;
   color: #724D93;
   font-weight: 600;
@@ -53,7 +53,7 @@ const SuspendEmployee = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: solid 2px #724D93;
+  border: solid 1.8 #724D93;
   background-color: #724D93;
   border-radius: 30px;
   padding: 10px 30px;
