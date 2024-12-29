@@ -23,7 +23,7 @@ const MainContent = styled.main`
 
 export default function AppRouter() {
   const { headerCollapsed, collapseHeader } = useStore();
-
+  
   return (
     <BrowserRouter>
       <Layout>
