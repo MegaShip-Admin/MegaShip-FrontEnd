@@ -60,7 +60,8 @@ export default function UserGroup({ searching }) {
   const [filteredData, setFilteredData] = useState([]);
   const [pages, setPages] = useState(0);
   const [actualPage, setActualPage] = useState(1);
-
+  const [selectedUser, setSelectedUser] = useState(null); // State for selected user
+  
   useEffect(() => {
     const filteredUsers = usersData.filter((u) =>
       u.name.toLowerCase().includes(searching.toLowerCase())
@@ -74,12 +75,16 @@ export default function UserGroup({ searching }) {
   }, [searching]);
 
   const displayedUsers = filteredData.slice((actualPage - 1) * 4, actualPage * 4);
+  const handleUserClick = (user) => { setSelectedUser(user); };
 
   return (
     <>
       <UsersGroup>
         {displayedUsers && displayedUsers.length > 0 ? (
-          displayedUsers.map((u) => <User key={u.phone} {...u} />)
+          displayedUsers.map((u) => <User
+            key={u.phone} {...u}
+            onClick={() => handleUserClick(u)}
+            selected={u === selectedUser} />)
         ) : (
           'No hay usuarios'
         )}

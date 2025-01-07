@@ -13,9 +13,10 @@ const UserBox = styled.div`
   width: 30vw;
   min-height: 170px;
   max-height: 180px;
-  border: 1.8px solid #724D93; 
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 5px;
   padding: 10px 30px;
+  border: ${(props) => (props.selected ? '2px solid red' : '1.8px solid #724D93')};
+  cursor: pointer;
 `;
 
 const UserInfo = styled.div`
@@ -86,7 +87,7 @@ const getCapitalLetters = (name) => {
 
 export default function User(data) {
 
-  const [letters, setLetters] = useState('BB');
+  const [letters, setLetters] = useState('MS');
   useEffect(() => {
       if (data.name) {
           setLetters(getCapitalLetters(data.name));
@@ -95,7 +96,7 @@ export default function User(data) {
 
   return (
     <>
-      <UserBox>
+      <UserBox onClick={data.onClick} selected={data.selected}>
         <UserInfo>
           <SpamLabel>Nombre</SpamLabel>
           <TextField>
