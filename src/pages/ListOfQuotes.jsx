@@ -1,6 +1,7 @@
 import { useState } from "react";
 import DataTable from "react-data-table-component";
 import styled from "styled-components";
+// import Select from 'react-select'
 
 import aereo from "../assets/Mini_Aereo.svg";
 import terrestre from "../assets/Mini_Terrestre.svg";
@@ -77,8 +78,8 @@ const ListOfQuotes = () => {
             columns={columns}
             data={records}
             selectableRows
+            selectableRowsNoSelectAll
             fixedHeader
-            fixedHeaderScrollHeight="500px"
             onSelectedRowsChange={(data) => console.log(data)}
           />
         </ListContainer>
@@ -118,7 +119,7 @@ const ListContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid #724d93;
+  
   border-radius: 20px;
   /* overflow-y: auto */
 `;
@@ -129,7 +130,7 @@ const FilterContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 10px; /* Menor espacio entre los botones */
-  margin-top: 20px;
+  margin-top: -12px; // Revistar !!! <--------
 `
 
 // Barra de busqueda
@@ -160,7 +161,7 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 10px; /* Menor espacio entre los botones */
-  margin-top: 20px;
+  /* margin-top: 20px; */
 `;
 
 const BotonDuplicar = styled.button`
@@ -191,7 +192,7 @@ const BotonEditar = styled(BotonDuplicar)`
 // Data_Table_CSS
 const StyledDataTable = styled(DataTable)`
   .rdt_Table {
-    min-width: 75vw;
+    min-width: 80vw;
     box-sizing: border-box;
   }
   .rdt_TableRow {
@@ -221,5 +222,31 @@ const StyledDataTable = styled(DataTable)`
     font-weight: 600;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
+  }
+
+  .rdt_TableBody {
+    max-height: 432px; //Tamaño de tabla exacto
+    overflow-y: auto;
+    padding-left: 3px;
+    border: 2px solid #724d93;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+
+    &::-webkit-scrollbar {
+      width: 20px;
+    }
+    &::-webkit-scrollbar-track {
+      background: #fafbfa9e;
+      border-radius: 20px;
+      margin: 5px 0; //Controla separacion de arriba y abajo
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #724d93;
+      border-radius: 10px;
+      border: 6px solid #ffffff;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: #5b376d; 
+    }
   }
 `;
