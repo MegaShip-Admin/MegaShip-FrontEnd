@@ -15,7 +15,7 @@ const UserBox = styled.div`
   max-height: 180px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 5px;
   padding: 10px 30px;
-  border: ${(props) => (props.selected ? '2px solid red' : '1.8px solid #724D93')};
+  border: ${(props) => (props.selected ? '4px solid #724D93' : '1.8px solid #724D93')};
   cursor: pointer;
 `;
 

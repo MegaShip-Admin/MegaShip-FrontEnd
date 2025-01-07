@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import useStore from '../stores/store';
 import UserGroup from '../components/UserGroup';
 import NewUser from '../components/NewUser';
+import SuspendEmployee from '../components/SuspendEmployee';
 
 const Page = styled.div`
   display: flex;
@@ -49,7 +50,7 @@ const AddUserBoton = styled.div`
   margin: 0px 30px 0 30px;
 `;
 
-const SuspendEmployee = styled.div`
+const SuspendEmployeeButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,11 +71,11 @@ const Finder = styled.div`
   width: fit-content;
   border: solid 2px #724D93;
   padding: 5px;
- .inputText {
-  margin-left: 5px;
-  border: none;
-  outline: none;
- }
+  .inputText {
+    margin-left: 5px;
+    border: none;
+    outline: none;
+  }
 `;
 
 const Magnifier = styled.div`
@@ -88,8 +89,6 @@ const Magnifier = styled.div`
   background-color: #724D93;
 `;
 
-
-
 export default function UserManagement() {
   const { headerCollapsed, expandHeader } = useStore();
   const [searching, setSearching] = useState('');
@@ -97,11 +96,30 @@ export default function UserManagement() {
   const handleSubmit = (event) => {
     event.preventDefault();
   };
-  const [showModal, setShowModal] = useState(false);  // show newUser Modal
-  const toggleModal = () => { setShowModal(!showModal); };
+
+  const [showModal, setShowModal] = useState(false); // show newUser Modal
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
+
+  const [showSuspendModal, setShowSuspendModal] = useState(false); // show suspend employee Modal
+  const toggleSuspendModal = () => {
+    setShowSuspendModal(!showSuspendModal);
+  };
+
+  const handleSuspendUser = () => {
+    console.log('Suspender este usuario');
+    toggleSuspendModal();
+  };
+
   return (
     <>
       <NewUser showModal={showModal} toggleModal={toggleModal} />
+      <SuspendEmployee
+        showSuspendModal={showSuspendModal}
+        toggleSuspendModal={toggleSuspendModal}
+        handleSuspendUser={handleSuspendUser}
+      />
       <Page $collapsed={headerCollapsed}>
         <Container $collapsed={headerCollapsed}>
           <Controls>
@@ -109,25 +127,23 @@ export default function UserManagement() {
               <Finder>
                 <form onSubmit={handleSubmit}>
                   <input
-                    className='inputText'
-                    type='text'
-                    placeholder='Buscador'
+                    className="inputText"
+                    type="text"
+                    placeholder="Buscador"
                     value={searching}
                     onChange={(e) => setSearching(e.target.value)}
                   />
-                
-
                 </form>
-                  <Magnifier/>
+                <Magnifier />
               </Finder>
             </div>
             <FunctionButtons>
               <AddUserBoton onClick={toggleModal}>
                 <span>Agregar Usuario +</span>
               </AddUserBoton>
-              <SuspendEmployee>
+              <SuspendEmployeeButton onClick={toggleSuspendModal}>
                 Suspender Empleado
-              </SuspendEmployee>
+              </SuspendEmployeeButton>
             </FunctionButtons>
           </Controls>
           <UserGroup searching={searching} />
