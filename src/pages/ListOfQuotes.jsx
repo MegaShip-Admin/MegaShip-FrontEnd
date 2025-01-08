@@ -1,7 +1,7 @@
 import { useState } from "react";
 import DataTable from "react-data-table-component";
 import styled from "styled-components";
-// import Select from 'react-select'
+import Select from 'react-select'
 
 import aereo from "../assets/Mini_Aereo.svg";
 import terrestre from "../assets/Mini_Terrestre.svg";
@@ -34,7 +34,22 @@ const ListOfQuotes = () => {
     { transporte: <img src={aereo} alt="Aereo" />, flujo: 'Exportación', empresa: 'Empresa L', cliente: 'Cliente 12', origen: 'Uruguay', destino: 'Estados Unidos', costo: '$600', fecha: '12/12/2024', empleado: 'Ana', estado: 'Pendiente' }
 ];
 
+const options = [
+  { value: "transporte", label: "Transporte" },
+  { value: "flujo", label: "Flujo" },
+  { value: "empresa", label: "Empresa" },
+  { value: "cliente", label: "Cliente" },
+  { value: "origen", label: "Origen" },
+  { value: "destino", label: "Destino" },
+  { value: "costo", label: "Costo" },
+  { value: "fecha", label: "Fecha" },
+  { value: "empleado", label: "Empleado" },
+  { value: "estado", label: "Estado" },
+];
 
+  const handleSelectChange = ( event ) => {
+    console.log (event);
+  }
 
   const [records, setRecords] = useState(data);
   const [filterColumn, setFilterColumn] = useState("transporte"); // Columna por defecto
@@ -57,8 +72,14 @@ const ListOfQuotes = () => {
               onChange={handleChange} 
             />
             
+          <StyledReactSelect
+            options = {options}
+            onChange={handleSelectChange}
+            defaultValue={ options[0] }
+            // styles={customStyles}
+          />
             {/* Selector de columna */}
-            <FiletSelect onChange={(e) => setFilterColumn(e.target.value)}>
+            {/* <FiletSelect onChange={(e) => setFilterColumn(e.target.value)}>
               <option value="transporte">Transporte</option>
               <option value="flujo">Flujo</option>
               <option value="empresa">Empresa</option>
@@ -69,7 +90,7 @@ const ListOfQuotes = () => {
               <option value="fecha">Fecha</option>
               <option value="empleado">Empleado</option>
               <option value="estado">Estado</option>
-            </FiletSelect>
+            </FiletSelect> */}
 
         </FilterContainer>
 
@@ -101,7 +122,7 @@ const Container = styled.div`
   align-items: center;
   height: 100vh;
   gap: 20px;
-  border: 3px solid red;
+  /* border: 3px solid red; */
 `;
 
 const InternalContainer = styled.div`
@@ -150,11 +171,11 @@ const InputFiler = styled.input`
 `
 
 //Selector de filtor
-const FiletSelect = styled(InputFiler).attrs({ as: 'select' })`
-  width: 225px;
-  height: 46px;
-  cursor: pointer;
-`
+// const FiletSelect = styled(InputFiler).attrs({ as: 'select' })`
+//   width: 225px;
+//   height: 46px;
+//   cursor: pointer;
+// `
 
 //Botones
 const ButtonContainer = styled.div`
@@ -250,3 +271,111 @@ const StyledDataTable = styled(DataTable)`
     }
   }
 `;
+
+
+// Selector para `react-select`
+
+// const StyledSelect = styled(Select)`
+// `;
+
+// const customStyles = {
+//   control: (provided, state) => ({
+//     ...provided,
+//     width: '225px',
+//     height: '46px',
+//     fontSize: '16px',
+//     paddingLeft: '10px',
+//     border: '2px solid #724d93',
+//     borderRadius: '30px',
+//     boxShadow: state.isFocused ? 'none' : 'none', // Elimina el sombreado del foco
+//     outline: 'none', // Elimina el contorno azul
+    
+//     '&:hover': {
+//       borderColor: '#724d93',
+//     },
+//   }),
+//   singleValue: (provided) => ({
+//     ...provided,
+//     color: '#646464', // Cambia el color del texto
+//   }),
+// };
+
+
+const StyledReactSelect = styled(Select).attrs({
+  classNamePrefix: 'custom-select',
+})`
+  font-size: 16px;
+
+  .custom-select__control {
+    width: 225px;
+    height: 46px;
+    font-size: 16px;
+    padding-left: 10px;
+    border: 2px solid #724D93;
+    border-radius: 30px;
+    box-shadow: none;
+    outline: none;
+
+    &:hover {
+      border-color: #724D93;
+    }
+  }
+
+  .custom-select__single-value {
+    color: #646464;
+  }
+
+  .custom-select__option {
+    background-color: #fbfafa;
+    color: #646464;
+    &:hover {
+      background-color: #bebdbf;
+    }
+
+    &:not(:first-child):not(:last-child) {
+      border-radius: 0;
+    }
+    &:first-child {
+      border-radius: 15px 15px 0 0;
+    }
+    &:last-child {
+      border-radius: 0 0 15px 15px;
+    }
+    &:not(:last-child) {
+      border-bottom: 1px solid #BEBDBF;
+    }
+    &:active {
+      background-color: #fbfafa;
+    }
+  }
+
+  .custom-select__menu {
+    max-height: 500px; /* Altura máxima del menú */
+    background-color: #cf1818;
+    border-radius: 30px;
+    z-index: 1000;
+    overflow: visible; /* Asegura que las opciones no se recorten */
+  }
+
+  .custom-select__menu-list {
+    max-height: 500px; /* Ajusta la altura de la lista interna */
+    overflow-y: visible; /* Elimina el scroll interno */
+  }
+
+  .custom-select__indicator {
+    color: #fbfafa;
+    background-color: #724D93;
+    border-radius: 50%;
+    margin-right: 4px;
+  }
+
+  .custom-select__indicator:hover {
+    color: #fbfafa;
+    background-color: #724D93;
+  }
+
+  .custom-select__indicator-separator {
+    display: none;
+  }
+`;
+
