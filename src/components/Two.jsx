@@ -36,10 +36,10 @@ export default function Two() {
             <ContentMain>
               <Columns>
                 <Client />
-                <Traject />
+                <Load />
               </Columns>
               <Columns>
-                <Load />
+                <Traject />
                 <LoadCharacteristics />
               </Columns>
             </ContentMain>

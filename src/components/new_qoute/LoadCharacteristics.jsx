@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import useComponentStore from '../../stores/componentsStore';
 
 const Column = styled.div`
   display: flex;
@@ -105,14 +105,11 @@ const Checkbox = styled.input.attrs({ type: 'checkbox' })`
 `;
 
 export default function LoadCharacteristics() {
-
-
-  const [isChecked, setIsChecked] = useState(false);
-
-
-  const handleCheckboxChange = (e) => {
-    setIsChecked(e.target.checked);
-  };
+  const {
+    isChecked,
+    setIsChecked,
+    danger,
+    setDanger } = useComponentStore()
 
   return (
     <Column>
@@ -122,7 +119,7 @@ export default function LoadCharacteristics() {
           <CheckboxWrapper>
             <Checkbox
               checked={isChecked}
-              onChange={handleCheckboxChange}
+              onChange={(e) => setIsChecked(e.target.checked)}
             />
             <CheckboxLabel> Peligroso</CheckboxLabel>
           </CheckboxWrapper>
@@ -130,7 +127,12 @@ export default function LoadCharacteristics() {
             <Label disabled={!isChecked}>UN</Label>
             <Input
               placeholder="1000"
-              disabled={!isChecked} />
+              disabled={!isChecked}
+              value={danger}
+              onChange={(e) => {
+                setDanger(e.target.value);
+                console.log("danger:", e.target.value); // delete later
+              }} />
           </InputLabelWrapper>
         </Container>
       </Card>

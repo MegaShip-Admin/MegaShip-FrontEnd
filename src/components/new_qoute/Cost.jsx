@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import useComponentStore from '../../stores/componentsStore';
 
 const Column = styled.div`
   display: flex;
@@ -86,22 +87,67 @@ const BotonContainer = styled.div`
 `;
 
 export default function Cost() {
+  const {
+    extraServices,
+    extraServicesActive,
+    originCost,
+    setOriginCost,
+    tariff,
+    setTariff,
+    adminServices,
+    setAdminServices,
+    handlingFee,
+    setHandlingFee,
+    deposit,
+    setDeposit,
+  } = useComponentStore();
+
   return (
     <Column>
       <Card>
         <Title>Costos</Title>
         <Label>Gastos de Origen</Label>
-        <Input placeholder="USD" />
+        <Input
+          placeholder="USD"
+          value={originCost}
+          onChange={(e) => {
+            setOriginCost(e.target.value);
+            console.log("originCost:", e.target.value); // delete later
+          }} />
         <Label>Tarifa</Label>
-        <Input placeholder="USD" />
+        <Input
+          placeholder="USD"
+          value={tariff}
+          onChange={(e) => {
+            setTariff(e.target.value);
+            console.log("tariff:", e.target.value); // delete later
+          }} />
         <Label>Servicios admin</Label>
-        <Input placeholder="USD" />
+        <Input
+          placeholder="USD"
+          value={adminServices}
+          onChange={(e) => {
+            setAdminServices(e.target.value);
+            console.log("adminServices:", e.target.value); // delete later
+          }} />
         <Label>Handling fee</Label>
-        <Input placeholder="USD" />
+        <Input
+          placeholder="USD"
+          value={handlingFee}
+          onChange={(e) => {
+            setHandlingFee(e.target.value);
+            console.log("handlingFee:", e.target.value); // delete later
+          }} />
         <Label>Deposito</Label>
-        <Input placeholder="USD" />
+        <Input
+          placeholder="USD"
+          value={deposit}
+          onChange={(e) => {
+            setDeposit(e.target.value);
+            console.log("deposit:", e.target.value); // delete later
+          }} />
         <BotonContainer>
-          <Boton> Servicios extras <Span>+</Span></Boton>
+          <Boton onClick={extraServicesActive}> Servicios extras <Span>{extraServices ? '-' : '+'}</Span></Boton>
         </BotonContainer>
       </Card>
     </Column>

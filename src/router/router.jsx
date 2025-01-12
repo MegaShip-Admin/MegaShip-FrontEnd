@@ -17,6 +17,7 @@ import Two from '../components/Two';
 import Loads from '../components/Loads';
 import Costs from '../components/Costs';
 import Services from '../components/Services';
+import Exportation from '../components/Exportation';
 
 const Layout = styled.div`
   display: flex;
@@ -46,6 +47,8 @@ export default function AppRouter() {
               <Route path="loads" element={<Loads />} />
               <Route path="costs" element={<Costs />} />
               <Route path="services" element={<Services />} />
+              <Route path="expor" element={<Exportation />} />
+              <Route path="resumen" element={<Login />} /> Reemplazar por Resumen cuando este hecho
             </Route>
             <Route path="/lista_cotizaciones" element={<ListOfQuotes />} />
             <Route path="/gestion_usuarios" element={<UserManagement />} />

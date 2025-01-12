@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import useComponentStore from '../../stores/componentsStore';
 
 const Column = styled.div`
   display: flex;
@@ -64,22 +65,73 @@ const Input = styled.input`
 
 
 export default function ExportationData() {
+  const {
+    exitContainer,
+    internalTransport,
+    expenseEnterTerminal,
+    expensesAgency,
+    customs,
+    flete,
+    setExitContainer,
+    setInternalTransport,
+    setExpenseEnterTerminal,
+    setExpensesAgency,
+    setCustoms,
+    setFlete,
+  } = useComponentStore()
+
   return (
     <Column>
       <Card>
         <Title>Datos de Exportación</Title>
         <Label>Salida del Contenedor</Label>
-        <Input placeholder="Placeholder" />
+        <Input
+          placeholder="Placeholder"
+          value={exitContainer}
+          onChange={(e) => {
+            setExitContainer(e.target.value);
+            console.log("exitContainer:", e.target.value); // delete later
+          }} />
         <Label>Transporte interno</Label>
-        <Input placeholder="Placeholder" />
+        <Input
+          placeholder="Placeholder"
+          value={internalTransport}
+          onChange={(e) => {
+            setInternalTransport(e.target.value);
+            console.log("internalTransport:", e.target.value); // delete later
+          }} />
         <Label>Gastos de ingreso a terminal</Label>
-        <Input placeholder="Placeholder" />
+        <Input
+          placeholder="Placeholder"
+          value={expenseEnterTerminal}
+          onChange={(e) => {
+            setExpenseEnterTerminal(e.target.value);
+            console.log("expenseEnterTerminal:", e.target.value); // delete later
+          }} />
         <Label>Gastos agencia</Label>
-        <Input placeholder="Placeholder" />
+        <Input
+          placeholder="Placeholder"
+          value={expensesAgency}
+          onChange={(e) => {
+            setExpensesAgency(e.target.value);
+            console.log("expensesAgency:", e.target.value); // delete later
+          }} />
         <Label>Customs</Label>
-        <Input placeholder="Placeholder" />
+        <Input
+          placeholder="Placeholder"
+          value={customs}
+          onChange={(e) => {
+            setCustoms(e.target.value);
+            console.log("customs:", e.target.value); // delete later
+          }} />
         <Label>Flete</Label>
-        <Input placeholder="Placeholder" />
+        <Input
+          placeholder="Placeholder"
+          value={flete}
+          onChange={(e) => {
+            setFlete(e.target.value);
+            console.log("flete:", e.target.value); // delete later
+          }} />
       </Card>
     </Column>
   )

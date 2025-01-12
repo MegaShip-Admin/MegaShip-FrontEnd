@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import useComponentStore from '../../stores/componentsStore';
 
 const Column = styled.div`
   display: flex;
@@ -11,6 +12,7 @@ const Card = styled.div`
   flex-direction: column;
   min-width: 500px; 
   max-width: 500px;
+  min-height: 500px;
   max-height: 510px;
   padding: 45px 20px 15px 45px;
   border: 1.8px solid #724D93; 
@@ -110,109 +112,42 @@ const Span = styled.span`
 
 
 export default function ListOfLoads() {
-  //hay q modificar para q se creen dinamicament con estados
+  const {
+    containerList,
+    removeContainerById
+  } = useComponentStore();
+
+  const handleRemove = (id) => {
+    removeContainerById(id);
+  };
 
   return (
     <Column>
       <Card>
         <ScrollableContent>
           <Title>Lista de Cargas Asociadas</Title>
-          <Wrapper>
-            <RowsContainer>
-              <Row>
-                <Label>Tipo del Contenedor: </Label> <Pp>Dry</Pp>
-              </Row>
-              <Row>
-                <Label>Tamaño del Contenedor: </Label> <Pp>20 ft.</Pp>
-              </Row>
-              <Row>
-                <Label>Cantidad de Contenedores: </Label> <Pp>2</Pp>
-              </Row>
-            </RowsContainer>
-            <BotonContainer>
-              <Boton> Eliminar <Span>-</Span></Boton>
-            </BotonContainer>
-          </Wrapper>
-          <Wrapper>
-            <RowsContainer>
-              <Row>
-                <Label>Tipo del Contenedor: </Label> <Pp>High Cube</Pp>
-              </Row>
-              <Row>
-                <Label>Tamaño del Contenedor: </Label> <Pp>40 ft.</Pp>
-              </Row>
-              <Row>
-                <Label>Cantidad de Contenedores: </Label> <Pp>1</Pp>
-              </Row>
-            </RowsContainer>
-            <BotonContainer>
-              <Boton> Eliminar <Span>-</Span></Boton>
-            </BotonContainer>
-          </Wrapper>
-          <Wrapper>
-            <RowsContainer>
-              <Row>
-                <Label>Tipo del Contenedor: </Label> <Pp>Reefer</Pp>
-              </Row>
-              <Row>
-                <Label>Tamaño del Contenedor: </Label> <Pp>30 ft.</Pp>
-              </Row>
-              <Row>
-                <Label>Cantidad de Contenedores: </Label> <Pp>3</Pp>
-              </Row>
-            </RowsContainer>
-            <BotonContainer>
-              <Boton> Eliminar <Span>-</Span></Boton>
-            </BotonContainer>
-          </Wrapper>
-          <Wrapper>
-            <RowsContainer>
-              <Row>
-                <Label>Tipo del Contenedor: </Label> <Pp>Reefer</Pp>
-              </Row>
-              <Row>
-                <Label>Tamaño del Contenedor: </Label> <Pp>30 ft.</Pp>
-              </Row>
-              <Row>
-                <Label>Cantidad de Contenedores: </Label> <Pp>3</Pp>
-              </Row>
-            </RowsContainer>
-            <BotonContainer>
-              <Boton> Eliminar <Span>-</Span></Boton>
-            </BotonContainer>
-          </Wrapper>
-          <Wrapper>
-            <RowsContainer>
-              <Row>
-                <Label>Tipo del Contenedor: </Label> <Pp>Reefer</Pp>
-              </Row>
-              <Row>
-                <Label>Tamaño del Contenedor: </Label> <Pp>30 ft.</Pp>
-              </Row>
-              <Row>
-                <Label>Cantidad de Contenedores: </Label> <Pp>3</Pp>
-              </Row>
-            </RowsContainer>
-            <BotonContainer>
-              <Boton> Eliminar <Span>-</Span></Boton>
-            </BotonContainer>
-          </Wrapper>
-          <Wrapper>
-            <RowsContainer>
-              <Row>
-                <Label>Tipo del Contenedor: </Label> <Pp>Reefer</Pp>
-              </Row>
-              <Row>
-                <Label>Tamaño del Contenedor: </Label> <Pp>30 ft.</Pp>
-              </Row>
-              <Row>
-                <Label>Cantidad de Contenedores: </Label> <Pp>3</Pp>
-              </Row>
-            </RowsContainer>
-            <BotonContainer>
-              <Boton> Eliminar <Span>-</Span></Boton>
-            </BotonContainer>
-          </Wrapper>
+          {containerList.length > 0 ? (
+            containerList.map((container) => (
+              <Wrapper key={container.id}>
+                <RowsContainer>
+                  <Row>
+                    <Label>Tipo del Contenedor: </Label> <Pp>{container.containerType}</Pp>
+                  </Row>
+                  <Row>
+                    <Label>Tamaño del Contenedor: </Label> <Pp>{container.containerSize}</Pp>
+                  </Row>
+                  <Row>
+                    <Label>Cantidad de Contenedores: </Label> <Pp>{container.containerCount}</Pp>
+                  </Row>
+                </RowsContainer>
+                <BotonContainer>
+                  <Boton onClick={() => handleRemove(container.id)}>Eliminar <Span>-</Span></Boton>
+                </BotonContainer>
+              </Wrapper>
+            ))
+          ) : (
+            <Pp>No hay cargas asociadas.</Pp>
+          )}
         </ScrollableContent>
       </Card>
     </Column>

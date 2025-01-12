@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import useComponentStore from '../../stores/componentsStore';
 
 const Column = styled.div`
   display: flex;
@@ -12,7 +13,8 @@ const Card = styled.div`
   min-width: 500px; 
   max-width: 500px;
   padding: 25px 45px 45px 45px;
-  border: 1.8px solid #724D93; 
+  border: ${(props) => (props.isActive ? "1.8px solid #724D93" : "1.8px solid #646464")};
+  cursor: ${(props) => (props.isActive ? "auto" : "not-allowed")};
   border-radius: 20px;
   gap: 5px;
   background-color: #fbfafa; 
@@ -28,7 +30,8 @@ const Title = styled.label`
   left: 50%;
   transform: translateX(-50%);
   font-size: 30px;
-  background-color: #724D93;
+  background-color: ${(props) => (props.isActive ? "#724D93" : "#646464")};
+  cursor: ${(props) => (props.isActive ? "auto" : "not-allowed")};
   color: #fbfafa; 
   font-weight: bold;
   width: 330px;
@@ -42,7 +45,8 @@ const Label = styled.label`
   top: 14px;
   left: 13px;
   background-color: #fbfafa;
-  color: #724D93; 
+  color: ${(props) => (props.isActive ? "#724D93" : "#646464")};
+  cursor: ${(props) => (props.isActive ? "auto" : "not-allowed")};
   font-weight: bold;
   width: fit-content;
   padding: 0 5px;
@@ -52,7 +56,8 @@ const Label = styled.label`
 const Input = styled.input`
   width: 480px;
   padding: 11px 0 11px 18px;
-  border: 1.8px solid #724D93;
+  border: ${(props) => (props.isActive ? "1.8px solid #724D93" : "1.8px solid #646464 ")};
+  cursor: ${(props) => (props.isActive ? "auto" : "not-allowed")};
   border-radius: 20px;
   font-size: 16px;
   color: #646464;
@@ -61,16 +66,46 @@ const Input = styled.input`
 `;
 
 export default function ExtraServices() {
+  const {
+    extraServices,
+    unifBill,
+    setUnifBill,
+    tlx,
+    setTlx,
+    insurance,
+    setInsurance } = useComponentStore();
+
   return (
     <Column>
-      <Card>
-        <Title>Servicios Extra</Title>
-        <Label>Unif. Factura</Label>
-        <Input placeholder="USD" />
-        <Label>TLX</Label>
-        <Input placeholder="USD" />
-        <Label>Seguro</Label>
-        <Input placeholder="USD" />
+      <Card isActive={extraServices} >
+        <Title isActive={extraServices}>Servicios Extra</Title>
+        <Label isActive={extraServices}>Unif. Factura</Label>
+        <Input
+          isActive={extraServices}
+          placeholder="USD"
+          value={unifBill}
+          onChange={(e) => {
+            setUnifBill(e.target.value);
+            console.log("UnifBill:", e.target.value); // delete later
+          }} />
+        <Label isActive={extraServices}>TLX</Label>
+        <Input
+          isActive={extraServices}
+          placeholder="USD"
+          value={tlx}
+          onChange={(e) => {
+            setTlx(e.target.value);
+            console.log("TLX:", e.target.value); // delete later
+          }} />
+        <Label isActive={extraServices}>Seguro</Label>
+        <Input
+          isActive={extraServices}
+          placeholder="USD"
+          value={insurance}
+          onChange={(e) => {
+            setInsurance(e.target.value);
+            console.log("Insurance:", e.target.value); // delete later
+          }} />
       </Card>
     </Column>
   )

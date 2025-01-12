@@ -1,5 +1,8 @@
 import styled from 'styled-components';
+import { useEffect } from 'react';
 import CreatableSelect from 'react-select/creatable';
+import useComponentStore from '../../stores/componentsStore';
+import useProgressStore from '../../stores/progressStore';
 
 const Column = styled.div`
   display: flex;
@@ -57,6 +60,7 @@ const StyledReactSelect = styled(CreatableSelect).attrs({
     box-shadow: none;
     padding-left: 5px;
     min-width: 500px; 
+    background-color: #fbfafa;
     &:hover {
       border-color: #724D93;
     }
@@ -69,11 +73,19 @@ const StyledReactSelect = styled(CreatableSelect).attrs({
     background-color: #fbfafa;
     border-radius: 20px;
     color: #646464;
+    &:hover{
+      background-color: #bebdbf;
+    }
     &:not(:first-child):not(:last-child) {
       border-radius: 0;
     }
     &:first-child {
       border-radius: 20px 20px 0 0;
+      border-top: none;
+    }
+    &:last-child {
+      border-radius: 0 0 20px 20px;
+      border-bottom: none; 
     }
     &:not(:last-child) {
       border-bottom: 1px solid #BEBDBF;
@@ -86,6 +98,9 @@ const StyledReactSelect = styled(CreatableSelect).attrs({
     background-color: #fbfafa;
     border-radius: 20px;
     z-index: 1000;
+  }
+  .custom-select__menu-list {
+    padding: 0;
   }
   .custom-select__indicator {
     color: #fbfafa;
@@ -120,25 +135,55 @@ const opcionesIncoterm = [
 ];
 
 export default function Traject() {
+  const {
+    origin,
+    setOrigin,
+    destiny,
+    setDestiny,
+    incoterms,
+    setIncoterm,
+  } = useComponentStore();
+  const { ActiveTab } = useProgressStore();
+
+  useEffect(() => {
+    if (ActiveTab === 'Importación') {
+      setOrigin('Montevideo');
+    } else if (ActiveTab === 'Exportación') {
+      setDestiny('Montevideo');
+    }
+  }, [ActiveTab, setOrigin, setDestiny]);
+
   return (
     <Column>
       <Card>
         <Title>Trayecto</Title>
         <Label>Origen</Label>
         <StyledReactSelect
+          value={origin ? { label: origin, value: origin } : null}
           options={opcionesOrigen}
           placeholder="Selecciona el Origen"
-        />
+          onChange={(e) => {
+            setOrigin(e.label);
+            console.log("origin:", e.label); // delete later
+          }} />
         <Label>Destino</Label>
         <StyledReactSelect
+          value={destiny ? { label: destiny, value: destiny } : null}
           options={opcionesDestino}
           placeholder="Selecciona el Destino"
-        />
+          onChange={(e) => {
+            setDestiny(e.label);
+            console.log("destiny:", e.label); // delete later
+          }} />
         <Label>IncoTerms</Label>
         <StyledReactSelect
+          value={incoterms ? { label: incoterms, value: incoterms } : null}
           options={opcionesIncoterm}
           placeholder="Selecciona el Incoterm"
-        />
+          onChange={(e) => {
+            setIncoterm(e.label);
+            console.log("incoterms:", e.label); // delete later
+          }} />
       </Card>
     </Column>
   );

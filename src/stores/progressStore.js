@@ -18,11 +18,6 @@ const useProgressStore = create((set) => ({
     { id: 4, value: null, path: '' },
     { id: 5, value: null, path: '' },
     { id: 6, value: null, path: '' },
-    { id: 7, value: null, path: '' },
-    { id: 8, value: null, path: '' },
-    { id: 9, value: null, path: '' },
-    { id: 10, value: null, path: '' },
-    { id: 11, value: null, path: '' },
   ],
   // Update the steps array based on the state values
   updateSteps: () => {
@@ -32,27 +27,57 @@ const useProgressStore = create((set) => ({
         { id: 2, value: state.selectedTransport, path: "first" },
         { id: 3, value: state.selectedType, path: "first" },
       ];
-      // Conditionally add steps based on selected transport and type
-      if (state.selectedTransport === 'Maritimo' && state.selectedType === 'Consolidado' || state.selectedTransport === 'Terrestre' && state.selectedType === 'Consolidado') {
-        updatedSteps.push(
-          { id: 4, value: 'Cliente', path: "two" },
-          { id: 5, value: 'Trayecto', path: "two" },
-          { id: 6, value: 'Carga', path: "two" }
-        );
+      if (state.ActiveTab === 'Importación') {
+        if (
+          state.selectedType === 'Consolidado' &&
+          (state.selectedTransport === 'Maritimo' || state.selectedTransport === 'Terrestre')
+        ) {
+          updatedSteps.push(
+            { id: 4, value: 'Cliente', path: "two" },
+            { id: 5, value: 'Trayecto', path: "two" },
+            { id: 6, value: 'Carga', path: "two" },
+            { id: 7, value: 'Costos', path: "costs" },
+            { id: 8, value: 'Servicios', path: "services" },
+            { id: 9, value: 'Aclaraciones', path: "services" },
+            { id: 10, value: 'Deposito', path: "services" },
+            { id: 11, value: 'Resumen', path: "resumen" }
+          );
+        } else {
+          updatedSteps.push(
+            { id: 4, value: 'Cliente', path: "two" },
+            { id: 5, value: 'Trayecto', path: "two" },
+            { id: 6, value: 'Carga', path: "loads" },
+            { id: 7, value: 'Costos', path: "costs" },
+            { id: 8, value: 'Servicios', path: "services" },
+            { id: 9, value: 'Aclaraciones', path: "services" },
+            { id: 10, value: 'Resumen', path: "resumen" }
+          );
+        }
       } else {
-        updatedSteps.push(
-          { id: 4, value: 'Cliente', path: "two" },
-          { id: 5, value: 'Trayecto', path: "two" },
-          { id: 6, value: 'Carga', path: "loads" }
-        );
+        if (
+          state.selectedType === 'Consolidado' &&
+          (state.selectedTransport === 'Maritimo' || state.selectedTransport === 'Terrestre')
+        ) {
+          updatedSteps.push(
+            { id: 4, value: 'Cliente', path: "two" },
+            { id: 5, value: 'Trayecto', path: "two" },
+            { id: 6, value: 'Carga', path: "two" },
+            { id: 7, value: 'Datos Export', path: "expor" },
+            { id: 8, value: 'Servicios', path: "services" },
+            { id: 9, value: 'Aclaraciones', path: "services" },
+            { id: 10, value: 'Resumen', path: "resumen" }
+          );
+        } else {
+          updatedSteps.push(
+            { id: 4, value: 'Cliente', path: "two" },
+            { id: 5, value: 'Trayecto', path: "two" },
+            { id: 6, value: 'Carga', path: "loads" },
+            { id: 7, value: 'Datos Export', path: "expor" },
+            { id: 8, value: 'Aclaraciones', path: "expor" },
+            { id: 9, value: 'Resumen', path: "resumen" }
+          );
+        }
       }
-      updatedSteps.push(
-        { id: 7, value: 'Costos', path: "costs" },
-        { id: 8, value: 'Servicios', path: "services" },
-        { id: 9, value: 'Aclaraciones', path: "services" },
-        { id: 10, value: 'Deposito', path: "services" },
-        { id: 11, value: 'Resumen', path: "services" }
-      );
       return { steps: updatedSteps };
     });
   },

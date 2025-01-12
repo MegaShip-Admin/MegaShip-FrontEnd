@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { useState } from 'react';
+import useComponentStore from '../../stores/componentsStore';
 
 const Column = styled.div`
   display: flex;
@@ -9,9 +11,10 @@ const Column = styled.div`
 const Card = styled.div`
   display: flex;
   flex-direction: column;
-  min-width: 500px; 
-  max-width: 500px;
+  min-width: 525px; 
+  max-width: 525px;
   min-height: 496px;
+  max-height: 496px;
   padding: 45px 20px 15px 45px;
   border: 1.8px solid #724D93; 
   border-radius: 20px;
@@ -78,24 +81,74 @@ const Boton = styled.button`
 
 const Paragraph = styled.p`
   font-size: 16px;
+  min-height: 450px;
+  max-height: 450px;
   color: #646464;
+  padding-right: 20px;
   margin: 0;
   text-align: left;
   word-wrap: break-word;
   white-space: normal;
 `;
 
+const Textarea = styled.textarea`
+  font-size: 16px;
+  color: #646464;
+  font-family: "Inter", sans-serif;
+  width: 90%;
+  height: 420px;
+  padding: 10px 20px 10px 10px;
+  border-radius: 10px;
+  border: 1.8px solid #724D93;
+  resize: none;
+  &:focus{
+    outline:none;
+  }
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #724D93;
+    border-radius: 8px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #5c3b77;
+  }
+`;
+
 
 export default function Clarifications() {
+  const {
+    clarification,
+    setClarification
+  } = useComponentStore()
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedClarification, setEditedClarification] = useState(clarification);
+
+  const handleEditClick = () => {
+    if (isEditing) {
+      setClarification(editedClarification);
+    }
+    setIsEditing(!isEditing);
+  };
   return (
     <Column>
       <Card>
-        <ScrollableContent>
-          <Title> Aclaraciones</Title>
-          <Paragraph> Terminos y condiciones </Paragraph>
-        </ScrollableContent>
+        <Title> Aclaraciones</Title>
+        {isEditing ? (
+          <Textarea
+            value={editedClarification}
+            onChange={(e) => setEditedClarification(e.target.value)}
+          />
+        ) : (
+          <ScrollableContent>
+            <Paragraph>{clarification}</Paragraph>
+          </ScrollableContent>
+        )}
         <BotonContainer>
-          <Boton> Editar </Boton>
+          <Boton onClick={handleEditClick}>
+            {isEditing ? 'Guardar' : 'Editar'}
+          </Boton>
         </BotonContainer>
       </Card>
     </Column>

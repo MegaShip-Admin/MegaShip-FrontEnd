@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import CreatableSelect from 'react-select/creatable';
+import Select from 'react-select'
+import useComponentStore from '../../stores/componentsStore';
 
 const Column = styled.div`
   display: flex;
@@ -59,7 +60,7 @@ const Input = styled.input`
   outline: none;
 `;
 
-const StyledReactSelect = styled(CreatableSelect).attrs({
+const StyledReactSelect = styled(Select).attrs({
   classNamePrefix: 'custom-select',
 })`
   font-size: 16px;
@@ -70,6 +71,7 @@ const StyledReactSelect = styled(CreatableSelect).attrs({
     box-shadow: none;
     padding-left: 5px;
     min-width: 500px; 
+    background-color: #fbfafa;
     &:hover {
       border-color: #724D93;
     }
@@ -82,11 +84,19 @@ const StyledReactSelect = styled(CreatableSelect).attrs({
     background-color: #fbfafa;
     border-radius: 20px;
     color: #646464;
+    &:hover{
+      background-color: #bebdbf;
+    }
     &:not(:first-child):not(:last-child) {
       border-radius: 0;
     }
     &:first-child {
       border-radius: 20px 20px 0 0;
+      border-top: none;
+    }
+    &:last-child {
+      border-radius: 0 0 20px 20px;
+      border-bottom: none; 
     }
     &:not(:last-child) {
       border-bottom: 1px solid #BEBDBF;
@@ -99,6 +109,9 @@ const StyledReactSelect = styled(CreatableSelect).attrs({
     background-color: #fbfafa;
     border-radius: 20px;
     z-index: 1000;
+  }
+  .custom-select__menu-list {
+    padding: 0;
   }
   .custom-select__indicator {
     color: #fbfafa;
@@ -114,13 +127,21 @@ const StyledReactSelect = styled(CreatableSelect).attrs({
   }
 `;
 
+
 const opcionesDeposit = [
-  { value: 'dry', label: 'Dry' },
-  { value: 'highcube', label: 'High Cube' },
-  { value: 'reefer', label: 'Reefer' },
+  { value: 'ciudadvieja', label: 'Ciudad Vieja' },
+  { value: 'pocitos', label: 'Pocitos' },
+  { value: 'pinar', label: 'Pinar' },
 ];
 
 export default function Deposit() {
+  const {
+    deposit,
+    leaving,
+    setDeposit,
+    setLeaving,
+  } = useComponentStore()
+
   return (
     <Column>
       <Card>
@@ -128,10 +149,21 @@ export default function Deposit() {
         <Label>Deposito</Label>
         <StyledReactSelect
           options={opcionesDeposit}
-          placeholder="Selecciona el Tipo de Contenedor"
+          placeholder="Selecciona el Deposito"
+          value={deposit ? { label: deposit, value: deposit } : null}
+          onChange={(e) => {
+            setDeposit(e.label);
+            console.log("deposit:", e.label); // delete later
+          }}
         />
         <Label>Salida DEPO</Label>
-        <Input placeholder="Ej. 1000" />
+        <Input
+          placeholder="Ej. 1000"
+          value={leaving}
+          onChange={(e) => {
+            setLeaving(e.target.value);
+            console.log("leaving:", e.target.value); // delete later
+          }} />
       </Card>
     </Column>
   )

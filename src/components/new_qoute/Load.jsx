@@ -1,7 +1,13 @@
 import styled from 'styled-components';
 import CreatableSelect from 'react-select/creatable';
-
+import Select from 'react-select'
 import useProgressStore from '../../stores/progressStore';
+import useComponentStore from '../../stores/componentsStore';
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 const Column = styled.div`
   display: flex;
@@ -61,7 +67,7 @@ const Input = styled.input`
   outline: none;
 `;
 
-const StyledReactSelect = styled(CreatableSelect).attrs({
+const StyledReactCreateSelect = styled(CreatableSelect).attrs({
   classNamePrefix: 'custom-select',
 })`
   font-size: 16px;
@@ -72,6 +78,7 @@ const StyledReactSelect = styled(CreatableSelect).attrs({
     box-shadow: none;
     padding-left: 5px;
     min-width: 500px; 
+    background-color: #fbfafa;
     &:hover {
       border-color: #724D93;
     }
@@ -84,11 +91,19 @@ const StyledReactSelect = styled(CreatableSelect).attrs({
     background-color: #fbfafa;
     border-radius: 20px;
     color: #646464;
+    &:hover{
+      background-color: #bebdbf;
+    }
     &:not(:first-child):not(:last-child) {
       border-radius: 0;
     }
     &:first-child {
       border-radius: 20px 20px 0 0;
+      border-top: none;
+    }
+    &:last-child {
+      border-radius: 0 0 20px 20px;
+      border-bottom: none; 
     }
     &:not(:last-child) {
       border-bottom: 1px solid #BEBDBF;
@@ -101,6 +116,76 @@ const StyledReactSelect = styled(CreatableSelect).attrs({
     background-color: #fbfafa;
     border-radius: 20px;
     z-index: 1000;
+  }
+  .custom-select__menu-list {
+    padding: 0;
+  }
+  .custom-select__indicator {
+    color: #fbfafa;
+    background-color: #724D93;
+    border-radius: 50%;
+  }
+  .custom-select__indicator:hover {
+    color: #fbfafa;
+    background-color: #724D93;
+  }
+  .custom-select__indicator-separator {
+    display: none;
+  }
+`;
+
+const StyledReactSelect = styled(Select).attrs({
+  classNamePrefix: 'custom-select',
+})`
+  font-size: 16px;
+  .custom-select__control {
+    border: 1.8px solid #724D93;
+    padding: 2px;
+    border-radius: 20px;
+    box-shadow: none;
+    padding-left: 5px;
+    min-width: 500px; 
+    background-color: #fbfafa;
+    &:hover {
+      border-color: #724D93;
+    }
+  }
+  .custom-select__single-value {
+    background-color: #fbfafa;
+    color: #646464;
+  }
+  .custom-select__option {
+    background-color: #fbfafa;
+    border-radius: 20px;
+    color: #646464;
+    &:hover{
+      background-color: #bebdbf;
+    }
+    &:not(:first-child):not(:last-child) {
+      border-radius: 0;
+    }
+    &:first-child {
+      border-radius: 20px 20px 0 0;
+      border-top: none;
+    }
+    &:last-child {
+      border-radius: 0 0 20px 20px;
+      border-bottom: none; 
+    }
+    &:not(:last-child) {
+      border-bottom: 1px solid #BEBDBF;
+    }
+    &:active {
+      background-color: #fbfafa;
+    }
+  }
+  .custom-select__menu {
+    background-color: #fbfafa;
+    border-radius: 20px;
+    z-index: 1000;
+  }
+  .custom-select__menu-list {
+    padding: 0;
   }
   .custom-select__indicator {
     color: #fbfafa;
@@ -155,34 +240,110 @@ const BotonContainer = styled.div`
 `;
 
 export default function Load() {
-  // tamaño del contenedor, cambiar a input? o ver como poder escribir y guardar info en select
+  const {
+    selectedType,
+    selectedTransport
+  } = useProgressStore();
+  const {
+    containerType,
+    containerSize,
+    containerCount,
+    setContainerType,
+    setContainerSize,
+    setContainerCount,
+    setContainerList
+  } = useComponentStore();
 
-  const { selectedType } = useProgressStore();
+  const handleAddContainer = () => {
+    const newContainer = {
+      containerType,
+      containerSize,
+      containerCount,
+    };
+    setContainerList(newContainer);
+    // Reset the states after adding
+    setContainerType(null);
+    setContainerSize(null);
+    setContainerCount('');
+  };
 
   return (
-    <Column>
-      <Card>
-        <Title>Carga</Title>
-        <Label>Tipo de contenedor</Label>
-        <StyledReactSelect
-          options={opcionesTipo}
-          placeholder="Selecciona el Tipo de Contenedor"
-        />
-        <Label>Tamaño del contenedor</Label>
-        <StyledReactSelect
-          options={opcionesTamaño}
-          placeholder="Selecciona el Tamaño del Contenedor"
-        />
-        <Label>Cantidad de contenedores</Label>
-        <Input placeholder="Ej: 1, 2" />
-        {
-          selectedType && selectedType === 'Exclusivo' ? (
-            <BotonContainer>
-              <Boton> Añadir <Span>+</Span></Boton>
-            </BotonContainer>
-          ) : null
-        }
-      </Card>
-    </Column>
+    <Wrapper>
+      {
+        (selectedTransport === 'Maritimo' && selectedType === 'Consolidado' || selectedTransport === 'Terrestre' && selectedType === 'Consolidado')
+          ? (
+            <Column>
+              <Card>
+                <Title>Carga</Title>
+                <Label>Tamaño del contenedor</Label>
+                <StyledReactCreateSelect
+                  options={opcionesTamaño}
+                  value={containerSize ? { value: containerSize, label: containerSize } : null}
+                  onChange={(e) => {
+                    setContainerSize(e.label);
+                    console.log("containerSize:", e.label); // delete later
+                  }}
+                  placeholder="Selecciona el Tamaño del Contenedor"
+                />
+                <Label>Cantidad de contenedores</Label>
+                <Input
+                  value={containerCount}
+                  onChange={(e) => setContainerCount(e.target.value)}
+                  placeholder="Ej: 1, 2"
+                />
+                {
+                  selectedType && selectedType === 'Exclusivo' ? (
+                    <BotonContainer>
+                      <Boton onClick={handleAddContainer}> Añadir <Span>+</Span></Boton>
+                    </BotonContainer>
+                  ) : null
+                }
+              </Card>
+            </Column>
+          )
+          : (
+            <Column>
+              <Card>
+                <Title>Carga</Title>
+                <Label>Tipo de contenedor</Label>
+                <StyledReactSelect
+                  options={opcionesTipo}
+                  value={containerType ? { value: containerType, label: containerType } : null}
+                  onChange={(e) => {
+                    setContainerType(e.label);
+                    console.log("containerType:", e.label); // delete later
+                  }}
+                  placeholder="Selecciona el Tipo de Contenedor"
+                />
+                <Label>Tamaño del contenedor</Label>
+                <StyledReactCreateSelect
+                  options={opcionesTamaño}
+                  value={containerSize ? { value: containerSize, label: containerSize } : null}
+                  onChange={(e) => {
+                    setContainerSize(e.label);
+                    console.log("containerSize:", e.label); // delete later
+                  }}
+                  placeholder="Selecciona el Tamaño del Contenedor" />
+                <Label>Cantidad de contenedores</Label>
+                <Input
+                  value={containerCount}
+                  onChange={(e) => {
+                    setContainerCount(e.target.value);
+                    console.log("containerCount:", e.target.value); // delete later
+                  }}
+                  placeholder="Ej: 1, 2"
+                />
+                {
+                  selectedType && selectedType === 'Exclusivo' ? (
+                    <BotonContainer>
+                      <Boton onClick={handleAddContainer}> Añadir <Span>+</Span></Boton>
+                    </BotonContainer>
+                  ) : null
+                }
+              </Card>
+            </Column>
+          )
+      }
+    </Wrapper>
   )
 }

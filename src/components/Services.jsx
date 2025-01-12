@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import useProgressStore from "../stores/progressStore";
 import Service from "./new_qoute/Service";
 import Deposit from "./new_qoute/Deposit";
 import Clarifications from "./new_qoute/Clarifications";
@@ -7,8 +7,6 @@ import Clarifications from "./new_qoute/Clarifications";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 `;
 
 const ContentMain = styled.div`
@@ -26,18 +24,52 @@ const Columns = styled.div`
 `;
 
 export default function Services() {
-  return (
-    <Wrapper>
-      <ContentMain>
-        <Columns>
-          <Service />
-          <Deposit />
-        </Columns>
-        <Columns>
-          <Clarifications />
-        </Columns>
-      </ContentMain>
-    </Wrapper>
-  )
+  const { ActiveTab, selectedTransport, selectedType } = useProgressStore();
+  if (ActiveTab === "Importación") {
+    if (
+      selectedType === "Consolidado" &&
+      (selectedTransport === "Maritimo" || selectedTransport === "Terrestre")
+    ) {
+      return (
+        <Wrapper>
+          <ContentMain>
+            <Columns>
+              <Service />
+              <Deposit />
+            </Columns>
+            <Columns>
+              <Clarifications />
+            </Columns>
+          </ContentMain>
+        </Wrapper>
+      );
+    } else {
+      return (
+        <Wrapper>
+          <ContentMain>
+            <Columns>
+              <Service />
+            </Columns>
+            <Columns>
+              <Clarifications />
+            </Columns>
+          </ContentMain>
+        </Wrapper>
+      );
+    }
+  } else {
+    return (
+      <Wrapper>
+        <ContentMain>
+          <Columns>
+            <Service />
+          </Columns>
+          <Columns>
+            <Clarifications />
+          </Columns>
+        </ContentMain>
+      </Wrapper>
+    );
+  }
 }
 

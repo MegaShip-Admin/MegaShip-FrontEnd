@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import useComponentStore from '../../stores/componentsStore';
 
 const Column = styled.div`
   display: flex;
@@ -59,18 +60,53 @@ const Input = styled.input`
 `;
 
 export default function Client() {
+  const {
+    company,
+    setCompany,
+    name,
+    setName,
+    email,
+    setEmail,
+    phone,
+    setPhone
+  } = useComponentStore()
+
   return (
     <Column>
       <Card>
         <Title> Cliente </Title>
         <Label>Empresa</Label>
-        <Input placeholder="Megaship" />
+        <Input
+          placeholder="Megaship"
+          value={company}
+          onChange={(e) => {
+            setCompany(e.target.value);
+            console.log("company:", e.target.value); // delete later
+          }} />
         <Label>Nombre</Label>
-        <Input placeholder="Fabricio" />
+        <Input
+          placeholder="Fabricio"
+          value={name}
+          onChange={(e) => {
+            setName(e.target.value);
+            console.log("name:", e.target.value); // delete later
+          }} />
         <Label>Email</Label>
-        <Input placeholder="example@mail.com" />
+        <Input
+          placeholder="example@mail.com"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            console.log("email:", e.target.value); // delete later
+          }} />
         <Label>Telefono</Label>
-        <Input placeholder="099888777" />
+        <Input
+          placeholder="099888777"
+          value={phone}
+          onChange={(e) => {
+            setPhone(e.target.value);
+            console.log("phone:", e.target.value); // delete later
+          }} />
       </Card>
     </Column>
   )
