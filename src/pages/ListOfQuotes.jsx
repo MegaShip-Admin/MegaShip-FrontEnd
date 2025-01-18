@@ -47,15 +47,18 @@ const options = [
   { value: "estado", label: "Estado" },
 ];
 
-  const handleSelectChange = ( event ) => {
-    console.log (event);
-  }
+  const handleSelectChange = (selectedOption) => {
+    // Actualiza el estado de filterColumn con el valor de la columna seleccionada
+    setFilterColumn(selectedOption.value);  // Suponiendo que 'value' es el valor que contiene el nombre de la columna
+  };
 
   const [records, setRecords] = useState(data);
+  
   const [filterColumn, setFilterColumn] = useState("transporte"); // Columna por defecto
 
   const handleChange = (e) => {
     const value = e.target.value.toLowerCase(); // Lo que escribe el usuario
+
     const filteredRecords = data.filter(record => 
       record[filterColumn].toLowerCase().includes(value) // Filtra por la columna seleccionada
     );
@@ -65,33 +68,18 @@ const options = [
   return (
     <Container>
       <InternalContainer>
+
         <FilterContainer>
           <InputFiler
-              type="text" 
-              placeholder={`Buscar por ${filterColumn}...`} 
-              onChange={handleChange} 
-            />
-            
+            type="text" 
+            placeholder={`Buscar por ${filterColumn}...`} 
+            onChange={handleChange} 
+          />
           <StyledReactSelect
             options = {options}
-            onChange={handleSelectChange}
+            onChange={handleSelectChange} // Muestra en consola los selects
             defaultValue={ options[0] }
-            // styles={customStyles}
           />
-            {/* Selector de columna */}
-            {/* <FiletSelect onChange={(e) => setFilterColumn(e.target.value)}>
-              <option value="transporte">Transporte</option>
-              <option value="flujo">Flujo</option>
-              <option value="empresa">Empresa</option>
-              <option value="cliente">Clientre</option>
-              <option value="origen">Origen</option>
-              <option value="destino">Destino</option>
-              <option value="costo">Costo</option>
-              <option value="fecha">Fecha</option>
-              <option value="empleado">Empleado</option>
-              <option value="estado">Estado</option>
-            </FiletSelect> */}
-
         </FilterContainer>
 
         <ListContainer>
@@ -170,12 +158,6 @@ const InputFiler = styled.input`
   }
 `
 
-//Selector de filtor
-// const FiletSelect = styled(InputFiler).attrs({ as: 'select' })`
-//   width: 225px;
-//   height: 46px;
-//   cursor: pointer;
-// `
 
 //Botones
 const ButtonContainer = styled.div`
@@ -202,7 +184,7 @@ const BotonDuplicar = styled.button`
   }
 
   &:hover {
-    background-color: #c71313; /* Un efecto hover */
+    background-color: #ffffff; /* Un efecto hover */
   }
 `;
 
@@ -273,38 +255,12 @@ const StyledDataTable = styled(DataTable)`
 `;
 
 
-// Selector para `react-select`
-
-// const StyledSelect = styled(Select)`
-// `;
-
-// const customStyles = {
-//   control: (provided, state) => ({
-//     ...provided,
-//     width: '225px',
-//     height: '46px',
-//     fontSize: '16px',
-//     paddingLeft: '10px',
-//     border: '2px solid #724d93',
-//     borderRadius: '30px',
-//     boxShadow: state.isFocused ? 'none' : 'none', // Elimina el sombreado del foco
-//     outline: 'none', // Elimina el contorno azul
-    
-//     '&:hover': {
-//       borderColor: '#724d93',
-//     },
-//   }),
-//   singleValue: (provided) => ({
-//     ...provided,
-//     color: '#646464', // Cambia el color del texto
-//   }),
-// };
-
-
+// Select (react-select)
 const StyledReactSelect = styled(Select).attrs({
   classNamePrefix: 'custom-select',
 })`
   font-size: 16px;
+  z-index: 1000;
 
   .custom-select__control {
     width: 225px;
@@ -326,7 +282,7 @@ const StyledReactSelect = styled(Select).attrs({
   }
 
   .custom-select__option {
-    background-color: #fbfafa;
+    background-color: #ffffff; //<---
     color: #646464;
     &:hover {
       background-color: #bebdbf;
@@ -350,16 +306,19 @@ const StyledReactSelect = styled(Select).attrs({
   }
 
   .custom-select__menu {
-    max-height: 500px; /* Altura máxima del menú */
-    background-color: #cf1818;
+    height: 100 px; /* Altura máxima del menú */
+    width: 225px;
+    /* border: 2px solid #724D93; */
+    /* background-color: #a51515; */
     border-radius: 30px;
-    z-index: 1000;
+    
     overflow: visible; /* Asegura que las opciones no se recorten */
   }
 
   .custom-select__menu-list {
     max-height: 500px; /* Ajusta la altura de la lista interna */
     overflow-y: visible; /* Elimina el scroll interno */
+    padding: 0px;
   }
 
   .custom-select__indicator {
