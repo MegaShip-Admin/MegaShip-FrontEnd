@@ -44,7 +44,6 @@ const LogoCircle = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  margin-right: 10px;
 `;
 
 const LogoText = styled.div`
@@ -54,6 +53,7 @@ const LogoText = styled.div`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  margin-left: 10px;
   display: ${(props) => (props.$collapsed ? 'none' : 'block')};
 `;
 
@@ -71,7 +71,7 @@ const StyledLink = styled(Link)`
   color: ${(props) => (props.$isActive ? '#724D93' : '#FFFFFF')};
   background-color: ${(props) => (props.$isActive ? '#FFFFFF' : 'transparent')};
   font-size: 20px;
-  padding: 22px 5px 22px 35px;
+  padding: 22px;
   border-radius: 30px 0 0 30px;
   display: flex;
   align-items: center;
@@ -105,9 +105,11 @@ export default function Header() {
           <img src={location.pathname === '/' ? Inicio : InicioB} alt="Inicio" />
           <span>Inicio</span>
         </StyledLink>
-        <StyledLink to="/nueva_cotizacion" $isActive={location.pathname === '/nueva_cotizacion'} collapsed={headerCollapsed}>
-          <img src={location.pathname === '/nueva_cotizacion' ? Nuevo : NuevoB} alt="Nueva Cotización" />
-          <span >Nueva Cotización</span>
+        <StyledLink
+          to="/nueva_cotizacion" $isActive={location.pathname.startsWith('/nueva_cotizacion')} collapsed={headerCollapsed}>
+          <img src={location.pathname.startsWith('/nueva_cotizacion') ? Nuevo : NuevoB} alt="Nueva Cotización"
+          />
+          <span>Nueva Cotización</span>
         </StyledLink>
         <StyledLink to="/lista_cotizaciones" $isActive={location.pathname === '/lista_cotizaciones'} collapsed={headerCollapsed}>
           <img src={location.pathname === '/lista_cotizaciones' ? Lista : ListaB} alt="Lista de Cotizaciones" />

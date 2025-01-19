@@ -26,10 +26,10 @@ const BarProgress = styled.div`
   width: 100%;
   gap: 4px;
 `
-const Step = styled.span`
+const Step = styled.button`
   color: #724D93;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   background: white;
   border-radius: 50%;
   display: flex;
@@ -37,13 +37,17 @@ const Step = styled.span`
   justify-content: center;
   font-weight: bold;
   background-color: ${(props) => (props.$isActive && props.$isCurrent ? "#fff" : props.$isActive ? "#724D93" : "#fff")};
-  border: 2px solid ${(props) => (props.$isActive || props.$defaultBorder ? "#724D93" : "#BEBDBF")};
+  border: 2px solid ${(props) => (props.$isActive ? "#724D93" : "#BEBDBF")};
   position: static;
   transition: background-color 1.0s ease, border-color 1.0s ease;
+  padding: 0;
+  cursor: pointer;
+  font-size: 16px;
   &:last-of-type {
   margin-right: 10px;
 }
 `
+
 const CheckIcons = styled.img`
   height: 16px;
   width: 16px;
@@ -66,6 +70,7 @@ const Button = styled.button`
   color: #724D93;
   margin-right: 40px;
   margin-left: 40px;
+  cursor: pointer;
 `
 const Arrow = styled.img`
   height: 16px;
@@ -109,9 +114,17 @@ const Div = styled.div`
 `
 
 export default function Progress() {
-  const { ActiveTab, selectedTransport, selectedType, setStepValue,
-    steps, currentStep, nextStep, prevStep,
-    updateSteps
+  const {
+    ActiveTab,
+    selectedTransport,
+    selectedType,
+    setStepValue,
+    steps,
+    currentStep,
+    setCurrentStep,
+    nextStep,
+    prevStep,
+    updateSteps,
   } = useProgressStore();
   const navigate = useNavigate();
 
@@ -121,6 +134,14 @@ export default function Progress() {
     setStepValue(3, selectedType); // Update step 3
     updateSteps();
   }, [ActiveTab, selectedTransport, selectedType]);
+
+  const handleStepClick = (stepId) => {
+    const step = steps.find((s) => s.id === stepId);
+    if (step && step.path) {
+      setCurrentStep(stepId);
+      navigate(`/nueva_cotizacion/${step.path}`);
+    }
+  };
 
   return (
     <StyledProgress>
@@ -141,7 +162,7 @@ export default function Progress() {
                   <Step
                     $isActive={step.id <= currentStep}
                     $isCurrent={step.id === currentStep}
-                    $defaultBorder={step.id <= 3}
+                    onClick={() => handleStepClick(step.id)}
                   >
                     {step.id < currentStep ? (
                       <CheckIcons src={Check} alt="Check" />
@@ -155,7 +176,7 @@ export default function Progress() {
                     </LineContainer>
                   )}
                 </Div>
-                {step.id < currentStep && step.value && (
+                {step.id <= currentStep && step.value && (
                   <StepText>{step.value}</StepText>
                 )}
               </StepContainer>

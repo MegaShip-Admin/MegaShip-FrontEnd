@@ -89,7 +89,6 @@ const useComponentStore = create((set) => ({
   setClarification: (option) => set({ clarification: option }),
 
   //Datos de Exportacion
-
   exitContainer: "",
   internalTransport: "",
   expenseEnterTerminal: "",

@@ -148,7 +148,9 @@ export default function Traject() {
   useEffect(() => {
     if (ActiveTab === 'Importación') {
       setOrigin('Montevideo');
+      setDestiny('');
     } else if (ActiveTab === 'Exportación') {
+      setOrigin('');
       setDestiny('Montevideo');
     }
   }, [ActiveTab, setOrigin, setDestiny]);

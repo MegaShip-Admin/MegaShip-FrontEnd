@@ -11,6 +11,7 @@ const useProgressStore = create((set) => ({
 
 
   currentStep: 1, // Current step
+  setCurrentStep: (step) => set({ currentStep: step }),
   steps: [
     { id: 1, value: null, path: '' },
     { id: 2, value: null, path: '' },
@@ -94,16 +95,18 @@ const useProgressStore = create((set) => ({
   //Avanza al paso siguiente
   nextStep: (navigate) => {
     set((state) => {
-      let nextStep = state.currentStep;
-      if (state.currentStep <= 3) {
-        nextStep = 4;
-      } else {
-        nextStep = Math.min(state.currentStep + 1, state.steps.length);
+      const currentStepIndex = state.currentStep - 1;
+      const currentPath = state.steps[currentStepIndex].path;
+      let nextStepIndex = currentStepIndex + 1;
+      while (
+        nextStepIndex < state.steps.length &&
+        state.steps[nextStepIndex].path === currentPath
+      ) {
+        nextStepIndex++;
       }
-      const currentPath = state.steps[state.currentStep - 1].path;
-      const nextPath = state.steps[nextStep - 1].path;
-      if (currentPath !== nextPath) {
-        navigate(`/nueva_cotizacion/${nextPath}`);
+      const nextStep = Math.min(nextStepIndex + 1, state.steps.length);
+      if (currentPath !== state.steps[nextStep - 1].path) {
+        navigate(`/nueva_cotizacion/${state.steps[nextStep - 1].path}`);
       }
       return { currentStep: nextStep };
     });
@@ -113,25 +116,26 @@ const useProgressStore = create((set) => ({
   // Va al paso anterior
   prevStep: (navigate) => {
     set((state) => {
-      let prevStep;  // Initialize prevStep variable.
-      console.log("Current step before calculation:", state.currentStep);
-      if (state.currentStep <= 4) {
-        prevStep = state.currentStep - 3;
-      } else {
-        prevStep = state.currentStep - 1;
+      const currentStepIndex = state.currentStep - 1;
+      const currentPath = state.steps[currentStepIndex]?.path;
+      let prevStepIndex = currentStepIndex - 1;
+      while (
+        prevStepIndex >= 0 &&
+        state.steps[prevStepIndex]?.path === currentPath
+      ) {
+        prevStepIndex--;
       }
-      const currentPath = state.steps[state.currentStep - 1]?.path;
-      const prevPath = state.steps[prevStep - 1]?.path;
-      if (prevPath && currentPath !== prevPath) {
-        navigate(`/nueva_cotizacion/${prevPath}`);
+      if (prevStepIndex >= 0 && prevStepIndex <= 2) {
+        prevStepIndex = 0;
       }
-      return { currentStep: prevStep };
+      const firstDifferentPathIndex = prevStepIndex >= 0 ? prevStepIndex : 0;
+      if (firstDifferentPathIndex >= 0 && currentPath !== state.steps[firstDifferentPathIndex]?.path) {
+        navigate(`/nueva_cotizacion/${state.steps[firstDifferentPathIndex].path}`);
+      }
+      return { currentStep: firstDifferentPathIndex + 1 };
     });
   },
 
-  setCurrentStep: (step) => {
-    set({ currentStep: step });
-  },
 }));
 
 export default useProgressStore;

@@ -197,6 +197,7 @@ export default function Service() {
           <DateInput
             type="date"
             value={endDate || null}
+            min={startDate || ""}
             onChange={(e) => {
               setEndDate(e.target.value);
               console.log("endDate:", e.target.value); // delete later

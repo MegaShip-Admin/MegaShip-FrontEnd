@@ -291,13 +291,6 @@ export default function Load() {
                   onChange={(e) => setContainerCount(e.target.value)}
                   placeholder="Ej: 1, 2"
                 />
-                {
-                  selectedType && selectedType === 'Exclusivo' ? (
-                    <BotonContainer>
-                      <Boton onClick={handleAddContainer}> Añadir <Span>+</Span></Boton>
-                    </BotonContainer>
-                  ) : null
-                }
               </Card>
             </Column>
           )
@@ -333,13 +326,9 @@ export default function Load() {
                   }}
                   placeholder="Ej: 1, 2"
                 />
-                {
-                  selectedType && selectedType === 'Exclusivo' ? (
-                    <BotonContainer>
-                      <Boton onClick={handleAddContainer}> Añadir <Span>+</Span></Boton>
-                    </BotonContainer>
-                  ) : null
-                }
+                <BotonContainer>
+                  <Boton onClick={handleAddContainer}> Añadir <Span>+</Span></Boton>
+                </BotonContainer>
               </Card>
             </Column>
           )
