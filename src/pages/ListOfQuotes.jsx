@@ -59,9 +59,14 @@ const options = [
   const handleChange = (e) => {
     const value = e.target.value.toLowerCase(); // Lo que escribe el usuario
 
-    const filteredRecords = data.filter(record => 
-      record[filterColumn].toLowerCase().includes(value) // Filtra por la columna seleccionada
-    );
+    const filteredRecords = data.filter(record => {
+      const field = record[filterColumn];
+      // Verifica si es un string, de lo contrario devuelve su representación
+      return typeof field === 'string'
+        ? field.toLowerCase().includes(value)
+        : String(field.props?.alt).toLowerCase().includes(value); // Maneja las imágenes
+    });
+    
     setRecords(filteredRecords);
   };
 
@@ -169,14 +174,14 @@ const ButtonContainer = styled.div`
 
 const BotonDuplicar = styled.button`
   width: 125px;
-  height: 34px; /* Mitad de la altura de FiletSelect */
-  font-size: 14px; /* Ajusta el tamaño de fuente proporcionalmente */
+  height: 34px;
+  font-size: 14px;
   border: 2px solid #724d93;
   background-color: #ffffff;
   color: #724d93;
   border-radius: 30px;
   cursor: pointer;
-  margin: 0px; /* Mismo margen */
+  margin: 0px;
 
   &:focus {
     border-color: #724d93;
@@ -184,7 +189,7 @@ const BotonDuplicar = styled.button`
   }
 
   &:hover {
-    background-color: #ffffff; /* Un efecto hover */
+    background-color: #ffffff;
   }
 `;
 
@@ -214,7 +219,7 @@ const StyledDataTable = styled(DataTable)`
     img {
       width: 40px;
       height: auto;
-      padding-left: 25px;
+      padding-left: 25px; // Padding iconos
     }
   }
   .rdt_TableHeadRow {
@@ -252,6 +257,18 @@ const StyledDataTable = styled(DataTable)`
       background-color: #5b376d; 
     }
   }
+
+/* Ajustar padding en los títulos de las columnas */
+.rdt_TableHeadRow .rdt_TableCol:nth-child(11) {
+  padding-right: 28px;
+  
+}
+
+.rdt_TableHeadRow .rdt_TableCol:nth-child(2) {
+  padding-left: 20px;
+  
+}
+
 `;
 
 
