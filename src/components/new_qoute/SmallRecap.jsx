@@ -76,7 +76,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `;
 
 const RowsContainer = styled.div`
@@ -84,43 +84,16 @@ const RowsContainer = styled.div`
   flex-direction: column;
 `;
 
-const BotonContainer = styled.div`
-  display:flex;
-  justify-content: center;
-  margin-right: 20px;
-`;
 
-const Boton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center; 
-  gap: 5px;
-  width: 160px;
-  padding: 3px 0;
-  border: 1.8px solid #724D93;
-  border-radius: 20px;
-  font-size: 16px;
-  font-weight: 700;
-  color: #724D93;
-  background-color: #fbfafa;
-  cursor: pointer;
-`;
-
-const Span = styled.span`
-  font-size: 30px;
-  font-weight: 400;
-`;
-
-export default function ListOfLoads() {
+export default function SmallRecap() {
   const {
     containerList,
-    removeContainerById,
+    incoterms,
+    origin,
+    destiny,
   } = useComponentStore();
-  const { selectedTransport, selectedType } = useProgressStore();
+  const { ActiveTab, selectedTransport, selectedType } = useProgressStore();
 
-  const handleRemove = (id) => {
-    removeContainerById(id);
-  };
   return (
     <Column>
       <Card>
@@ -128,7 +101,18 @@ export default function ListOfLoads() {
           (selectedTransport === 'Maritimo' && selectedType === 'Consolidado' || selectedTransport === 'Terrestre' && selectedType === 'Consolidado')
             ? (
               <ScrollableContent>
-                <Title>Lista de Cargas Asociadas</Title>
+                <Title>Resumen de las Cargas</Title>
+                {(ActiveTab === "Importación" ?
+                  <Row>
+                    <Label>Origen: </Label> <Pp>{origin}</Pp>
+                  </Row> :
+                  <Row>
+                    <Label>Destino: </Label> <Pp>{destiny}</Pp>
+                  </Row>
+                )}
+                <Row>
+                  <Label>Incoterm: </Label> <Pp>{incoterms}</Pp>
+                </Row>
                 {containerList.length > 0 ? (
                   containerList.map((container) => (
                     <Wrapper key={container.id}>
@@ -145,9 +129,6 @@ export default function ListOfLoads() {
                           </Row>
                         )}
                       </RowsContainer>
-                      <BotonContainer>
-                        <Boton onClick={() => handleRemove(container.id)}>Eliminar <Span>-</Span></Boton>
-                      </BotonContainer>
                     </Wrapper>
                   ))
                 ) : (
@@ -157,7 +138,18 @@ export default function ListOfLoads() {
             )
             : (
               <ScrollableContent>
-                <Title>Lista de Cargas Asociadas</Title>
+                <Title>Resumen del Presupuesto</Title>
+                {(ActiveTab === "Importación" ?
+                  <Row>
+                    <Label>Origen: </Label> <Pp>{origin}</Pp>
+                  </Row> :
+                  <Row>
+                    <Label>Destino: </Label> <Pp>{destiny}</Pp>
+                  </Row>
+                )}
+                <Row>
+                  <Label>Incoterm: </Label> <Pp>{incoterms}</Pp>
+                </Row>
                 {containerList.length > 0 ? (
                   containerList.map((container) => (
                     <Wrapper key={container.id}>
@@ -177,9 +169,6 @@ export default function ListOfLoads() {
                           </Row>
                         )}
                       </RowsContainer>
-                      <BotonContainer>
-                        <Boton onClick={() => handleRemove(container.id)}>Eliminar <Span>-</Span></Boton>
-                      </BotonContainer>
                     </Wrapper>
                   ))
                 ) : (

@@ -1,4 +1,6 @@
+import { useState } from "react";
 import styled from 'styled-components';
+import Select from 'react-select'
 import useComponentStore from '../../stores/componentsStore';
 
 const Column = styled.div`
@@ -12,7 +14,7 @@ const Card = styled.div`
   flex-direction: column;
   min-width: 500px; 
   max-width: 500px;
-  padding: 25px 45px 45px 45px;
+  padding: 25px 55px 45px 35px;
   border: 1.8px solid #724D93; 
   border-radius: 20px;
   gap: 5px;
@@ -20,7 +22,6 @@ const Card = styled.div`
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 5px;
   position: relative;
 `;
-
 
 const Title = styled.label`
   display: flex;
@@ -39,10 +40,9 @@ const Title = styled.label`
   z-index: 1;
 `;
 
-
 const Label = styled.label`
   position: relative;
-  top: 14px;
+  top: 11px;
   left: 13px;
   background-color: #fbfafa;
   color: #724D93; 
@@ -63,75 +63,184 @@ const Input = styled.input`
   outline: none;
 `;
 
+const StyledReactSelect = styled(Select).attrs({
+  classNamePrefix: 'custom-select',
+})`
+  font-size: 16px;
+  margin-top: 15px;
+  .custom-select__control {
+    border: 1.8px solid #724D93;
+    padding: 2px;
+    border-radius: 20px;
+    box-shadow: none;
+    padding-left: 5px;
+    min-width: 500px; 
+    background-color: #fbfafa;
+    &:hover {
+      border-color: #724D93;
+    }
+  }
+  .custom-select__single-value {
+    background-color: #fbfafa;
+    color: #646464;
+  }
+  .custom-select__option {
+    background-color: #fbfafa;
+    border-radius: 20px;
+    color: #646464;
+    &:hover{
+      background-color: #bebdbf;
+    }
+    &:not(:first-child):not(:last-child) {
+      border-radius: 0;
+    }
+    &:first-child {
+      border-radius: 20px 20px 0 0;
+      border-top: none;
+    }
+    &:last-child {
+      border-radius: 0 0 20px 20px;
+      border-bottom: none; 
+    }
+    &:not(:last-child) {
+      border-bottom: 1px solid #BEBDBF;
+    }
+    &:active {
+      background-color: #fbfafa;
+    }
+  }
+  .custom-select__menu {
+    background-color: #fbfafa;
+    border-radius: 20px;
+    z-index: 1000;
+    ::-webkit-scrollbar {
+      width: 8px;
+      background-color: #f0f0f0;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #724D93;
+      border-radius: 10px;
+    }
+  }
+  .custom-select__menu-list {
+    padding: 0;
+  }
+  .custom-select__indicator {
+    color: #fbfafa;
+    background-color: #724D93;
+    border-radius: 50%;
+  }
+  .custom-select__indicator:hover {
+    color: #fbfafa;
+    background-color: #724D93;
+  }
+  .custom-select__indicator-separator {
+    display: none;
+  }
+`;
+
+const Boton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  gap: 5px;
+  width: fit-content;
+  padding: 3px 25px;
+  border: 1.8px solid #724D93;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #724D93;
+  background-color: #fbfafa;
+  cursor: pointer;
+`;
+
+const BotonContainer = styled.div`
+  display:flex;
+  justify-content: center;
+  margin-top: 20px;
+`;
+
+const ScrollableContent = styled.div`
+  max-height: 600px;
+  width: fit-content;
+  padding: 10px 15px 10px 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #724D93;
+    border-radius: 8px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #5c3b77;
+  }
+`;
+
+const Span = styled.span`
+  font-size: 30px;
+  font-weight: 400;
+`;
+
 
 export default function ExportationData() {
   const {
-    exitContainer,
-    internalTransport,
-    expenseEnterTerminal,
-    expensesAgency,
-    customs,
-    flete,
-    setExitContainer,
-    setInternalTransport,
-    setExpenseEnterTerminal,
-    setExpensesAgency,
-    setCustoms,
-    setFlete,
-  } = useComponentStore()
+    exportationData,
+    addExtraExportField,
+    updateExportValue,
+    extraServicesActive,
+    extraServices,
+    opcionesExtraExpo
+  } = useComponentStore();
 
+  const [selectedOption, setSelectedOption] = useState(null);
+  const handleAddField = () => {
+    if (selectedOption) {
+      addExtraExportField(selectedOption.label);
+      setSelectedOption(null);
+    }
+  };
+
+  const handleFieldChange = (id, value) => {
+    updateExportValue(id, value);
+  };
   return (
     <Column>
       <Card>
-        <Title>Datos de Exportación</Title>
-        <Label>Salida del Contenedor</Label>
-        <Input
-          placeholder="Placeholder"
-          value={exitContainer}
-          onChange={(e) => {
-            setExitContainer(e.target.value);
-            console.log("exitContainer:", e.target.value); // delete later
-          }} />
-        <Label>Transporte interno</Label>
-        <Input
-          placeholder="Placeholder"
-          value={internalTransport}
-          onChange={(e) => {
-            setInternalTransport(e.target.value);
-            console.log("internalTransport:", e.target.value); // delete later
-          }} />
-        <Label>Gastos de ingreso a terminal</Label>
-        <Input
-          placeholder="Placeholder"
-          value={expenseEnterTerminal}
-          onChange={(e) => {
-            setExpenseEnterTerminal(e.target.value);
-            console.log("expenseEnterTerminal:", e.target.value); // delete later
-          }} />
-        <Label>Gastos agencia</Label>
-        <Input
-          placeholder="Placeholder"
-          value={expensesAgency}
-          onChange={(e) => {
-            setExpensesAgency(e.target.value);
-            console.log("expensesAgency:", e.target.value); // delete later
-          }} />
-        <Label>Customs</Label>
-        <Input
-          placeholder="Placeholder"
-          value={customs}
-          onChange={(e) => {
-            setCustoms(e.target.value);
-            console.log("customs:", e.target.value); // delete later
-          }} />
-        <Label>Flete</Label>
-        <Input
-          placeholder="Placeholder"
-          value={flete}
-          onChange={(e) => {
-            setFlete(e.target.value);
-            console.log("flete:", e.target.value); // delete later
-          }} />
+        <ScrollableContent>
+          <Title>Datos de Exportación</Title>
+          {exportationData.map((expor) => (
+            <div key={expor.id}>
+              <Label>{expor.label}</Label>
+              <Input
+                placeholder="Placeholder"
+                value={expor.value}
+                onChange={(e) => handleFieldChange(expor.id, e.target.value)}
+              />
+            </div>
+          ))}
+          <>
+            {extraServices && (
+              <>
+                <StyledReactSelect
+                  options={opcionesExtraExpo}
+                  value={selectedOption}
+                  onChange={setSelectedOption}
+                  placeholder="Seleccione una opción"
+                />
+                <BotonContainer>
+                  <Boton onClick={handleAddField}> Agregar</Boton>
+                </BotonContainer>
+              </>
+            )}
+            <BotonContainer>
+              <Boton onClick={extraServicesActive}> Servicios extras <Span>{extraServices ? '-' : '+'}</Span></Boton>
+            </BotonContainer>
+          </>
+        </ScrollableContent>
       </Card>
     </Column>
   )

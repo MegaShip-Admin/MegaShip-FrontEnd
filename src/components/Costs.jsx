@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import useComponentStore from "../stores/componentsStore";
-import ExtraServices from "./new_qoute/ExtraServices";
 import Cost from "./new_qoute/Cost";
+import SmallRecap from "./new_qoute/SmallRecap";
 
 const Wrapper = styled.div`
   display: flex;
@@ -25,7 +24,6 @@ const Columns = styled.div`
 `;
 
 export default function Costs() {
-  const { extraServices } = useComponentStore();
 
   return (
     <Wrapper>
@@ -34,7 +32,7 @@ export default function Costs() {
           <Cost />
         </Columns>
         <Columns>
-          <ExtraServices isActive={extraServices} />
+          <SmallRecap />
         </Columns>
       </ContentMain>
     </Wrapper>

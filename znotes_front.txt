@@ -1,0 +1,11 @@
+limpiar estados al cambiar pa atras
+
+
+fabricio 
+    quiere consolidado/exclusivo o flc fcf
+    servicio y vias
+    select, create y normal
+
+for deploy modifications:
+    dejar importacion terrestre-maritimo consolidado-exclusivo 
+        sacar aereo y exportacion

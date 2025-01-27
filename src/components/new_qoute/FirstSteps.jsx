@@ -95,7 +95,8 @@ export default function FirstSteps() {
     setActiveTab,
     setSelectedType,
     setSelectedTransport,
-    selectedTransport, selectedType
+    selectedTransport,
+    selectedType,
   } = useProgressStore();
 
   return (

@@ -15,6 +15,7 @@ import Costs from '../components/Costs';
 import Services from '../components/Services';
 import Exportation from '../components/Exportation';
 import Recap from '../components/new_qoute/Recap';
+import Clarifications from '../components/new_qoute/Clarifications';
 
 const Layout = styled.div`
   display: flex;
@@ -46,6 +47,7 @@ export default function AppRouter() {
               <Route path="services" element={<Services />} />
               <Route path="expor" element={<Exportation />} />
               <Route path="resumen" element={<Recap />} />
+              <Route path="aclaraciones" element={<Clarifications />} />
               <Route path="*" element={<Navigate to="/nueva_cotizacion" replace />} />
             </Route>
             <Route path="/lista_cotizaciones" element={<ListOfQuotes />} />

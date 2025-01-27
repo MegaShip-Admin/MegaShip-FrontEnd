@@ -1,7 +1,5 @@
 import styled from "styled-components";
-
 import Load from "../components/new_qoute/Load"
-import LoadCharacteristics from '../components/new_qoute/LoadCharacteristics';
 import ListOfLoads from "./new_qoute/ListOfLoads";
 
 const Wrapper = styled.div`
@@ -30,7 +28,6 @@ export default function Loads() {
     <Wrapper>
       <ContentMain>
         <Columns>
-          <LoadCharacteristics />
           <Load />
         </Columns>
         <Columns>

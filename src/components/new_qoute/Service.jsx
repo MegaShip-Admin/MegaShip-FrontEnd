@@ -109,6 +109,15 @@ const StyledReactSelect = styled(CreatableSelect).attrs({
     background-color: #fbfafa;
     border-radius: 20px;
     z-index: 1000;
+    ::-webkit-scrollbar {
+      width: 8px;
+      background-color: #f0f0f0;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #724D93;
+      border-radius: 10px;
+    }
   }
   .custom-select__menu-list {
     padding: 0;

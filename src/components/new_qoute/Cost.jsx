@@ -1,4 +1,6 @@
+import { useState } from "react";
 import styled from 'styled-components';
+import Select from 'react-select'
 import useComponentStore from '../../stores/componentsStore';
 
 const Column = styled.div`
@@ -12,7 +14,7 @@ const Card = styled.div`
   flex-direction: column;
   min-width: 500px; 
   max-width: 500px;
-  padding: 25px 45px 45px 45px;
+  padding: 25px 55px 45px 35px;
   border: 1.8px solid #724D93; 
   border-radius: 20px;
   gap: 5px;
@@ -38,7 +40,7 @@ const Title = styled.label`
 
 const Label = styled.label`
   position: relative;
-  top: 14px;
+  top: 11px;
   left: 13px;
   background-color: #fbfafa;
   color: #724D93; 
@@ -86,70 +88,157 @@ const BotonContainer = styled.div`
   margin-top: 20px;
 `;
 
+const StyledReactSelect = styled(Select).attrs({
+  classNamePrefix: 'custom-select',
+})`
+  font-size: 16px;
+  margin-top: 15px;
+  .custom-select__control {
+    border: 1.8px solid #724D93;
+    padding: 2px;
+    border-radius: 20px;
+    box-shadow: none;
+    padding-left: 5px;
+    min-width: 500px; 
+    background-color: #fbfafa;
+    &:hover {
+      border-color: #724D93;
+    }
+  }
+  .custom-select__single-value {
+    background-color: #fbfafa;
+    color: #646464;
+  }
+  .custom-select__option {
+    background-color: #fbfafa;
+    border-radius: 20px;
+    color: #646464;
+    &:hover{
+      background-color: #bebdbf;
+    }
+    &:not(:first-child):not(:last-child) {
+      border-radius: 0;
+    }
+    &:first-child {
+      border-radius: 20px 20px 0 0;
+      border-top: none;
+    }
+    &:last-child {
+      border-radius: 0 0 20px 20px;
+      border-bottom: none; 
+    }
+    &:not(:last-child) {
+      border-bottom: 1px solid #BEBDBF;
+    }
+    &:active {
+      background-color: #fbfafa;
+    }
+  }
+  .custom-select__menu {
+    background-color: #fbfafa;
+    border-radius: 20px;
+    z-index: 1000;
+    ::-webkit-scrollbar {
+      width: 8px;
+      background-color: #f0f0f0;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #724D93;
+      border-radius: 10px;
+    }
+  }
+  .custom-select__menu-list {
+    padding: 0;
+  }
+  .custom-select__indicator {
+    color: #fbfafa;
+    background-color: #724D93;
+    border-radius: 50%;
+  }
+  .custom-select__indicator:hover {
+    color: #fbfafa;
+    background-color: #724D93;
+  }
+  .custom-select__indicator-separator {
+    display: none;
+  }
+`;
+
+const ScrollableContent = styled.div`
+  max-height: 600px;
+  width: fit-content;
+  padding: 10px 15px 10px 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #724D93;
+    border-radius: 8px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #5c3b77;
+  }
+`;
+
+
+
 export default function Cost() {
   const {
+    costs,
+    addExtraField,
     extraServices,
     extraServicesActive,
-    originCost,
-    setOriginCost,
-    tariff,
-    setTariff,
-    adminServices,
-    setAdminServices,
-    handlingFee,
-    setHandlingFee,
-    deposit,
-    setDeposit,
+    opcionesExtra,
+    updateValue,
   } = useComponentStore();
+
+  const [selectedOption, setSelectedOption] = useState(null);
+  const handleAddField = () => {
+    if (selectedOption) {
+      addExtraField(selectedOption.label);
+      setSelectedOption(null);
+    }
+  };
+  const handleFieldChange = (id, value) => {
+    updateValue(id, value);
+  };
 
   return (
     <Column>
       <Card>
-        <Title>Costos</Title>
-        <Label>Gastos de Origen</Label>
-        <Input
-          placeholder="USD"
-          value={originCost}
-          onChange={(e) => {
-            setOriginCost(e.target.value);
-            console.log("originCost:", e.target.value); // delete later
-          }} />
-        <Label>Tarifa</Label>
-        <Input
-          placeholder="USD"
-          value={tariff}
-          onChange={(e) => {
-            setTariff(e.target.value);
-            console.log("tariff:", e.target.value); // delete later
-          }} />
-        <Label>Servicios admin</Label>
-        <Input
-          placeholder="USD"
-          value={adminServices}
-          onChange={(e) => {
-            setAdminServices(e.target.value);
-            console.log("adminServices:", e.target.value); // delete later
-          }} />
-        <Label>Handling fee</Label>
-        <Input
-          placeholder="USD"
-          value={handlingFee}
-          onChange={(e) => {
-            setHandlingFee(e.target.value);
-            console.log("handlingFee:", e.target.value); // delete later
-          }} />
-        <Label>Deposito</Label>
-        <Input
-          placeholder="USD"
-          value={deposit}
-          onChange={(e) => {
-            setDeposit(e.target.value);
-            console.log("deposit:", e.target.value); // delete later
-          }} />
-        <BotonContainer>
-          <Boton onClick={extraServicesActive}> Servicios extras <Span>{extraServices ? '-' : '+'}</Span></Boton>
-        </BotonContainer>
+        <ScrollableContent>
+          <Title>Costos</Title>
+          {costs.map((cost) => (
+            <div key={cost.id}>
+              <Label>{cost.label}</Label>
+              <Input
+                placeholder="USD"
+                value={cost.value}
+                onChange={(e) => handleFieldChange(cost.id, e.target.value)}
+              />
+            </div>
+          ))}
+          {extraServices && (
+            <>
+              <StyledReactSelect
+                options={opcionesExtra}
+                value={selectedOption}
+                onChange={setSelectedOption}
+                placeholder="Seleccione una opción"
+              />
+              <BotonContainer>
+                <Boton onClick={handleAddField}> Agregar</Boton>
+              </BotonContainer>
+            </>
+          )}
+          <BotonContainer>
+            <Boton onClick={extraServicesActive}> Servicios extras <Span>{extraServices ? '-' : '+'}</Span></Boton>
+          </BotonContainer>
+        </ScrollableContent>
       </Card>
-    </Column>
+    </Column >
   )
 }

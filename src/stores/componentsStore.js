@@ -21,13 +21,17 @@ const useComponentStore = create((set) => ({
 
   //Carga y lista de cargas
   containerType: "",
-  containerSize: "",
   containerCount: "",
+  bulkType: "",
+  bulkVolume: "",
+  bulkWeight: "",
   containerList: [],
   nextContainerId: 1,
   setContainerType: (option) => set({ containerType: option }),
-  setContainerSize: (option) => set({ containerSize: option }),
   setContainerCount: (option) => set({ containerCount: option }),
+  setBulkType: (option) => set({ bulkType: option }),
+  setBulkVolume: (option) => set({ bulkVolume: option }),
+  setBulkWeight: (option) => set({ bulkWeight: option }),
   setContainerList: (newContainer) => set((state) => {
     const newId = state.nextContainerId;
     const updatedContainer = { ...newContainer, id: newId };
@@ -39,34 +43,43 @@ const useComponentStore = create((set) => ({
   removeContainerById: (id) => set((state) => ({
     containerList: state.containerList.filter(container => container.id !== id),
   })),
-
-  //Caracteristicas de la carga
+  clearContainerList: () => set({ containerList: [] }),
   isChecked: false,
   setIsChecked: () => set((state) => ({ isChecked: !state.isChecked })),
   danger: "",
   setDanger: (option) => set({ danger: option }),
 
   //Costos
-  originCost: "",
-  tariff: "",
-  adminServices: "",
-  handlingFee: "",
-  deposit: "",
-  setOriginCost: (option) => set({ originCost: option }),
-  setTariff: (option) => set({ tariff: option }),
-  setAdminServices: (option) => set({ adminServices: option }),
-  setHandlingFee: (option) => set({ handlingFee: option }),
-  setDeposit: (option) => set({ deposit: option }),
-
-  //Servicios extra
+  costs: [
+    { id: 1, label: "Gastos de Origen", value: 0 },
+    { id: 2, label: "Tarifa", value: 0 },
+    { id: 3, label: "Servicios admin", value: 0 },
+    { id: 4, label: "Handling fee", value: 0 },
+    { id: 5, label: "Deposito", value: 0 },
+  ],
   extraServices: false,
   extraServicesActive: () => set((state) => ({ extraServices: !state.extraServices })),
-  unifBill: "",
-  tlx: "",
-  insurance: "",
-  setUnifBill: (option) => set({ unifBill: option }),
-  setTlx: (option) => set({ tlx: option }),
-  setInsurance: (option) => set({ insurance: option }),
+  opcionesExtra: [
+    { value: 'uniffactura', label: 'Unif. Factura' },
+    { value: 'tlx', label: 'TLX' },
+    { value: 'seguro', label: 'Seguro' },
+    { value: 'one', label: 'Opcion 1' },
+    { value: 'two', label: 'Opcion 2' },
+    { value: 'three', label: 'Opcion 3' },
+    { value: 'four', label: 'Opcion 4' },
+    { value: 'five', label: 'Opcion 5' },
+  ],
+  addExtraField: (label) => set((state) => {
+    const newFieldId = state.costs.length + 1;
+    const newField = { id: newFieldId, label, value: "" };
+    return { costs: [...state.costs, newField] };
+  }),
+  updateValue: (id, value) => set((state) => {
+    const updatedFields = state.costs.map(cost =>
+      cost.id === id ? { ...cost, value } : cost
+    );
+    return { costs: updatedFields };
+  }),
 
   //Servicio
   serviceType: "",
@@ -89,17 +102,34 @@ const useComponentStore = create((set) => ({
   setClarification: (option) => set({ clarification: option }),
 
   //Datos de Exportacion
-  exitContainer: "",
-  internalTransport: "",
-  expenseEnterTerminal: "",
-  expensesAgency: "",
-  customs: "",
-  flete: "",
-  setExitContainer: (option) => set({ exitContainer: option }),
-  setInternalTransport: (option) => set({ internalTransport: option }),
-  setExpenseEnterTerminal: (option) => set({ expenseEnterTerminal: option }),
-  setExpensesAgency: (option) => set({ expensesAgency: option }),
-  setCustoms: (option) => set({ customs: option }),
-  setFlete: (option) => set({ flete: option }),
+  exportationData: [
+    { id: 1, label: "Salida del Contenedor", value: 0 },
+    { id: 2, label: "Transporte interno", value: 0 },
+    { id: 3, label: "Gastos de ingreso a terminal", value: 0 },
+    { id: 4, label: "Gastos agencia", value: 0 },
+    { id: 5, label: "Customs", value: 0 },
+    { id: 6, label: "Flete", value: 0 },
+  ],
+  extraServices: false,
+  extraServicesActive: () => set((state) => ({ extraServices: !state.extraServices })),
+  opcionesExtraExpo: [
+    { value: 'one', label: 'Opcion 1' },
+    { value: 'two', label: 'Opcion 2' },
+    { value: 'three', label: 'Opcion 3' },
+    { value: 'four', label: 'Opcion 4' },
+    { value: 'five', label: 'Opcion 5' },
+  ],
+  addExtraExportField: (label) => set((state) => {
+    const newFieldId = state.exportationData.length + 1;
+    const newField = { id: newFieldId, label, value: "" };
+    return { exportationData: [...state.exportationData, newField] };
+  }),
+  updateExportValue: (id, value) => set((state) => {
+    const updatedFields = state.exportationData.map((field) =>
+      field.id === id ? { ...field, value } : field
+    );
+    return { exportationData: updatedFields };
+  }),
+
 }));
 export default useComponentStore;

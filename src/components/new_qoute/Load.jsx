@@ -54,10 +54,11 @@ const Label = styled.label`
   width: fit-content;
   padding: 0 5px;
   z-index:3;
+  ${({ disabled }) => disabled && `color: #646464;`}
 `;
 
 const Input = styled.input`
-  width: 480px;
+  max-width: 480px;
   padding: 11px 0 11px 18px;
   border: 1.8px solid #724D93;
   border-radius: 20px;
@@ -65,6 +66,7 @@ const Input = styled.input`
   color: #646464;
   background-color: #fbfafa;
   outline: none;
+  ${({ disabled }) => disabled && `border: 1.8px solid #646464; cursor: not-allowed;`}
 `;
 
 const StyledReactCreateSelect = styled(CreatableSelect).attrs({
@@ -116,6 +118,15 @@ const StyledReactCreateSelect = styled(CreatableSelect).attrs({
     background-color: #fbfafa;
     border-radius: 20px;
     z-index: 1000;
+    ::-webkit-scrollbar {
+      width: 8px;
+      background-color: #f0f0f0;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #724D93;
+      border-radius: 10px;
+    }
   }
   .custom-select__menu-list {
     padding: 0;
@@ -183,6 +194,15 @@ const StyledReactSelect = styled(Select).attrs({
     background-color: #fbfafa;
     border-radius: 20px;
     z-index: 1000;
+    ::-webkit-scrollbar {
+      width: 8px;
+      background-color: #f0f0f0;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #724D93;
+      border-radius: 10px;
+    }
   }
   .custom-select__menu-list {
     padding: 0;
@@ -222,22 +242,67 @@ const Span = styled.span`
   font-weight: 400;
 `;
 
-const opcionesTipo = [
-  { value: 'dry', label: 'Dry' },
-  { value: 'highcube', label: 'High Cube' },
-  { value: 'reefer', label: 'Reefer' },
-];
-
-const opcionesTamaño = [
-  { value: 'pequeño', label: 'Pequeño' },
-  { value: 'grande', label: 'Grande' },
-];
-
 const BotonContainer = styled.div`
   display:flex;
   justify-content: center;
   margin-top: 20px;
 `;
+
+const opcionesTipo = [
+  { value: 'generalpurpose', label: 'General Purpose' },
+  { value: 'reefer', label: 'Reefer' },
+  { value: 'flatrack', label: 'Flat Rack' },
+  { value: 'opentop', label: 'Open Top' },
+  { value: 'tank', label: 'Tank' },
+  { value: 'highcube', label: 'High Cube' },
+  { value: 'nor', label: 'NOR' },
+];
+
+const opcionesBulto = [
+  { value: 'palet', label: 'Palet' },
+  { value: 'caja', label: 'Caja' },
+  { value: 'rollo', label: 'Rollo' },
+];
+
+const Container = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 50px;
+`;
+const CheckboxWrapper = styled.div`
+display: flex;
+align-items: center;
+gap: 10px;
+`;
+
+const CheckboxLabel = styled.label`
+margin-top: 18px;
+font-size: 16px;
+color: #724D93;
+font-weight: bold;
+`;
+
+const Checkbox = styled.input.attrs({ type: 'checkbox' })`
+width: 20px;
+height: 20px;
+margin-top: 20px;
+border-radius: 50%;
+appearance: none;
+border: 1.8px solid #BEBDBF;
+background-color: #fbfafa;
+cursor: pointer;
+&:checked {
+  background-color: #646464;
+}
+`;
+
+const InputLabelWrapper = styled.div`
+display: flex;
+flex-direction: column;
+width: 400px;
+`;
+
 
 export default function Load() {
   const {
@@ -246,25 +311,40 @@ export default function Load() {
   } = useProgressStore();
   const {
     containerType,
-    containerSize,
     containerCount,
+    bulkType,
+    bulkVolume,
+    bulkWeight,
     setContainerType,
-    setContainerSize,
     setContainerCount,
-    setContainerList
+    setBulkType,
+    setBulkVolume,
+    setBulkWeight,
+    setContainerList,
+    isChecked,
+    setIsChecked,
+    danger,
+    setDanger
   } = useComponentStore();
 
   const handleAddContainer = () => {
     const newContainer = {
       containerType,
-      containerSize,
       containerCount,
+      bulkType,
+      bulkVolume,
+      bulkWeight,
+      danger,
     };
     setContainerList(newContainer);
+    console.log(newContainer)
     // Reset the states after adding
-    setContainerType(null);
-    setContainerSize(null);
+    setContainerType('');
     setContainerCount('');
+    setBulkType('');
+    setBulkVolume('');
+    setBulkWeight('');
+    setDanger('');
   };
 
   return (
@@ -275,13 +355,13 @@ export default function Load() {
             <Column>
               <Card>
                 <Title>Carga</Title>
-                <Label>Tamaño del contenedor</Label>
+                <Label>Tipo de contenedor</Label>
                 <StyledReactCreateSelect
-                  options={opcionesTamaño}
-                  value={containerSize ? { value: containerSize, label: containerSize } : null}
+                  options={opcionesTipo}
+                  value={containerType ? { value: containerType, label: containerType } : null}
                   onChange={(e) => {
-                    setContainerSize(e.label);
-                    console.log("containerSize:", e.label); // delete later
+                    setContainerType(e.label);
+                    console.log("containerType:", e.label); // delete later
                   }}
                   placeholder="Selecciona el Tamaño del Contenedor"
                 />
@@ -291,6 +371,29 @@ export default function Load() {
                   onChange={(e) => setContainerCount(e.target.value)}
                   placeholder="Ej: 1, 2"
                 />
+                <Container>
+                  <CheckboxWrapper>
+                    <Checkbox
+                      checked={isChecked}
+                      onChange={(e) => setIsChecked(e.target.checked)}
+                    />
+                    <CheckboxLabel> Peligroso</CheckboxLabel>
+                  </CheckboxWrapper>
+                  <InputLabelWrapper>
+                    <Label disabled={!isChecked}>UN</Label>
+                    <Input
+                      placeholder="1000"
+                      disabled={!isChecked}
+                      value={danger}
+                      onChange={(e) => {
+                        setDanger(e.target.value);
+                        console.log("danger:", e.target.value); // delete later
+                      }} />
+                  </InputLabelWrapper>
+                </Container>
+                <BotonContainer>
+                  <Boton onClick={handleAddContainer}> Añadir <Span>+</Span></Boton>
+                </BotonContainer>
               </Card>
             </Column>
           )
@@ -298,34 +401,55 @@ export default function Load() {
             <Column>
               <Card>
                 <Title>Carga</Title>
-                <Label>Tipo de contenedor</Label>
+                {/*cantidad de piezas, peso bruto, cbm*/}
+                <Label>Tipo de Bulto</Label>
                 <StyledReactSelect
-                  options={opcionesTipo}
-                  value={containerType ? { value: containerType, label: containerType } : null}
+                  options={opcionesBulto}
+                  value={bulkType ? { value: bulkType, label: bulkType } : null}
                   onChange={(e) => {
-                    setContainerType(e.label);
-                    console.log("containerType:", e.label); // delete later
+                    setBulkType(e.label);
+                    console.log("bulkType:", e.label); // delete later
                   }}
                   placeholder="Selecciona el Tipo de Contenedor"
                 />
-                <Label>Tamaño del contenedor</Label>
-                <StyledReactCreateSelect
-                  options={opcionesTamaño}
-                  value={containerSize ? { value: containerSize, label: containerSize } : null}
-                  onChange={(e) => {
-                    setContainerSize(e.label);
-                    console.log("containerSize:", e.label); // delete later
-                  }}
-                  placeholder="Selecciona el Tamaño del Contenedor" />
-                <Label>Cantidad de contenedores</Label>
+                <Label>Peso</Label>
                 <Input
-                  value={containerCount}
+                  value={bulkWeight}
                   onChange={(e) => {
-                    setContainerCount(e.target.value);
-                    console.log("containerCount:", e.target.value); // delete later
+                    setBulkWeight(e.target.value);
+                    console.log("bulkWeight:", e.target.value); // delete later
                   }}
-                  placeholder="Ej: 1, 2"
+                  placeholder="Ej: 100kg"
                 />
+                <Label>Volumen</Label>
+                <Input
+                  value={bulkVolume}
+                  onChange={(e) => {
+                    setBulkVolume(e.target.value);
+                    console.log("bulkVolume:", e.target.value); // delete later
+                  }}
+                  placeholder="Ej: 3CBM"
+                />
+                <Container>
+                  <CheckboxWrapper>
+                    <Checkbox
+                      checked={isChecked}
+                      onChange={(e) => setIsChecked(e.target.checked)}
+                    />
+                    <CheckboxLabel> Peligroso</CheckboxLabel>
+                  </CheckboxWrapper>
+                  <InputLabelWrapper>
+                    <Label disabled={!isChecked}>UN</Label>
+                    <Input
+                      placeholder="1000"
+                      disabled={!isChecked}
+                      value={danger}
+                      onChange={(e) => {
+                        setDanger(e.target.value);
+                        console.log("danger:", e.target.value); // delete later
+                      }} />
+                  </InputLabelWrapper>
+                </Container>
                 <BotonContainer>
                   <Boton onClick={handleAddContainer}> Añadir <Span>+</Span></Boton>
                 </BotonContainer>
@@ -336,3 +460,4 @@ export default function Load() {
     </Wrapper>
   )
 }
+

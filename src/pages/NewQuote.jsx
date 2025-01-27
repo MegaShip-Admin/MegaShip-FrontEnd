@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Outlet } from "react-router-dom";
-
 import Progress from '../components/new_qoute/Progress';
+
 
 const Wrapper = styled.div`
   height: 100vh;

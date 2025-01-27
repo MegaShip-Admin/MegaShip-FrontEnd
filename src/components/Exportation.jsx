@@ -2,7 +2,7 @@ import styled from "styled-components";
 import useComponentStore from "../stores/componentsStore";
 import useProgressStore from "../stores/progressStore";
 import ExportationData from "./new_qoute/ExportationData";
-import Clarifications from "./new_qoute/Clarifications"
+import SmallRecap from "./new_qoute/SmallRecap";
 
 const Wrapper = styled.div`
   display: flex;
@@ -38,6 +38,9 @@ export default function Exportation() {
             <Columns>
               <ExportationData />
             </Columns>
+            <Columns>
+              <SmallRecap />
+            </Columns>
           </ContentMain>
         )
         : (
@@ -46,7 +49,7 @@ export default function Exportation() {
               <ExportationData />
             </Columns>
             <Columns>
-              <Clarifications />
+              <SmallRecap />
             </Columns>
           </ContentMain>
         )

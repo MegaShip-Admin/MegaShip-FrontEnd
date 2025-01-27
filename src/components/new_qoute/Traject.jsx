@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useEffect } from 'react';
 import CreatableSelect from 'react-select/creatable';
+import Select from 'react-select'
 import useComponentStore from '../../stores/componentsStore';
 import useProgressStore from '../../stores/progressStore';
 
@@ -49,7 +50,7 @@ const Label = styled.label`
   z-index: 3;
 `;
 
-const StyledReactSelect = styled(CreatableSelect).attrs({
+const StyledReactCreateSelect = styled(CreatableSelect).attrs({
   classNamePrefix: 'custom-select',
 })`
   font-size: 16px;
@@ -98,6 +99,91 @@ const StyledReactSelect = styled(CreatableSelect).attrs({
     background-color: #fbfafa;
     border-radius: 20px;
     z-index: 1000;
+    ::-webkit-scrollbar {
+      width: 8px;
+      background-color: #f0f0f0;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #724D93;
+      border-radius: 10px;
+    }
+  }
+  .custom-select__menu-list {
+    padding: 0;
+  }
+  .custom-select__indicator {
+    color: #f0f0f0;
+    background-color: #724D93;
+    border-radius: 50%;
+  }
+  .custom-select__indicator:hover {
+    color: #f0f0f0;
+    background-color: #724D93;
+  }
+  .custom-select__indicator-separator {
+    display: none;
+  }
+`;
+
+const StyledReactSelect = styled(Select).attrs({
+  classNamePrefix: 'custom-select',
+})`
+  font-size: 16px;
+  .custom-select__control {
+    border: 1.8px solid #724D93;
+    padding: 2px;
+    border-radius: 20px;
+    box-shadow: none;
+    padding-left: 5px;
+    min-width: 500px; 
+    background-color: #fbfafa;
+    &:hover {
+      border-color: #724D93;
+    }
+  }
+  .custom-select__single-value {
+    background-color: #fbfafa;
+    color: #646464;
+  }
+  .custom-select__option {
+    background-color: #fbfafa;
+    border-radius: 20px;
+    color: #646464;
+    &:hover{
+      background-color: #bebdbf;
+    }
+    &:not(:first-child):not(:last-child) {
+      border-radius: 0;
+    }
+    &:first-child {
+      border-radius: 20px 20px 0 0;
+      border-top: none;
+    }
+    &:last-child {
+      border-radius: 0 0 20px 20px;
+      border-bottom: none; 
+    }
+    &:not(:last-child) {
+      border-bottom: 1px solid #BEBDBF;
+    }
+    &:active {
+      background-color: #fbfafa;
+    }
+  }
+  .custom-select__menu {
+    background-color: #fbfafa;
+    border-radius: 20px;
+    z-index: 1000;
+    ::-webkit-scrollbar {
+      width: 8px;
+      background-color: #f0f0f0;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #724D93;
+      border-radius: 10px;
+    }
   }
   .custom-select__menu-list {
     padding: 0;
@@ -116,22 +202,29 @@ const StyledReactSelect = styled(CreatableSelect).attrs({
   }
 `;
 
-const opcionesOrigen = [
+const opcionesDestino = [
   { value: 'montevideo', label: 'Montevideo' },
   { value: 'colonia', label: 'Colonia' },
 ];
 
-const opcionesDestino = [
+const opcionesOrigen = [
   { value: 'china', label: 'China' },
   { value: 'japon', label: 'Japón' },
   { value: 'usa', label: 'Estados Unidos' },
 ];
 
 const opcionesIncoterm = [
+  { value: 'exw', label: 'EXW' },
   { value: 'fca', label: 'FCA' },
-  { value: 'cpt', label: 'CPT' },
+  { value: 'fas', label: 'FAS' },
+  { value: 'fob', label: 'FOB' },
+  { value: 'cfr', label: 'CFR' },
+  { value: 'cif', label: 'CIF' },
+  { value: 'cip', label: 'CIP' },
   { value: 'dap', label: 'DAP' },
   { value: 'dpu', label: 'DPU' },
+  { value: 'dap', label: 'DAP' },
+  { value: 'ddp', label: 'DDP' },
 ];
 
 export default function Traject() {
@@ -147,11 +240,11 @@ export default function Traject() {
 
   useEffect(() => {
     if (ActiveTab === 'Importación') {
-      setOrigin('Montevideo');
-      setDestiny('');
-    } else if (ActiveTab === 'Exportación') {
       setOrigin('');
       setDestiny('Montevideo');
+    } else if (ActiveTab === 'Exportación') {
+      setOrigin('Montevideo');
+      setDestiny('');
     }
   }, [ActiveTab, setOrigin, setDestiny]);
 
@@ -160,18 +253,18 @@ export default function Traject() {
       <Card>
         <Title>Trayecto</Title>
         <Label>Origen</Label>
-        <StyledReactSelect
+        <StyledReactCreateSelect
           value={origin ? { label: origin, value: origin } : null}
-          options={opcionesOrigen}
+          options={ActiveTab === 'Importación' ? opcionesOrigen : opcionesDestino}
           placeholder="Selecciona el Origen"
           onChange={(e) => {
             setOrigin(e.label);
             console.log("origin:", e.label); // delete later
           }} />
         <Label>Destino</Label>
-        <StyledReactSelect
+        <StyledReactCreateSelect
           value={destiny ? { label: destiny, value: destiny } : null}
-          options={opcionesDestino}
+          options={ActiveTab === 'Importación' ? opcionesDestino : opcionesOrigen}
           placeholder="Selecciona el Destino"
           onChange={(e) => {
             setDestiny(e.label);

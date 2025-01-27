@@ -36,7 +36,7 @@ const useProgressStore = create((set) => ({
           updatedSteps.push(
             { id: 4, value: 'Cliente', path: "two" },
             { id: 5, value: 'Trayecto', path: "two" },
-            { id: 6, value: 'Carga', path: "two" },
+            { id: 6, value: 'Carga', path: "loads" },
             { id: 7, value: 'Costos', path: "costs" },
             { id: 8, value: 'Servicios', path: "services" },
             { id: 9, value: 'Aclaraciones', path: "services" },
@@ -62,7 +62,7 @@ const useProgressStore = create((set) => ({
           updatedSteps.push(
             { id: 4, value: 'Cliente', path: "two" },
             { id: 5, value: 'Trayecto', path: "two" },
-            { id: 6, value: 'Carga', path: "two" },
+            { id: 6, value: 'Carga', path: "loads" },
             { id: 7, value: 'Datos Export', path: "expor" },
             { id: 8, value: 'Servicios', path: "services" },
             { id: 9, value: 'Aclaraciones', path: "services" },
@@ -74,7 +74,7 @@ const useProgressStore = create((set) => ({
             { id: 5, value: 'Trayecto', path: "two" },
             { id: 6, value: 'Carga', path: "loads" },
             { id: 7, value: 'Datos Export', path: "expor" },
-            { id: 8, value: 'Aclaraciones', path: "expor" },
+            { id: 8, value: 'Aclaraciones', path: "aclaraciones" },
             { id: 9, value: 'Resumen', path: "resumen" }
           );
         }
