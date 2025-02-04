@@ -92,7 +92,9 @@ const options = [
             columns={columns}
             data={records}
             selectableRows
-            selectableRowsNoSelectAll
+            // selectableRowsNoSelectAll
+            selectableRowsSingle
+            selectableRowsComponent={CustomCheckbox}
             fixedHeader
             onSelectedRowsChange={(data) => console.log(data)}
           />
@@ -263,7 +265,6 @@ const StyledDataTable = styled(DataTable)`
   padding-right: 28px;
   
 }
-
 .rdt_TableHeadRow .rdt_TableCol:nth-child(2) {
   padding-left: 20px;
   
@@ -355,3 +356,19 @@ const StyledReactSelect = styled(Select).attrs({
   }
 `;
 
+const CustomCheckbox = styled.input.attrs({ type: "checkbox" })`
+  appearance: none;
+  width: 5px;
+  height: 5px;
+  border: 2px solid #BEBDBF;
+  border-radius: 50%;
+  background-color: #ffffff;
+  cursor: pointer;
+  outline: none;
+  padding: 6px;
+
+  &:checked {
+    background-color: #646464; /* Verde cuando está seleccionado */
+    border-color: #646464;
+  }
+`;
