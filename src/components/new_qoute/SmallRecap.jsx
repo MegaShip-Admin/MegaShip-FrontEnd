@@ -98,7 +98,7 @@ export default function SmallRecap() {
     <Column>
       <Card>
         {
-          (selectedTransport === 'Maritimo' && selectedType === 'Exclusivo' || selectedTransport === 'Terrestre' && selectedType === 'Consolidado')
+          (selectedTransport === 'Maritimo' && selectedType === 'Exclusivo' || selectedTransport === 'Terrestre' && selectedType === 'Exclusivo')
             ? (
               <ScrollableContent>
                 <Title>Resumen de las Cargas</Title>

@@ -60,7 +60,7 @@ export default function AppRouter() {
           </Routes>
           <ToastContainer
             position="top-right"
-            autoClose={1500} />
+            autoClose={3000} />
         </MainContent>
       </Layout>
     </BrowserRouter>

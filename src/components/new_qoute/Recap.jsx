@@ -208,7 +208,7 @@ export default function Recap() {
                         <RowForList>
                           <Label>Cantidad de Contenedores: </Label> <Pp>{container.containerCount}</Pp>
                         </RowForList>
-                        {container.danger !== '' && (
+                        {container.danger && (
                           <RowForList>
                             <Label>Peligroso: </Label> <Pp>{container.danger}</Pp>
                           </RowForList>

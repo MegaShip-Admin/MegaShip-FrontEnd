@@ -1,5 +1,4 @@
-lista de cargas tiene q reiniciar si cambia selec
+lista de cargas tiene q reiniciar si cambia select
 rehacer estados origen y destino 
-ver tutorial mensaje toastify negrita
 
 conectar back
