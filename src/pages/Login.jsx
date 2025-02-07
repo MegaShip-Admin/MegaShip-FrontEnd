@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import {create} from 'zustand';
 import { useNavigate } from 'react-router-dom';
 import {users} from '../pages/pruebas';
+import {useAuthStore} from '../stores/authStore';
+import axios from 'axios';
+
 
 const OtherContainer = styled.div `
 display: flex;
@@ -35,7 +38,7 @@ justify-content: center;
 width: 45vw;
 background: #fff;
 `
-const DivLogin = styled.div`
+const DivLogin = styled.form`
 width: 50%;
 height: 45%;
 display: flex;
@@ -126,40 +129,35 @@ const useStore = create((set) => ({
   toggleRememberMe: () => set((state) => ({rememberMe: !state.rememberMe})),
 }));
 
-const useAuthStore = create((set) => ({
-  user: null,
-  token: null,
-  isAuthenticated: false,
-  login: (user, token) => set({ user, token, isAuthenticated: true}), // inicia sesión
-  logout: () => set({ user: null, token: null, isAuthenticated: false}), // cierra sesión
-}))
 
 export default function Login() {
   const {rememberMe, toggleRememberMe} = useStore(); // para el checkbox
   const [email, setemail] = useState(''); // guarda el correo
   const [password, setpassword] = useState('') // guarda la contraseña
   const login = useAuthStore((state) => state.login); // obtiene la funcion de login 
-  const navigate = useNavigate(); // crea funsion para rederigir
+  const navigate = useNavigate(); // crea función para rederigir
+  const [userData, setUserData] = useState(null);
+  const [error, setError] = useState(null);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    // const user = users.find((u) => u.email === email && u.password === password);
-    
-    // if (user) {
-    //   login( user.email, 'fake-token');
-    //   console.log("Redirigiendo...");
-    //   navigate('/configuraciones')
-    // } else {
-    //   alert('Credenciales incorrectas');
-    // }
-    useEffect(() => {
-      console.log('email', email);
-      console.log('pass', password);
-      
-      
-    }, [email, password]);
-    navigate('/')
+  
+    if (!email || !password) {
+      alert('Por favor, completa todos los campos.');
+      return;
+    }
+    axios.post(`http://localhost:3000/vendedor/:email`, { email, password })
+      .then((response) => {
+        setUserData(response.data); // Guardamos la respuesta en el estado
+        console.log('hola', response.data);
+        navigate("/");
+        
+      })
+      .catch((error) => {
+        setError('Error al iniciar sesión');
+        console.error('Error', error);
+      });
   };
   
   return (
