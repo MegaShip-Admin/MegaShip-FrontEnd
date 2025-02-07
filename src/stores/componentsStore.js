@@ -2,29 +2,29 @@ import { create } from 'zustand';
 
 const useComponentStore = create((set) => ({
   //Cliente
-  company: "",
-  name: "",
-  email: "",
-  phone: "",
+  company: null,
+  name: null,
+  email: null,
+  phone: null,
   setCompany: (option) => set({ company: option }),
   setName: (option) => set({ name: option }),
   setEmail: (option) => set({ email: option }),
   setPhone: (option) => set({ phone: option }),
 
   //Trayecto
-  origin: "",
-  destiny: "",
-  incoterms: "",
+  origin: null,
+  destiny: null,
+  incoterms: null,
   setOrigin: (option) => set({ origin: option }),
   setDestiny: (option) => set({ destiny: option }),
   setIncoterm: (option) => set({ incoterms: option }),
 
   //Carga y lista de cargas
-  containerType: "",
-  containerCount: "",
-  bulkType: "",
-  bulkVolume: "",
-  bulkWeight: "",
+  containerType: null,
+  containerCount: null,
+  bulkType: null,
+  bulkVolume: null,
+  bulkWeight: null,
   containerList: [],
   nextContainerId: 1,
   setContainerType: (option) => set({ containerType: option }),
@@ -46,7 +46,7 @@ const useComponentStore = create((set) => ({
   clearContainerList: () => set({ containerList: [] }),
   isChecked: false,
   setIsChecked: () => set((state) => ({ isChecked: !state.isChecked })),
-  danger: "",
+  danger: null,
   setDanger: (option) => set({ danger: option }),
 
   //Costos
@@ -82,8 +82,8 @@ const useComponentStore = create((set) => ({
   }),
 
   //Servicio
-  serviceType: "",
-  estimatedDays: "",
+  serviceType: null,
+  estimatedDays: null,
   startDate: null,
   endDate: null,
   setServiceType: (option) => set({ serviceType: option }),
@@ -92,8 +92,8 @@ const useComponentStore = create((set) => ({
   setEndDate: (option) => set({ endDate: option }),
 
   //Deposito
-  deposit: "",
-  leaving: "",
+  deposit: null,
+  leaving: null,
   setDeposit: (option) => set({ deposit: option }),
   setLeaving: (option) => set({ leaving: option }),
 

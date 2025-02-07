@@ -98,7 +98,7 @@ export default function SmallRecap() {
     <Column>
       <Card>
         {
-          (selectedTransport === 'Maritimo' && selectedType === 'Consolidado' || selectedTransport === 'Terrestre' && selectedType === 'Consolidado')
+          (selectedTransport === 'Maritimo' && selectedType === 'Exclusivo' || selectedTransport === 'Terrestre' && selectedType === 'Consolidado')
             ? (
               <ScrollableContent>
                 <Title>Resumen de las Cargas</Title>
@@ -123,7 +123,7 @@ export default function SmallRecap() {
                         <Row>
                           <Label>Cantidad de Contenedores: </Label> <Pp>{container.containerCount}</Pp>
                         </Row>
-                        {container.danger !== '' && (
+                        {container.danger && (
                           <Row>
                             <Label>Peligroso: </Label> <Pp>{container.danger}</Pp>
                           </Row>
@@ -163,7 +163,7 @@ export default function SmallRecap() {
                         <Row>
                           <Label>Volumen Bulto: </Label> <Pp>{container.bulkVolume}</Pp>
                         </Row>
-                        {container.danger !== '' && (
+                        {container.danger && (
                           <Row>
                             <Label>Peligroso: </Label> <Pp>{container.danger}</Pp>
                           </Row>

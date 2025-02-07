@@ -105,20 +105,20 @@ export default function FirstSteps() {
         <IMPEXP>
           <ButtonGroup>
             <Button
-              $isActive={ActiveTab === 'Exportación'}
-              onClick={() => {
-                setActiveTab('Exportación'); // Cambia la pestaña activa
-              }}
-            >
-              Exportación
-            </Button>
-            <Button
               $isActive={ActiveTab === 'Importación'}
               onClick={() => {
                 setActiveTab('Importación'); // Cambia la pestaña activa
               }}
             >
               Importación
+            </Button>
+            <Button
+              $isActive={ActiveTab === 'Exportación'}
+              onClick={() => {
+                setActiveTab('Exportación'); // Cambia la pestaña activa
+              }}
+            >
+              Exportación
             </Button>
           </ButtonGroup>
         </IMPEXP>

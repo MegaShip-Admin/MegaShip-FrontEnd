@@ -1,8 +1,10 @@
 import styled from 'styled-components';
+import { toast } from 'react-toastify';
 import CreatableSelect from 'react-select/creatable';
 import Select from 'react-select'
 import useProgressStore from '../../stores/progressStore';
 import useComponentStore from '../../stores/componentsStore';
+import { isNumber, isRequired, isString } from '../../utils/validations';
 
 const Wrapper = styled.div`
   display: flex;
@@ -248,22 +250,6 @@ const BotonContainer = styled.div`
   margin-top: 20px;
 `;
 
-const opcionesTipo = [
-  { value: 'generalpurpose', label: 'General Purpose' },
-  { value: 'reefer', label: 'Reefer' },
-  { value: 'flatrack', label: 'Flat Rack' },
-  { value: 'opentop', label: 'Open Top' },
-  { value: 'tank', label: 'Tank' },
-  { value: 'highcube', label: 'High Cube' },
-  { value: 'nor', label: 'NOR' },
-];
-
-const opcionesBulto = [
-  { value: 'palet', label: 'Palet' },
-  { value: 'caja', label: 'Caja' },
-  { value: 'rollo', label: 'Rollo' },
-];
-
 const Container = styled.div`
 display: flex;
 align-items: center;
@@ -303,6 +289,22 @@ flex-direction: column;
 width: 400px;
 `;
 
+const opcionesTipo = [
+  { value: 'generalpurpose', label: 'General Purpose' },
+  { value: 'reefer', label: 'Reefer' },
+  { value: 'flatrack', label: 'Flat Rack' },
+  { value: 'opentop', label: 'Open Top' },
+  { value: 'tank', label: 'Tank' },
+  { value: 'highcube', label: 'High Cube' },
+  { value: 'nor', label: 'NOR' },
+];
+
+const opcionesBulto = [
+  { value: 'palet', label: 'Palet' },
+  { value: 'caja', label: 'Caja' },
+  { value: 'rollo', label: 'Rollo' },
+];
+
 
 export default function Load() {
   const {
@@ -328,17 +330,34 @@ export default function Load() {
   } = useComponentStore();
 
   const handleAddContainer = () => {
-    const newContainer = {
-      containerType,
-      containerCount,
-      bulkType,
-      bulkVolume,
-      bulkWeight,
-      danger,
-    };
+    let validations = {};
+    if (selectedType === "Consolidado") {
+      validations.bulkType = isRequired(bulkType, "Tipo de Bulto") !== true ? isRequired(bulkType, "Tipo de Bulto") : isString(bulkType, "Tipo de Bulto");
+      validations.bulkVolume = isRequired(bulkVolume, "Volumen") !== true ? isRequired(bulkVolume, "Volumen") : isNumber(bulkVolume, "Volumen");
+      validations.bulkWeight = isRequired(bulkWeight, "Peso") !== true ? isRequired(bulkWeight, "Peso") : isNumber(bulkWeight, "Peso");
+      if (isChecked) {
+        validations.danger = isRequired(danger, "Peligroso")
+      }
+    } else {
+      validations.containerType = isRequired(containerType, "Tipo de Contenedor") !== true ? isRequired(containerType, "Tipo de Contenedor") : isString(containerType, "Tipo de Contenedor");
+      validations.containerCount = isRequired(containerCount, "Cantidad de contenedores") !== true ? isRequired(containerCount, "Cantidad de contenedores") : isNumber(containerCount, "Cantidad de contenedores");
+      if (isChecked) {
+        validations.danger = isRequired(danger, "Peligroso")
+      }
+    }
+
+    let errors = Object.values(validations).filter(error => error !== true);
+    if (errors.length > 0) {
+      errors.forEach(error => toast.error(error));
+      return;
+    }
+
+    let newContainer = selectedType === "Consolidado"
+      ? { bulkType, bulkWeight, bulkVolume, ...(isChecked && { danger }) }
+      : { containerType, containerCount, ...(isChecked && { danger }) };
+
     setContainerList(newContainer);
-    console.log(newContainer)
-    // Reset the states after adding
+    console.log(newContainer) // delete later
     setContainerType('');
     setContainerCount('');
     setBulkType('');
@@ -350,7 +369,7 @@ export default function Load() {
   return (
     <Wrapper>
       {
-        (selectedTransport === 'Maritimo' && selectedType === 'Consolidado' || selectedTransport === 'Terrestre' && selectedType === 'Consolidado')
+        (selectedTransport === 'Maritimo' && selectedType === 'Exclusivo' || selectedTransport === 'Terrestre' && selectedType === 'Exclusivo')
           ? (
             <Column>
               <Card>

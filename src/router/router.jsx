@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import useHeaderStore from '../stores/headerStore';
 import Header from '../components/common/Header';
 import IndexPage from '../pages/IndexPage';
@@ -56,6 +58,9 @@ export default function AppRouter() {
             <Route path="/login" element={<Login />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
+          <ToastContainer
+            position="top-right"
+            autoClose={1500} />
         </MainContent>
       </Layout>
     </BrowserRouter>

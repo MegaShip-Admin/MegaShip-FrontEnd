@@ -217,7 +217,10 @@ export default function Cost() {
               <Input
                 placeholder="USD"
                 value={cost.value}
-                onChange={(e) => handleFieldChange(cost.id, e.target.value)}
+                onChange={(e) => {
+                  console.log(`Input changed - Value: ${e.target.value}`);
+                  handleFieldChange(cost.id, e.target.value);
+                }}
               />
             </div>
           ))}

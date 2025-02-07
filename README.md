@@ -14,6 +14,7 @@ El frontend de CarToFix utiliza las siguientes tecnologías modernas para ofrece
 - **Zustand**: Biblioteca ligera para manejar el estado global en aplicaciones de React.
 - **React select**: Librería para crear menús desplegables personalizables y funcionales en aplicaciones de React.
 - **React datatable**: Herramienta para mostrar y gestionar tablas de datos dinámicas e interactivas en aplicaciones de React.
+- **React Toastify**: Biblioteca para mostrar notificaciones en la aplicación.
 
 ## Instalación
 

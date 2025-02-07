@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 
 const useProgressStore = create((set) => ({
+  errors: {},
+  setErrors: (newErrors) => set({ errors: newErrors }),
 
   ActiveTab: 'Importación', // Initial state for ActiveTab
   setActiveTab: (tab) => set({ ActiveTab: tab }), // Method to update ActiveTab
@@ -9,16 +11,12 @@ const useProgressStore = create((set) => ({
   selectedType: '', // Add selectedType initial state
   setSelectedType: (option) => set({ selectedType: option }), // Add setter for selectedOption
 
-
   currentStep: 1, // Current step
   setCurrentStep: (step) => set({ currentStep: step }),
   steps: [
-    { id: 1, value: null, path: '' },
-    { id: 2, value: null, path: '' },
-    { id: 3, value: null, path: '' },
-    { id: 4, value: null, path: '' },
-    { id: 5, value: null, path: '' },
-    { id: 6, value: null, path: '' },
+    { id: 1, value: '', path: '' },
+    { id: 2, value: '', path: '' },
+    { id: 3, value: '', path: '' },
   ],
   // Update the steps array based on the state values
   updateSteps: () => {

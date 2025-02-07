@@ -121,11 +121,13 @@ export default function ListOfLoads() {
   const handleRemove = (id) => {
     removeContainerById(id);
   };
+
+
   return (
     <Column>
       <Card>
         {
-          (selectedTransport === 'Maritimo' && selectedType === 'Consolidado' || selectedTransport === 'Terrestre' && selectedType === 'Consolidado')
+          (selectedTransport === 'Maritimo' && selectedType === 'Exclusivo' || selectedTransport === 'Terrestre' && selectedType === 'Exclusivo')
             ? (
               <ScrollableContent>
                 <Title>Lista de Cargas Asociadas</Title>
@@ -139,7 +141,7 @@ export default function ListOfLoads() {
                         <Row>
                           <Label>Cantidad de Contenedores: </Label> <Pp>{container.containerCount}</Pp>
                         </Row>
-                        {container.danger !== '' && (
+                        {container.danger && (
                           <Row>
                             <Label>Peligroso: </Label> <Pp>{container.danger}</Pp>
                           </Row>
@@ -171,7 +173,7 @@ export default function ListOfLoads() {
                         <Row>
                           <Label>Volumen Bulto: </Label> <Pp>{container.bulkVolume}</Pp>
                         </Row>
-                        {container.danger !== '' && (
+                        {container.danger && (
                           <Row>
                             <Label>Peligroso: </Label> <Pp>{container.danger}</Pp>
                           </Row>

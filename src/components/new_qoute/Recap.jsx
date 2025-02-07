@@ -195,7 +195,7 @@ export default function Recap() {
           <Row>
             <Big> Lista de Cargas</Big>
           </Row>
-          {(selectedTransport === 'Maritimo' && selectedType === 'Consolidado' || selectedTransport === 'Terrestre' && selectedType === 'Consolidado')
+          {(selectedTransport === 'Maritimo' && selectedType === 'Exclusivo' || selectedTransport === 'Terrestre' && selectedType === 'Exclusivo')
             ? (
               <ScrollableContent>
                 {containerList.length > 0 ? (

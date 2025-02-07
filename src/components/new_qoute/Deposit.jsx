@@ -138,9 +138,9 @@ const StyledReactSelect = styled(Select).attrs({
 
 
 const opcionesDeposit = [
-  { value: 'ciudadvieja', label: 'Ciudad Vieja' },
-  { value: 'pocitos', label: 'Pocitos' },
-  { value: 'pinar', label: 'Pinar' },
+  { value: 'demonsa', label: 'DEMONSA' },
+  { value: 'bomport', label: 'BOMPORT' },
+  { value: 'portalsur', label: 'PORTAL SUR' },
 ];
 
 export default function Deposit() {

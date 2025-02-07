@@ -24,39 +24,25 @@ const Columns = styled.div`
 `;
 
 export default function Services() {
-  const { ActiveTab, selectedTransport, selectedType } = useProgressStore();
-  if (ActiveTab === "Importación") {
-    if (
-      selectedType === "Consolidado" &&
-      (selectedTransport === "Maritimo" || selectedTransport === "Terrestre")
-    ) {
-      return (
-        <Wrapper>
-          <ContentMain>
-            <Columns>
-              <Service />
-              <Deposit />
-            </Columns>
-            <Columns>
-              <Clarifications />
-            </Columns>
-          </ContentMain>
-        </Wrapper>
-      );
-    } else {
-      return (
-        <Wrapper>
-          <ContentMain>
-            <Columns>
-              <Service />
-            </Columns>
-            <Columns>
-              <Clarifications />
-            </Columns>
-          </ContentMain>
-        </Wrapper>
-      );
-    }
+  const { selectedTransport, selectedType } = useProgressStore();
+
+  if (
+    selectedType === "Consolidado" &&
+    (selectedTransport === "Maritimo" || selectedTransport === "Terrestre")
+  ) {
+    return (
+      <Wrapper>
+        <ContentMain>
+          <Columns>
+            <Service />
+            <Deposit />
+          </Columns>
+          <Columns>
+            <Clarifications />
+          </Columns>
+        </ContentMain>
+      </Wrapper>
+    );
   } else {
     return (
       <Wrapper>
