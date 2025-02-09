@@ -162,7 +162,7 @@ export default function NewUser({ showModal, toggleModal }) {
                   Nombre
                 </SpamLabel>
                 <TextField>
-                  Pablo Riveiro
+             
                 </TextField>
                 <SpamLabel>
                   Email

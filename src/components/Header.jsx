@@ -13,6 +13,7 @@ import UsersB from '../assets/BotonGestionBlanco.svg';
 import SettingB from '../assets/OpcionesBlanco.svg';
 
 
+
 const StyledHeader = styled.header`
   background-color: #724D93;
   height: 100vh;
@@ -94,8 +95,11 @@ export default function Header() {
   const { headerCollapsed, expandHeader } = useStore();
   const location = useLocation();
 
+
   return (
+    <nav collapsed={headerCollapsed ? "true" : undefined}>
     <StyledHeader $collapsed={headerCollapsed} onClick={expandHeader}>
+
       <LogoLink to="/login">
         <LogoCircle>MB</LogoCircle>
         <LogoText $collapsed={headerCollapsed}>MegaBoss</LogoText>
@@ -123,5 +127,6 @@ export default function Header() {
         </StyledLink>
       </StyledNav>
     </StyledHeader>
+    </nav>
   );
 }
