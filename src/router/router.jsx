@@ -9,6 +9,7 @@ import UserManagement from '../pages/UserManagement';
 import Header from '../components/Header';
 import useStore from '../stores/store';
 import { useAuthStore } from '../stores/authStore';
+
 const Layout = styled.div`
   display: flex;
   height: 100vh;
@@ -23,19 +24,15 @@ const MainContent = styled.main`
 export default function AppRouter() {
   const { headerCollapsed, collapseHeader } = useStore();
   const { isAuthenticated } = useAuthStore();
+
   return (
     <BrowserRouter>
       <Routes>
-        {/* Si el usuario no está autenticado, redirige al login */}
-        {!isAuthenticated ? (
-          <>
-            <Route path="/login" element={<Login />} />
-            <Route path="*" element={<Navigate to="/login" />} />
-          </>
-        ) : (
-          <Route
-            path="/*"
-            element={
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/*"
+          element={
+            isAuthenticated ? (
               <Layout>
                 <Header />
                 <MainContent $headerCollapsed={headerCollapsed} onClick={collapseHeader}>
@@ -49,9 +46,11 @@ export default function AppRouter() {
                   </Routes>
                 </MainContent>
               </Layout>
-            }
-          />
-        )}
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

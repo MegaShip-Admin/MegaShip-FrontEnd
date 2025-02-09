@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import Isologo from '../assets/Isologo.svg';
 import { useState, useEffect } from "react";
-import {create} from 'zustand';
+import { create } from 'zustand';
 import { useNavigate } from 'react-router-dom';
-import {users} from '../pages/pruebas';
-import {useAuthStore} from '../stores/authStore';
+import { users } from '../pages/pruebas';
+import { useAuthStore } from '../stores/authStore';
 import axios from 'axios';
 
 
-const OtherContainer = styled.div `
+const OtherContainer = styled.div`
 display: flex;
 flex-direction: row;
 width: 100vw;
@@ -126,12 +126,12 @@ const Label = styled.label`
 
 const useStore = create((set) => ({
   rememberMe: false,
-  toggleRememberMe: () => set((state) => ({rememberMe: !state.rememberMe})),
+  toggleRememberMe: () => set((state) => ({ rememberMe: !state.rememberMe })),
 }));
 
 
 export default function Login() {
-  const {rememberMe, toggleRememberMe} = useStore(); // para el checkbox
+  const { rememberMe, toggleRememberMe } = useStore(); // para el checkbox
   const [email, setemail] = useState(''); // guarda el correo
   const [password, setpassword] = useState('') // guarda la contraseña
   const login = useAuthStore((state) => state.login); // obtiene la funcion de login 
@@ -142,30 +142,28 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+
     if (!email || !password) {
       alert('Por favor, completa todos los campos.');
       return;
     }
-    axios.post(`http://localhost:3000/vendedor/:email`, { email, password })
+    axios.post(`http://localhost:3000/vendedor`, { email, password })
       .then((response) => {
-        setUserData(response.data); // Guardamos la respuesta en el estado
-        console.log('hola', response.data);
+        login(response.data);
         navigate("/");
-        
       })
       .catch((error) => {
         setError('Error al iniciar sesión');
         console.error('Error', error);
       });
   };
-  
+
   return (
     <>
       <OtherContainer>
         <DivLeft>
           <LeftSide>
-            <Img src={Isologo} alt="ISologo"/>
+            <Img src={Isologo} alt="ISologo" />
           </LeftSide>
         </DivLeft>
         <RightSide>
@@ -173,7 +171,7 @@ export default function Login() {
             <InputContainer>
               <Label>Email</Label>
               <Input
-                type= 'email'
+                type='email'
                 placeholder="Megaship@gmail.com"
                 value={email}
                 onChange={(e) => setemail(e.target.value)}
@@ -193,7 +191,7 @@ export default function Login() {
                 <CheckBox
                   type="checkbox"
                   checked={rememberMe}
-                  onChange={toggleRememberMe}/>
+                  onChange={toggleRememberMe} />
                 <Premember>Recuerdame</Premember>
               </DivInterno>
               <P>Olvide mi contraseña</P>
