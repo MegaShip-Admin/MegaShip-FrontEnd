@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import DataTable from "react-data-table-component";
 import styled from "styled-components";
 import Select from 'react-select'
@@ -9,20 +9,6 @@ import terrestre from "../assets/Mini_Terrestre.svg";
 import maritimo from "../assets/Mini_Maritimo.svg";
 
 const ListOfQuotes = () => {
-
-  const [records, setRecords] = useState([]);
-
-  useEffect(() => {
-    axios.get("http://localhost:3000/trabajos")
-      .then((response) => {
-        console.log("Datos recibidos:", response.data);
-        setRecords(response.data);
-      })
-      .catch((error) => {
-        console.error("Error al obtener datos:", error);
-      });
-  }, []);
-
   const columns = [
     { name: "Transporte", selector: row => row.transporte.props.alt, cell: row => row.transporte, sortable: true },
     { name: "Flujo", selector: row => row.flujo, sortable: true },
@@ -67,7 +53,7 @@ const options = [
     setFilterColumn(selectedOption.value);  // Suponiendo que 'value' es el valor que contiene el nombre de la columna
   };
 
-  const [records1, setRecords1] = useState(data);
+  const [records, setRecords] = useState(data);
   
   const [filterColumn, setFilterColumn] = useState("transporte"); // Columna por defecto
 
@@ -82,7 +68,7 @@ const options = [
         : String(field.props?.alt).toLowerCase().includes(value); // Maneja las imágenes
     });
     
-    setRecords1(filteredRecords);
+    setRecords(filteredRecords);
   };
 
   return (
@@ -105,7 +91,7 @@ const options = [
         <ListContainer>
           <StyledDataTable
             columns={columns}
-            data={records1}
+            data={records}
             selectableRows
             // selectableRowsNoSelectAll
             selectableRowsSingle
