@@ -9,19 +9,47 @@ import terrestre from "../assets/Mini_Terrestre.svg";
 import maritimo from "../assets/Mini_Maritimo.svg";
 
 const ListOfQuotes = () => {
-
   const [records, setRecords] = useState([]);
 
   useEffect(() => {
     axios.get("http://localhost:3000/trabajos")
       .then((response) => {
         console.log("Datos recibidos:", response.data);
-        setRecords(response.data);
+
+        const transformedData = response.data.map(item => ({
+          transporte: getTransportImage(item.medio), // Solo transformamos "medio"
+          flujo: "null",
+          empresa: "null",
+          cliente: null,
+          origen: null,
+          destino: null,
+          costo: null,
+          fecha: null,
+          empleado: null,
+          estado: null,
+        }));
+
+        setRecords(transformedData);
       })
       .catch((error) => {
         console.error("Error al obtener datos:", error);
       });
   }, []);
+
+
+    // Función para asignar la imagen según el medio de transporte
+    const getTransportImage = (medio) => {
+      switch (medio) {
+        case 1:
+          return <img src={terrestre} alt="Terrestre" />;
+        case 2:
+          return <img src={maritimo} alt="Maritimo" />;
+        case 3:
+          return <img src={aereo} alt="Aereo" />;
+        default:
+          return "Desconocido";
+      }
+    };
 
   const columns = [
     { name: "Transporte", selector: row => row.transporte.props.alt, cell: row => row.transporte, sortable: true },
@@ -105,7 +133,7 @@ const options = [
         <ListContainer>
           <StyledDataTable
             columns={columns}
-            data={records1}
+            data={records}
             selectableRows
             // selectableRowsNoSelectAll
             selectableRowsSingle
