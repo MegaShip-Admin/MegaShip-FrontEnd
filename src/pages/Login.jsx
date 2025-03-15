@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import Isologo from '../assets/Isologo.svg';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {create} from 'zustand';
 import { useNavigate } from 'react-router-dom';
-import {users} from '../pages/pruebas';
 import {useAuthStore} from '../stores/authStore';
 import axios from 'axios';
 
@@ -137,28 +136,34 @@ export default function Login() {
   const login = useAuthStore((state) => state.login); // obtiene la funcion de login 
   const navigate = useNavigate(); // crea función para rederigir
   const [userData, setUserData] = useState(null);
-  const [error, setError] = useState(null);
 
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("handleSubmit ejecutado");
+    console.log("Email:", email, "Password:", password);
+
+
   
     if (!email || !password) {
-      alert('Por favor, completa todos los campos.');
+      alert("Por favor, completa todos los campos.");
       return;
     }
-    axios.post(`http://localhost:3000/vendedor/:email`, { email, password })
+  
+    axios
+      .post(`http://localhost:3000/vendedor/${email}`, { email, password })
       .then((response) => {
-        setUserData(response.data); // Guardamos la respuesta en el estado
-        console.log('hola', response.data);
-        navigate("/");
-        
+        setUserData(response.data);
+        console.log("Usuario autenticado", response.data);
+        login();
+        navigate("/nueva_cotizacion"); // Redirigir si el login es exitoso
       })
       .catch((error) => {
-        setError('Error al iniciar sesión');
-        console.error('Error', error);
+        alert("Error al iniciar sesión");
+        console.error("Error", error);
       });
   };
+  
   
   return (
     <>
