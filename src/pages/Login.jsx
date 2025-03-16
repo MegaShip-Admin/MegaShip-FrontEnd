@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import Isologo from '../assets/Isologo.svg';
+import { AiFillEye } from "react-icons/ai";
+import { AiFillEyeInvisible } from "react-icons/ai";
 import { useState } from "react";
-import {create} from 'zustand';
 import { useNavigate } from 'react-router-dom';
 import {useAuthStore} from '../stores/authStore';
 import axios from 'axios';
 
 
-const OtherContainer = styled.div `
+const OtherContainer = styled.div`
 display: flex;
 flex-direction: row;
 width: 100vw;
@@ -51,40 +52,18 @@ box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
 const Div = styled.div`
 display: flex;
 flex-direction: row;
-justify-content: space-between;
+justify-content: space-around;
 width: 82%;
+margin-top: 11px;
 `
 const DivInterno = styled.div`
 display: flex;
 align-items: center;
 flex-direction: row;
 `
-const CheckBox = styled.input.attrs({ type: 'checkbox' })`
-width: 15px;
-height: 15px;
-border-radius: 5px;
-margin-right: 10px;
-background-color: ${props => (props.checked ? '#724D93' : '#fff')};
-appearance: none;
-border: 1px solid #724D93;
-
-&:checked {
-  background-color: #724D93;
-}
-`
-const Premember = styled.p`
-font-size: 16px;
-color: #724D93;
-`
-const P = styled.p`
-font-size: 16px;
-color: #724D93;
-font-weight: bold;
-cursor: pointer;
-`
 const Button = styled.button`
 background: #724D93;
-margin-top: 48px;
+margin-top: 15px;
 width: 50%;
 height: 13%;
 border-radius: 25px;
@@ -122,31 +101,47 @@ const Label = styled.label`
   padding: 0 5px;
   
 `
-
-const useStore = create((set) => ({
-  rememberMe: false,
-  toggleRememberMe: () => set((state) => ({rememberMe: !state.rememberMe})),
-}));
-
-
+// Icono de ocultar o mostrar contraseña
+const IconPassword = styled.div`
+position: absolute;
+right: 8px;
+top: 58%;
+transform: translateY(-50%);
+cursor: pointer;
+font-size: 22px;
+color: #724D93;
+`
+// texto de error al iniciar sesión
+const ErrorText = styled.p`
+color: #d91d1d;
+font-weight: bold;
+font-size: 16px;
+margin-top: 12px;
+text-align: left;
+width: 100%;
+`
 export default function Login() {
-  const {rememberMe, toggleRememberMe} = useStore(); // para el checkbox
   const [email, setemail] = useState(''); // guarda el correo
   const [password, setpassword] = useState('') // guarda la contraseña
+  const [showPassword, setShowPassword] = useState(false); // Ocultar o mostrar contraseña
   const login = useAuthStore((state) => state.login); // obtiene la funcion de login 
   const navigate = useNavigate(); // crea función para rederigir
   const [userData, setUserData] = useState(null);
+  const [Error, setError] = useState('');
 
-
+  const togglePassword = () => {
+    setShowPassword(!showPassword)
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("handleSubmit ejecutado");
     console.log("Email:", email, "Password:", password);
+    setError('');
 
 
   
     if (!email || !password) {
-      alert("Por favor, completa todos los campos.");
+      setError("Por favor, completa todos los campos.");
       return;
     }
   
@@ -156,10 +151,10 @@ export default function Login() {
         setUserData(response.data);
         console.log("Usuario autenticado", response.data);
         login();
-        navigate("/nueva_cotizacion"); // Redirigir si el login es exitoso
+        navigate("/"); // Redirigir si el login es exitoso
       })
       .catch((error) => {
-        alert("Error al iniciar sesión");
+        setError("Email o contraseña incorrecta.");
         console.error("Error", error);
       });
   };
@@ -170,7 +165,7 @@ export default function Login() {
       <OtherContainer>
         <DivLeft>
           <LeftSide>
-            <Img src={Isologo} alt="ISologo"/>
+            <Img src={Isologo} alt="ISologo" />
           </LeftSide>
         </DivLeft>
         <RightSide>
@@ -178,7 +173,7 @@ export default function Login() {
             <InputContainer>
               <Label>Email</Label>
               <Input
-                type= 'email'
+                type='email'
                 placeholder="Megaship@gmail.com"
                 value={email}
                 onChange={(e) => setemail(e.target.value)}
@@ -187,21 +182,19 @@ export default function Login() {
             <InputContainer>
               <Label>Contraseña</Label>
               <Input
-                type='password'
+                type={showPassword ? 'text' : 'Password'}
                 placeholder="********"
                 value={password}
                 onChange={(e) => setpassword(e.target.value)}
               />
+              <IconPassword onClick={togglePassword}>
+                {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
+              </IconPassword>
             </InputContainer>
             <Div>
               <DivInterno>
-                <CheckBox
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={toggleRememberMe}/>
-                <Premember>Recuerdame</Premember>
+                {Error && <ErrorText>{Error}</ErrorText>}
               </DivInterno>
-              <P>Olvide mi contraseña</P>
             </Div>
             <Button type="submit" >
               Iniciar Sesión

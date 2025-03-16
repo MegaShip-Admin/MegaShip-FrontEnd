@@ -96,7 +96,7 @@ export default function Header() {
 
   return (
     <StyledHeader $collapsed={headerCollapsed} onClick={expandHeader}>
-      <LogoLink to="/login">
+      <LogoLink to="/">
         <LogoCircle>MB</LogoCircle>
         <LogoText $collapsed={headerCollapsed}>MegaBoss</LogoText>
       </LogoLink>
