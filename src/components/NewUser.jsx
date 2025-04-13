@@ -25,7 +25,7 @@ const Modal = styled.div`
   background-color: #fbfafa; 
   border-radius: 30px;
   color: #724D93;
-  height: 45vb;
+  height: 65vb;
   width: 40vw;
   border: 1.8px solid #724D93; 
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 5px;
@@ -68,6 +68,17 @@ const InputsSection = styled.div`
   width: 65vw;
   height: 100%;
   color: #787878;
+  input {
+    border: 0;
+    width: 90%;
+    background-color: #fbfafa;
+  }
+
+input:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
 `;
 
 const TextField = styled.div`
@@ -87,7 +98,7 @@ const SpamLabel = styled.div`
   position: relative;
   top: 10px;
   left: 25px;
-  background-color: aliceblue;
+  background-color: #fbfafa;
   font-weight: 600;
   width: fit-content;
   padding: 0 15px 0 5px;
@@ -139,15 +150,40 @@ const OptionsButtons = styled.div`
   font-weight: 600;
 `;
 
-function addUser(newArray, callback) {
-  console.log('agregar este usuario', newArray);
-  if (callback) {
-    callback();
+  function addUser(newUser, callback) {
+    fetch("http://localhost:3000/vendedor", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newUser),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error al agregar usuario");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Usuario agregado exitosamente:", data);
+        if (callback) {
+          callback();
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   }
-}
+
+
 
 export default function NewUser({ showModal, toggleModal }) {
-  let letters = 'PR';
+  let letters = 'MS';
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [rango, setRango] = useState("");
   return (
     <>
       {showModal && (
@@ -158,30 +194,54 @@ export default function NewUser({ showModal, toggleModal }) {
             </BoxTitle>
             <UserBox>
               <InputsSection>
-                <SpamLabel>
-                  Nombre
-                </SpamLabel>
-                <TextField>
-             
-                </TextField>
-                <SpamLabel>
-                  Email
-                </SpamLabel>
-                <TextField>
-                </TextField>
-                <SpamLabel>
-                  Telefono
-                </SpamLabel>
-                <TextField>
-                </TextField>
-                <ButtonsArea>
-                  <OptionsButtons onClick={toggleModal}>
-                    Cerrar
-                  </OptionsButtons>
-                  <OptionsButtons onClick={() => addUser([{ usuario: 'ejemplo' }], toggleModal)}>
-                    Agregar
-                  </OptionsButtons>
-                </ButtonsArea>
+                <form onSubmit={(e) => { e.preventDefault(); addUser({ name, email, phone, password, rango }, toggleModal); }}>
+                  <SpamLabel>
+                    Nombre
+                  </SpamLabel>
+                  <TextField>
+                    <input type='text' value={name}
+                      onChange={(e) => setName(e.target.value)} />
+                  </TextField>
+                  <SpamLabel>
+                    Email
+                  </SpamLabel>
+                  <TextField>
+                    <input type='text' value={email}
+                      onChange={(e) => setEmail(e.target.value)} />
+                  </TextField>
+                  <SpamLabel>
+                    Telefono
+                  </SpamLabel>
+                  <TextField>
+                    <input type='text' value={phone}
+                      onChange={(e) => setPhone(e.target.value)} />
+                  </TextField>
+                  <SpamLabel>
+                    Password
+                  </SpamLabel>
+                  <TextField>
+                    <input type='text' value={password}
+                      onChange={(e) => setPassword(e.target.value)} />
+                  </TextField>
+                  <SpamLabel>
+                    Rango
+                  </SpamLabel>
+                  <TextField>
+                    <input type='text' value={rango}
+                      onChange={(e) => setRango(e.target.value)} />
+                  </TextField>
+                  <ButtonsArea>
+                    <OptionsButtons onClick={toggleModal}>
+                      Cerrar
+                    </OptionsButtons>
+                    <OptionsButtons onClick={(e) => {
+                      e.preventDefault();
+                      addUser({ name, email, phone, password, rango}, toggleModal);
+                    }}>
+                      Agregar
+                    </OptionsButtons>
+                  </ButtonsArea>
+                </form>
               </InputsSection>
               <ProfilePicArea>
                 <UserPic>{letters}</UserPic>
