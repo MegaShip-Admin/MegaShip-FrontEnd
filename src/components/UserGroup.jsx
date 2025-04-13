@@ -26,11 +26,10 @@ const SliderContainer = styled.div`
 const PagesSlider = styled.div`
   display: flex;
   margin-top: 2vh;;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
-  height: 1px;
   width: 50%;
-  background-color: #6f6f6f;
+
 `;
 
 const PageNumber = styled.div`
