@@ -1,6 +1,11 @@
 import { create } from 'zustand';
+import useProgressStore from './progressStore';
 
-const useComponentStore = create((set) => ({
+const useComponentStore = create((set) => {
+  return {
+  //Generar numero cotizacion
+  //numberCotizacion: leer base de datos y generar numero
+
   //Cliente
   company: null,
   name: null,
@@ -12,7 +17,7 @@ const useComponentStore = create((set) => ({
   setPhone: (option) => set({ phone: option }),
 
   //Trayecto
-  origin: null,
+  origin: [],
   destiny: null,
   incoterms: null,
   setOrigin: (option) => set({ origin: option }),
@@ -20,18 +25,26 @@ const useComponentStore = create((set) => ({
   setIncoterm: (option) => set({ incoterms: option }),
 
   //Carga y lista de cargas
+  mercaderia: null,
   containerType: null,
+  containerSize: null,
   containerCount: null,
+  containerWeight: null,
   bulkType: null,
   bulkVolume: null,
   bulkWeight: null,
+  bulkCount: null,
   containerList: [],
   nextContainerId: 1,
+  setMercaderia: (option) => set({ mercaderia: option }),
   setContainerType: (option) => set({ containerType: option }),
+  setContainerSize:(option) => set({ containerSize: option }),
   setContainerCount: (option) => set({ containerCount: option }),
+  setContainerWeight: (option) => set({ containerWeight: option }),
   setBulkType: (option) => set({ bulkType: option }),
   setBulkVolume: (option) => set({ bulkVolume: option }),
   setBulkWeight: (option) => set({ bulkWeight: option }),
+  setBulkCount: (option) => set({ bulkCount: option }),
   setContainerList: (newContainer) => set((state) => {
     const newId = state.nextContainerId;
     const updatedContainer = { ...newContainer, id: newId };
@@ -45,29 +58,21 @@ const useComponentStore = create((set) => ({
   })),
   clearContainerList: () => set({ containerList: [] }),
   isChecked: false,
-  setIsChecked: () => set((state) => ({ isChecked: !state.isChecked })),
-  danger: null,
+  setIsChecked: (option) => set({ isChecked: option }),
+  danger: false,
   setDanger: (option) => set({ danger: option }),
 
   //Costos
-  costs: [
-    { id: 1, label: "Gastos de Origen", value: 0 },
-    { id: 2, label: "Tarifa", value: 0 },
-    { id: 3, label: "Servicios admin", value: 0 },
-    { id: 4, label: "Handling fee", value: 0 },
-    { id: 5, label: "Deposito", value: 0 },
-  ],
+  costs: [],
+  setCosts: (option) => set({ costs: option }),
   extraServices: false,
   extraServicesActive: () => set((state) => ({ extraServices: !state.extraServices })),
   opcionesExtra: [
-    { value: 'uniffactura', label: 'Unif. Factura' },
-    { value: 'tlx', label: 'TLX' },
-    { value: 'seguro', label: 'Seguro' },
-    { value: 'one', label: 'Opcion 1' },
-    { value: 'two', label: 'Opcion 2' },
-    { value: 'three', label: 'Opcion 3' },
-    { value: 'four', label: 'Opcion 4' },
-    { value: 'five', label: 'Opcion 5' },
+    { value: 0, label: 'Opcion 1' },
+    { value: 0, label: 'Opcion 2' },
+    { value: 0, label: 'Opcion 3' },
+    { value: 0, label: 'Opcion 4' },
+    { value: 0, label: 'Opcion 5' },
   ],
   addExtraField: (label) => set((state) => {
     const newFieldId = state.costs.length + 1;
@@ -83,14 +88,18 @@ const useComponentStore = create((set) => ({
 
   //Servicio
   serviceType: null,
+  transbordo: null,
+  frequencyType: null,
   estimatedDays: null,
-  startDate: null,
+  startDate: new Date().toISOString().split('T')[0],
   endDate: null,
   setServiceType: (option) => set({ serviceType: option }),
+  setTransbordo: (option) => set({ transbordo: option }),
+  setFrequencyType: (option) => set({ frequencyType: option }),
   setEstimatedDays: (option) => set({ estimatedDays: option }),
   setStartDate: (option) => set({ startDate: option }),
   setEndDate: (option) => set({ endDate: option }),
-
+  
   //Deposito
   deposit: null,
   leaving: null,
@@ -129,7 +138,7 @@ const useComponentStore = create((set) => ({
       field.id === id ? { ...field, value } : field
     );
     return { exportationData: updatedFields };
-  }),
+  })}
 
-}));
+});
 export default useComponentStore;

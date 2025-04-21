@@ -1,4 +1,0 @@
-lista de cargas tiene q reiniciar si cambia select
-rehacer estados origen y destino 
-
-conectar back

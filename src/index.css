@@ -1,7 +1,18 @@
-:root,
+
 body {
   margin: 0;
   padding: 0;
   font-family: "Inter", sans-serif;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #E5E5E5; 
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #724D93; 
+  border-radius: 10px;
+}

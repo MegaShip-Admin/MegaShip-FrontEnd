@@ -1,39 +1,48 @@
 import styled from "styled-components";
-import { Outlet } from "react-router-dom";
-import Progress from '../components/new_qoute/Progress';
+import FirstSteps from '../components/FirstSteps';
+import SecondSelection from '../components/SecondSelection';
+import ThirdCustomer from "../components/ThirdCustomer";
+import IncoDestinyOrigin from "../components/IncoDestinyOrigin";
+import TheLoad from "../components/TheLoad";
+import TypePrice from "../components/TypePrice";
+import DisplayContainer from "../components/DisplayContainer";
+import ServiceTimeValid from "../components/ServiceTimeValid";
+import Disclaimers from "../components/Disclaimers";
+import Deposit from "../components/Deposit";
 
 
 const Wrapper = styled.div`
-  height: 100vh;
+  height: 92vh;
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
 `;
 
 const ContentMain = styled.div`
-  margin-top: 3.5%;
+  width: 100vw;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
+  flex-direction: column;
+  >*{
+    border-bottom: 1px solid #ccc;
+    padding: 20px 0;
+  }
 `;
 
-const ProgressBarWrapper = styled.div`
-  height: 10%;
-  width: 100%;
-  margin-bottom: 3.5%;
-`;
 
 export default function NewquoteMain() {
   return (
     <Wrapper>
       <ContentMain>
-        <Outlet />
+        <FirstSteps />
+        <SecondSelection />
+        <ThirdCustomer />
+        <IncoDestinyOrigin />
+        <TheLoad />
+        <Deposit/>
+        <TypePrice />
+        <DisplayContainer />
+        <ServiceTimeValid />
+        <Disclaimers />
       </ContentMain>
-      <ProgressBarWrapper>
-        <Progress />
-      </ProgressBarWrapper>
     </Wrapper>
   )
 }

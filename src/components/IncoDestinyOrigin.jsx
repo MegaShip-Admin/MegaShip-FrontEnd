@@ -1,77 +1,58 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import { useEffect } from 'react';
 import CreatableSelect from 'react-select/creatable';
 import Select from 'react-select'
-import useComponentStore from '../../stores/componentsStore';
-import useProgressStore from '../../stores/progressStore';
+import useComponentStore from '../stores/componentsStore';
+import useProgressStore from '../stores/progressStore';
 
-const Column = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Card = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 25px 45px 45px 45px;
-  border: 1.8px solid #724D93;
-  border-radius: 20px;
-  gap: 5px;
-  background-color: #fbfafa;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 5px;
-  position: relative;
-`;
-
-const Title = styled.label`
-  position: absolute;
-  top: -27px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 30px;
-  background-color: #724D93;
-  color: #fbfafa;
-  font-weight: bold;
-  width: fit-content;
-  padding: 8px 90px;
-  border-radius: 20px;
-  z-index: 1;
-`;
-
+`
+const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 0 120px;
+`
+const ItemBox = styled.div`
+  display: flex;
+  background-color: #FBFAFA;
+  position: relative; 
+`
 const Label = styled.label`
-  position: relative;
-  top: 14px;
-  left: 13px;
-  background-color: #fbfafa;
   color: #724D93;
   font-weight: bold;
+  height: fit-content;
   width: fit-content;
   padding: 0 5px;
-  z-index: 3;
+  background-color: #FBFAFA;
+  z-index: 1;
+  position: absolute;
+  left: 12px;
+  top: -7px;
 `;
-
 const StyledReactCreateSelect = styled(CreatableSelect).attrs({
   classNamePrefix: 'custom-select',
 })`
   font-size: 16px;
   .custom-select__control {
-    border: 1.8px solid #724D93;
+    border: 2px solid #724D93;
     padding: 2px;
     border-radius: 20px;
     box-shadow: none;
     padding-left: 5px;
-    min-width: 500px; 
-    background-color: #fbfafa;
+    width: 400px; 
+    background-color: #FBFAFA;
     &:hover {
       border-color: #724D93;
     }
   }
   .custom-select__single-value {
-    background-color: #fbfafa;
+    background-color: #FBFAFA;
     color: #646464;
   }
   .custom-select__option {
-    background-color: #fbfafa;
+    background-color: #FBFAFA;
     border-radius: 20px;
     color: #646464;
     &:hover{
@@ -92,11 +73,11 @@ const StyledReactCreateSelect = styled(CreatableSelect).attrs({
       border-bottom: 1px solid #BEBDBF;
     }
     &:active {
-      background-color: #fbfafa;
+      background-color: #FBFAFA;
     }
   }
   .custom-select__menu {
-    background-color: #fbfafa;
+    background-color: #FBFAFA;
     border-radius: 20px;
     z-index: 1000;
     ::-webkit-scrollbar {
@@ -125,29 +106,28 @@ const StyledReactCreateSelect = styled(CreatableSelect).attrs({
     display: none;
   }
 `;
-
 const StyledReactSelect = styled(Select).attrs({
   classNamePrefix: 'custom-select',
 })`
   font-size: 16px;
   .custom-select__control {
-    border: 1.8px solid #724D93;
+    border: 2px solid #724D93;
     padding: 2px;
     border-radius: 20px;
     box-shadow: none;
     padding-left: 5px;
-    min-width: 500px; 
-    background-color: #fbfafa;
+    width: 400px; 
+    background-color: #FBFAFA;
     &:hover {
       border-color: #724D93;
     }
   }
   .custom-select__single-value {
-    background-color: #fbfafa;
+    background-color: #FBFAFA;
     color: #646464;
   }
   .custom-select__option {
-    background-color: #fbfafa;
+    background-color: #FBFAFA;
     border-radius: 20px;
     color: #646464;
     &:hover{
@@ -168,11 +148,11 @@ const StyledReactSelect = styled(Select).attrs({
       border-bottom: 1px solid #BEBDBF;
     }
     &:active {
-      background-color: #fbfafa;
+      background-color: #FBFAFA;
     }
   }
   .custom-select__menu {
-    background-color: #fbfafa;
+    background-color: #FBFAFA;
     border-radius: 20px;
     z-index: 1000;
     ::-webkit-scrollbar {
@@ -189,12 +169,12 @@ const StyledReactSelect = styled(Select).attrs({
     padding: 0;
   }
   .custom-select__indicator {
-    color: #fbfafa;
+    color: #f0f0f0;
     background-color: #724D93;
     border-radius: 50%;
   }
   .custom-select__indicator:hover {
-    color: #fbfafa;
+    color: #f0f0f0;
     background-color: #724D93;
   }
   .custom-select__indicator-separator {
@@ -227,15 +207,15 @@ const opcionesIncoterm = [
   { value: 'ddp', label: 'DDP' },
 ];
 
-export default function Traject() {
+export default function IncoDestinyOrigin() {
   const {
     origin,
     setOrigin,
     destiny,
     setDestiny,
     incoterms,
-    setIncoterm,
-  } = useComponentStore();
+    setIncoterm
+  } = useComponentStore()
   const { ActiveTab } = useProgressStore();
 
   useEffect(() => {
@@ -247,39 +227,45 @@ export default function Traject() {
       setDestiny('');
     }
   }, [ActiveTab, setOrigin, setDestiny]);
-
   return (
-    <Column>
-      <Card>
-        <Title>Trayecto</Title>
-        <Label>Origen</Label>
-        <StyledReactCreateSelect
-          value={origin ? { label: origin, value: origin } : null}
-          options={ActiveTab === 'Importación' ? opcionesOrigen : opcionesDestino}
-          placeholder="Selecciona el Origen"
-          onChange={(e) => {
-            setOrigin(e.label);
-            console.log("origin:", e.label); // delete later
-          }} />
-        <Label>Destino</Label>
-        <StyledReactCreateSelect
-          value={destiny ? { label: destiny, value: destiny } : null}
-          options={ActiveTab === 'Importación' ? opcionesDestino : opcionesOrigen}
-          placeholder="Selecciona el Destino"
-          onChange={(e) => {
-            setDestiny(e.label);
-            console.log("destiny:", e.label); // delete later
-          }} />
-        <Label>IncoTerms</Label>
-        <StyledReactSelect
-          value={incoterms ? { label: incoterms, value: incoterms } : null}
-          options={opcionesIncoterm}
-          placeholder="Selecciona el Incoterm"
-          onChange={(e) => {
-            setIncoterm(e.label);
-            console.log("incoterms:", e.label); // delete later
-          }} />
-      </Card>
-    </Column>
+    <Wrapper>
+      <Container>
+        <ItemBox>
+          <Label>Incoterm</Label>
+          <StyledReactSelect
+            value={incoterms ? { label: incoterms, value: incoterms } : null}
+            options={opcionesIncoterm}
+            placeholder="Selecciona el Incoterm"
+            onChange={(e) => {
+              setIncoterm(e.label);
+              console.log("incoterms:", e.label); // delete later
+            }} />
+        </ItemBox>
+        <ItemBox>
+          <Label>Origen</Label>
+          <StyledReactCreateSelect
+            isMulti
+            value={origin ? origin.map(o => ({ label: o, value: o })) : []}
+            options={ActiveTab === 'Importación' ? opcionesOrigen : opcionesDestino}
+            placeholder="Selecciona el Origen"
+            onChange={(e) => {
+              const selectedValues = e ? e.map(option => option.label) : [];
+              setOrigin(selectedValues);
+              console.log("origin:", selectedValues); // delete later
+            }} />
+        </ItemBox>
+        <ItemBox>
+          <Label>Destino</Label>
+          <StyledReactCreateSelect
+            value={destiny ? { label: destiny, value: destiny } : null}
+            options={ActiveTab === 'Importación' ? opcionesDestino : opcionesOrigen}
+            placeholder="Selecciona el Destino"
+            onChange={(e) => {
+              setDestiny(e.label);
+              console.log("destiny:", e.label); // delete later
+            }} />
+        </ItemBox>
+      </Container>
+    </Wrapper>
   );
 }

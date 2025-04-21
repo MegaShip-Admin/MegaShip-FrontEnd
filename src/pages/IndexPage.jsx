@@ -1,19 +1,18 @@
 import React from 'react';
-import Logo from '../assets/LogoMegaShip.svg';
-import Setting from '../assets/Opciones.svg'
+import Logo from '../assets/Logo.svg';
 import styled from 'styled-components';
 
 const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: #ffffff;
+  height: 92vh;
+  background-color: #FBFAFA;
 `;
 
 const LogoImage = styled.img`
-  width: 250px;
-  height: 250px;
+  width: 350px;
+  height: 350px;
 `;
 
 export default function IndexPage() {
