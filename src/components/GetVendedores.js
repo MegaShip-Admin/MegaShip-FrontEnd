@@ -9,5 +9,3 @@ export async function GetVendedores() {
     const data = await response.json();
     return data;
   }
-  
-  

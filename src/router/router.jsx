@@ -7,28 +7,30 @@ import Login from '../pages/Login';
 import NewQuote from '../pages/NewQuote';
 import Settings from '../pages/Settings';
 import UserManagement from '../pages/UserManagement';
-import Header from '../components/Header';
-import useStore from '../stores/store';
+import Header from '../components/common/Header';
 
 const Layout = styled.div`
   display: flex;
+  flex-direction: column;
   height: 100vh;
   overflow: hidden;
 `;
 
 const MainContent = styled.main`
-  flex-grow: 1;
-  background-color: #FFFFFF;
+  height: 92vh;
+  width: 100vw;
+  background-color: #FBFAFA;
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 export default function AppRouter() {
-  const { headerCollapsed, collapseHeader } = useStore();
 
   return (
     <BrowserRouter>
       <Layout>
         <Header />
-        <MainContent $headerCollapsed={headerCollapsed} onClick={collapseHeader}>
+        <MainContent>
           <Routes>
             <Route path="/" element={<IndexPage />} />
             <Route path="/nueva_cotizacion" element={<NewQuote />} />

@@ -120,13 +120,10 @@ export default function UserGroup({ searching }) {
           ))
         ) : (
           <>
-
               <NoUsersBox>
                 <h3>No hay usuarios</h3>
               </NoUsersBox>
-
           </>
-
         )}
       </UsersGroup>
       <SliderContainer>
