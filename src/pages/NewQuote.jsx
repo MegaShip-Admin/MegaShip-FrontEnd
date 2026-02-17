@@ -9,7 +9,7 @@ import DisplayContainer from "../components/DisplayContainer";
 import ServiceTimeValid from "../components/ServiceTimeValid";
 import Disclaimers from "../components/Disclaimers";
 import Deposit from "../components/Deposit";
-
+import useProgressStore from "../stores/progressStore";
 
 const Wrapper = styled.div`
   height: 92vh;
@@ -28,7 +28,9 @@ const ContentMain = styled.div`
 `;
 
 
-export default function NewquoteMain() {
+export default function NewquoteMain() {  
+  const { selectedType } = useProgressStore();
+
   return (
     <Wrapper>
       <ContentMain>
@@ -37,7 +39,7 @@ export default function NewquoteMain() {
         <ThirdCustomer />
         <IncoDestinyOrigin />
         <TheLoad />
-        <Deposit/>
+        {(selectedType === "lcl" || selectedType === "ltl") && <Deposit />}
         <TypePrice />
         <DisplayContainer />
         <ServiceTimeValid />

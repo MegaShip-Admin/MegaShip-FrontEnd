@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import Select from "react-select";
 import useComponentStore from "../stores/componentsStore";
-import useProgressStore from "../stores/progressStore";
 
 const Wrapper = styled.div`
   display: flex;
@@ -125,11 +124,10 @@ const opcionesDeposit = [
 
 export default function Deposit() {
   const { deposit, setDeposit, leaving, setLeaving } = useComponentStore();
-  const { selectedType } = useProgressStore();
+
 
   return (
     <Wrapper>
-      {selectedType === "lcl" || selectedType === "ltl" ? (
         <Container>
           <ItemBox>
             <Label>Deposito </Label>
@@ -155,7 +153,6 @@ export default function Deposit() {
             />
           </ItemBox>
         </Container>
-      ) : null}
     </Wrapper>
   );
 }
